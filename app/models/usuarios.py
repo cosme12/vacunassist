@@ -1,4 +1,4 @@
-from app.models import get_db_connection, make_dicts
+from app.models import get_db_connection
 
 
 def existe_usuario(nombre):
@@ -17,9 +17,9 @@ def get_usuarios():
     """
     Devuelve todos los usuarios
     """
-    conn = get_db_connection()
-    cursor = conn.cursor()
-    #usuarios = make_dicts(cursor, cursor.execute("select * from usuarios;"))
+    conn = get_db_connection()  # Me conecto a la db
+    cursor = conn.cursor()  # Creo un cursor para poder ejecutar comandos SQL
     usuarios = cursor.execute("select * from usuarios;").fetchall()
     conn.close()
     return usuarios
+

@@ -1,6 +1,7 @@
 from flask import render_template, redirect,url_for,session
 from app.forms import LoginForm
 from app.auth import login_required
+from app import models
 from app import app
 
 
@@ -8,7 +9,8 @@ from app import app
 @login_required
 def index():
     usuario = session['usuario']
-    return render_template('index.html', titulo="Inicio", usuario=usuario)
+    todos_los_usuarios = models.get_usuarios()
+    return render_template('index.html', titulo="Inicio", usuario=usuario, todos_los_usuarios=todos_los_usuarios)
 
 
 @app.route('/login', methods=['GET', 'POST'])  # http://localhost:5000/login

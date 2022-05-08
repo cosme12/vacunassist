@@ -23,6 +23,6 @@ def login():
 @app.route('/logout')
 @login_required
 def logout():
-    session.pop('usuario', None)
+    session = None
     return redirect(url_for('login'))
 

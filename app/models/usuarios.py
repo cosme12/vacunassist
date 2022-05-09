@@ -19,7 +19,7 @@ def get_usuarios():
     """
     conn = get_db_connection()  # Me conecto a la db
     cursor = conn.cursor()  # Creo un cursor para poder ejecutar comandos SQL
-    usuarios = cursor.execute("select * from usuarios;").fetchall()
+    usuarios = cursor.execute("select * from usuario;").fetchall()
     conn.close()
     return usuarios
 

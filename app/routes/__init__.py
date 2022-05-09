@@ -67,7 +67,7 @@ def mis_turnos():
         print(mis_turnos)
         return render_template ('mis_turnos.html', titulo='Mis turnos', usuario=usuario, mis_turnos=mis_turnos)
 
-@app.route('/mis-vacunas')
+@app.route('/mis-vacunas') # http://localhost:5000/mis-vacunas
 @login_required
 def mis_vacunas():
     usuario = session["usuario"]

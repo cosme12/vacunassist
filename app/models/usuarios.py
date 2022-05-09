@@ -61,3 +61,12 @@ def validar_contrasena(contrasena, contrasena_hash):
     """
     return hashear_contrasena(contrasena) == contrasena_hash
 
+def get_user_data(usuario):
+    """
+    Devuelve los datos del usuario
+    """
+    conn = get_db_connection() 
+    cursor = conn.cursor()  
+    user_data = cursor.execute("SELECT * FROM usuario WHERE dni =?;", (usuario,)).fetchone()
+    conn.close()
+    return user_data

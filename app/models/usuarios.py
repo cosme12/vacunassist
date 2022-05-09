@@ -65,6 +65,7 @@ def validar_contrasena(contrasena, contrasena_hash):
     """
     return hashear_contrasena(contrasena) == contrasena_hash
 
+
 def get_user_data(usuario):
     """
     Devuelve los datos del usuario
@@ -74,3 +75,24 @@ def get_user_data(usuario):
     user_data = cursor.execute("SELECT * FROM usuario WHERE dni =?;", (usuario,)).fetchone()
     conn.close()
     return user_data
+
+
+def validar_inicio_sesion(dni, contrasena, token=None):
+    """
+    Verifica el inicio de sesion de un paciente
+    """
+    usuario = get_user_data(dni)
+    if usuario:
+        if usuario["tipo"] == 1:  # Si es un paciente
+            if token and usuario["token"] == token and validar_contrasena(contrasena, usuario["password"]):
+                return True, "Inicio de sesion correcto"
+            else:
+                return False, "Credenciales inválidas"
+        else:
+            # Verificar si es enfermero o administrador
+            pass
+    else:
+        return False, "El usuario no está registrado"
+
+
+

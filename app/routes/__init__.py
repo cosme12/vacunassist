@@ -4,12 +4,13 @@ from app.forms import LoginForm, RegistroForm
 from app.auth import login_required
 from app import models
 from app import app
+from app.models.usuarios import validar_inicio_sesion
 
 
 @app.route('/')  # http://localhost:5000/
 @login_required
 def index():
-    usuario = session['usuario']
+    usuario = session['dni']
     todos_los_usuarios = models.get_usuarios()
     return render_template('index.html', titulo="Inicio", usuario=usuario, todos_los_usuarios=todos_los_usuarios)
 
@@ -18,16 +19,21 @@ def index():
 def login():
     formulario_de_login = LoginForm()
     if formulario_de_login.validate_on_submit():
-        # Aca deberiamos validar el usuario y contraseña
-        session['usuario'] = formulario_de_login.usuario.data
-        return redirect(url_for('index'))
-    return render_template('login.html', titulo="Login", formulario_de_login=formulario_de_login, esconder_navbar=True)
+        # Valida el usuario y contraseña y token si es necesario
+        validar_inicio, error = validar_inicio_sesion(formulario_de_login.dni.data, formulario_de_login.password.data, 
+                                formulario_de_login.token.data)
+        if validar_inicio:
+            session['dni'] = formulario_de_login.dni.data
+            return redirect(url_for('index'))
+        else:
+            flash(error, 'danger')
+    return render_template('login.html', titulo="Login", formulario_de_login=formulario_de_login)
 
 
 @app.route('/logout')
 @login_required
 def logout():
-    session.pop('usuario', None)
+    session.pop('dni', None)
     return redirect(url_for('login'))
 
 
@@ -54,14 +60,14 @@ def registro():
 @app.route('/perfil')  # http://localhost:5000/perfil
 @login_required
 def perfil():  
-    usuario = session['usuario']
+    usuario = session['dni']
     user_data = models.get_user_data(usuario)
     return render_template('perfil.html', titulo="Perfil", usuario=usuario, user_data=user_data)
 
 @app.route('/mis-turnos') # http://localhost:5000/mis-turnos
 @login_required
 def mis_turnos():
-        usuario = session ['usuario']
+        usuario = session['dni']
         user_data = models.get_user_data(usuario)
         mis_turnos = models.get_turnos_from_usuario(user_data['id']) 
         print(mis_turnos)

@@ -4,9 +4,43 @@
 {% block content %}
     <h1>Registro</h1>
     <div class="row">
+        {{ render_form(form, form_type='horizontal', horizontal_columns=('lg', 2, 10)) }}
+    </div>
+    <br>
+    <div class="row">
+        <div class="col-md-2"></div>
         <div class="col-md-4">
-            {{ render_form(form) }}
+            <button type="button" class="btn btn-secondary" id="add-vacunas-field">
+                <i class="fa fa-plus"></i> Agregar otra vacuna
+            </button>
         </div>
     </div>
     <br><br>
+    
+    <script>
+        window.onload = function() {
+            let addVacunasFieldBtn = document.getElementById('add-vacunas-field');
+            addVacunasFieldBtn.addEventListener('click', function(e){
+                e.preventDefault();
+                let todasVacunasFieldWrapper = document.getElementsByTagName('fieldset')[0];
+                let todasVacunasField = document.querySelectorAll('*[id^="vacunas-"]');
+                if(todasVacunasField.length > 4) {
+                    alert('Solo puede seleccionar 5 vacunas');
+                    return;
+                }
+                let vacunasInputIds = []
+                for(let i = 0; i < todasVacunasField.length; i++) {
+                    vacunasInputIds.push(parseInt(todasVacunasField[i].name.split('-')[1]));
+                }
+                let newFieldName = `vacunas-${Math.max(...vacunasInputIds) + 1}`;
+                todasVacunasFieldWrapper.insertAdjacentHTML('beforeend',`
+                <div class="mb-3 row">
+                <label class="col-form-label col-lg-2" for="${newFieldName}">¿Qué vacuna ya se aplicó?</label>
+                <div class="col-lg-10">
+                        <select class="form-control" id="${newFieldName}" name="${newFieldName}"><option value="">-</option><option value="covid1">Covid 1era dosis</option><option value="covid2">Covid 2da dosis</option><option value="fiebre_amarilla">Fiebre amarilla</option><option value="gripe">Gripe</option></select>
+                </div></div>
+                `);
+            });
+        }
+    </script>    
 {% endblock %}

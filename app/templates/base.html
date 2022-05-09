@@ -23,7 +23,7 @@
             <ul class="navbar-nav mr-auto">
                 {% if not esconder_navbar %}
                 {{ render_nav_item('index', 'Home', use_li=True) }}
-                <li class="nav-item"><a class="nav-link" href="" target="_blank">Mis turnos</a></li>
+                {{ render_nav_item('mis_turnos', 'Mis turnos', use_li=True) }}
                 {% endif %} 
                 
                 <!--<li class="nav-item"><a class="nav-link" href="https://bootstrap-flask.readthedocs.io/" target="_blank">Documentacion</a></li>

@@ -13,3 +13,13 @@ def get_turnos():
     turnos = cursor.execute("select * from turno").fetchall()
     conn.close()
     return turnos
+
+def get_turnos_from_usuario(id):
+    """
+    Devuelve todos los turnos del usuario con id=id
+    """
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    turnos = cursor.execute("select * from turno where id =?", (id,)).fetchall()
+    conn.close()
+    return turnos

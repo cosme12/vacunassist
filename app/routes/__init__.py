@@ -50,3 +50,9 @@ def registro():
                 flash(error, 'danger')
     return render_template('registro.html', titulo="Registro", form=form)
 
+@app.route('/perfil')  # http://localhost:5000/perfil
+@login_required
+def perfil():  
+    usuario = session['usuario']
+    user_data = models.get_user_data(usuario)
+    return render_template('perfil.html', titulo="Perfil", usuario=usuario, user_data=user_data)

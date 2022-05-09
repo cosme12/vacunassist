@@ -1,3 +1,4 @@
+from dataclasses import dataclass
 from flask import render_template, redirect,url_for, session, flash
 from app.forms import LoginForm, RegistroForm
 from app.auth import login_required
@@ -56,3 +57,11 @@ def perfil():
     usuario = session['usuario']
     user_data = models.get_user_data(usuario)
     return render_template('perfil.html', titulo="Perfil", usuario=usuario, user_data=user_data)
+
+@app.route('/mis_turnos') 
+@login_required
+def mis_turnos():
+        usuario = session ['usuario']
+        user_data = models.get_user_data(usuario)
+        mis_turnos = models.get_turnos_from_usuario(user_data.id) ## xq no me toma la funcion y el campo??
+        return render_template ('mis_turnos.html', titulo='Mis turnos', usuario=usuario, mis_turnos=mis_turnos)

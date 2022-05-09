@@ -13,4 +13,5 @@ def get_db_connection():
 
 
 from app.models.usuarios import *
+from app.models.turnos import *
 

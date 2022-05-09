@@ -2,12 +2,11 @@
 {% from 'bootstrap5/form.html' import render_form %}
 
 {% block content %}
-    <h1>Iniciar sesión</h1>
+    <h1>Registro</h1>
     <div class="row">
         <div class="col-md-4">
-            {{ render_form(formulario_de_login) }}
+            {{ render_form(form) }}
         </div>
     </div>
-    <br>
-    <a href="{{ url_for('registro') }}">¿Aún no tiene una cuenta? Regístrese</a>
+    <br><br>
 {% endblock %}

@@ -1,5 +1,5 @@
 from flask import render_template, redirect,url_for,session
-from app.forms import LoginForm
+from app.forms import LoginForm, RegistroForm
 from app.auth import login_required
 from app import models
 from app import app
@@ -22,9 +22,21 @@ def login():
         return redirect(url_for('index'))
     return render_template('login.html', titulo="Login", formulario_de_login=formulario_de_login, esconder_navbar=True)
 
+
 @app.route('/logout')
 @login_required
 def logout():
-    session = None
+    session.pop('usuario', None)
     return redirect(url_for('login'))
+
+
+@app.route('/registro', methods=['GET', 'POST'])
+def registro():
+    """
+    Ruta que se encarga de la logica del registro
+    """
+    if "usuario" in session:  # Si el usuario esta logueado, lo redirige a la pagina principal
+        return redirect(url_for('index'))
+    form = RegistroForm()
+    return render_template('registro.html', titulo="Registro", form=form)
 

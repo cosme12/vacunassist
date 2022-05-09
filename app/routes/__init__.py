@@ -20,7 +20,7 @@ def login():
         # Aca deberiamos validar el usuario y contraseña
         session['usuario'] = formulario_de_login.usuario.data
         return redirect(url_for('index'))
-    return render_template('login_con_bootstrap.html', titulo="Login", formulario_de_login=formulario_de_login, esconder_navbar=True)
+    return render_template('login.html', titulo="Login", formulario_de_login=formulario_de_login, esconder_navbar=True)
 
 @app.route('/logout')
 @login_required

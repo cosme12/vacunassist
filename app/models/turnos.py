@@ -17,6 +17,10 @@ def get_turnos_from_usuario(id):
     """
     conn = get_db_connection()
     cursor = conn.cursor()
-    turnos = cursor.execute("select * from turno where id_usuario =? and estado =?;", (id,1,)).fetchall()
+    turnos = cursor.execute("""SELECT * FROM turno 
+                                INNER JOIN vacuna as e ON e.id = turno.id_vacuna 
+                                INNER JOIN zona as z ON z.id=turno.id_zona 
+                                WHERE id_usuario =? AND estado=?;
+                                """, (id,1)).fetchall()
     conn.close()
     return turnos

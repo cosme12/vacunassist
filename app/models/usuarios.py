@@ -1,4 +1,5 @@
 import hashlib
+import sqlite3
 from app.models import get_db_connection
 
 
@@ -33,13 +34,18 @@ def guardar_usuario(form_data):
     """
     conn = get_db_connection()  # Me conecto a la db
     cursor = conn.cursor()  # Creo un cursor para poder ejecutar comandos SQL
-    cursor.execute("INSERT INTO usuario (nombre, apellido, dni, email, password, fecha_de_nacimiento, \
+    error = None
+    try:
+        cursor.execute("INSERT INTO usuario (nombre, apellido, dni, email, password, fecha_de_nacimiento, \
                                telefono, paciente_de_riesgo, tipo) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);",
                               (form_data['nombre'], form_data['apellido'], form_data['dni'], form_data['email'],
                                 hashear_contrasena(form_data['password']), form_data['fecha_de_nacimiento'], form_data['telefono'],
                                 form_data['paciente_de_riesgo'], 1)).fetchall()
-    conn.commit()
+        conn.commit()
+    except sqlite3.IntegrityError:
+        error = "El usuario ya existe."
     conn.close()
+    return error
 
 
 def hashear_contrasena(contrasena):

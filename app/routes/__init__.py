@@ -39,8 +39,11 @@ def registro():
         return redirect(url_for('index'))
     form = RegistroForm()
     if form.validate_on_submit():
-        models.guardar_usuario(form.data)
-        flash(f"El registro fue exitoso. Hemos enviado un mail a {form.email.data} con un token que deberá usar junto con su contraseña para iniciar sesión.")
-        return redirect(url_for('login'))
+        error = models.guardar_usuario(form.data)
+        if not error:
+            flash(f"El registro fue exitoso. Hemos enviado un mail a {form.email.data} con un token que deberá usar junto con su contraseña para iniciar sesión.", "success")
+            return redirect(url_for('login'))
+        else:
+            flash(error, 'danger')
     return render_template('registro.html', titulo="Registro", form=form)
 

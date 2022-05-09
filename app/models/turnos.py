@@ -20,6 +20,6 @@ def get_turnos_from_usuario(id):
     """
     conn = get_db_connection()
     cursor = conn.cursor()
-    turnos = cursor.execute("select * from turno where id =? and estado =?;", (id,1,)).fetchall()
+    turnos = cursor.execute("select * from turno where id_usuario =? and estado =?;", (id,1,)).fetchall()
     conn.close()
     return turnos

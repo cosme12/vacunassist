@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block content %}
+    {% if usuario %}
+    <h1>Mis turnos</h1>
+        
+        {%for turno in mis_turnos%}
+            <div class="card" style="width: 18rem;">
+                <!-- <img src="..." class="card-img-top" alt="..."> -->
+                <div class="card-body">
+                <h5 class="card-title">Nombre Vacuna</h5>
+                <p class="card-text">Fecha y direccion</p>
+                <a href="#" class="btn btn-primary">Cancelar turno</a>
+                </div>
+            </div>
+            <p></p>
+        {% endfor %}
+    {%endif%}
+{% endblock %}

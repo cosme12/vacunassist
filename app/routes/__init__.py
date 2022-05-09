@@ -58,10 +58,11 @@ def perfil():
     user_data = models.get_user_data(usuario)
     return render_template('perfil.html', titulo="Perfil", usuario=usuario, user_data=user_data)
 
-@app.route('/mis_turnos') 
+@app.route('/mis_turnos') # http://localhost:5000/mis_turnos
 @login_required
 def mis_turnos():
         usuario = session ['usuario']
         user_data = models.get_user_data(usuario)
-        mis_turnos = models.get_turnos_from_usuario(user_data.id) ## xq no me toma la funcion y el campo??
+        mis_turnos = models.get_turnos_from_usuario(user_data['id']) ## IndexError: No item with that key
+        print(mis_turnos)
         return render_template ('mis_turnos.html', titulo='Mis turnos', usuario=usuario, mis_turnos=mis_turnos)

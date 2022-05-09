@@ -58,7 +58,7 @@ def perfil():
     user_data = models.get_user_data(usuario)
     return render_template('perfil.html', titulo="Perfil", usuario=usuario, user_data=user_data)
 
-@app.route('/mis_turnos') # http://localhost:5000/mis_turnos
+@app.route('/mis-turnos') # http://localhost:5000/mis-turnos
 @login_required
 def mis_turnos():
         usuario = session ['usuario']

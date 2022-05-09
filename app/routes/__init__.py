@@ -63,6 +63,6 @@ def perfil():
 def mis_turnos():
         usuario = session ['usuario']
         user_data = models.get_user_data(usuario)
-        mis_turnos = models.get_turnos_from_usuario(user_data['id']) ## IndexError: No item with that key
+        mis_turnos = models.get_turnos_from_usuario(user_data['id']) 
         print(mis_turnos)
         return render_template ('mis_turnos.html', titulo='Mis turnos', usuario=usuario, mis_turnos=mis_turnos)

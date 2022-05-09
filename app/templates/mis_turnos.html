@@ -2,19 +2,22 @@
 
 {% block content %}
     {% if usuario %}
-    <h1>Mis turnos</h1>
-        
-        {%for turno in mis_turnos%}
-            <div class="card" style="width: 18rem;">
-                <!-- <img src="..." class="card-img-top" alt="..."> -->
-                <div class="card-body">
-                <h5 class="card-title">Nombre Vacuna</h5>
-                <p class="card-text">{{turno["fecha"]}} - Hora</p>
-                <p class="card-text">Direccion</p>
-                <a href="#" class="btn btn-primary">Cancelar turno</a>
+        <h1>Mis turnos</h1>
+        {% if mis_turnos=None %} 
+        <p>No tiene turnos reservados</p>
+        {% else %}
+            {%for turno in mis_turnos%}
+                <div class="card" style="width: 18rem;">
+                    <!-- <img src="..." class="card-img-top" alt="..."> -->
+                    <div class="card-body">
+                    <h5 class="card-title">{{turno["enfermedad"]}}</h5>
+                    <p class="card-text">{{turno["fecha"]}}</p>
+                    <p class="card-text">{{turno["direccion"]}}</p>
+                    <a href="#" class="btn btn-primary">Cancelar turno</a>
+                    </div>
                 </div>
-            </div>
-            <p></p>
-        {% endfor %}
+                <p></p>
+            {% endfor %}
+        {% endif %}
     {%endif%}
 {% endblock %}

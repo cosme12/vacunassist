@@ -7,7 +7,7 @@ def existe_usuario(nombre):
     """
     conn = get_db_connection()
     cursor = conn.cursor()
-    cursor.execute("select COUNT('nombre') from usuarios where nombre=?;", (nombre,))
+    cursor.execute("select COUNT('nombre') from usuario where nombre=?;", (nombre,))
     existe = cursor.fetchone()[0]
     conn.close()
     return existe

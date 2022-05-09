@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block content %}
-    {% if user_data['tipo'] == 'paciente' %}
+    {% if user_data['tipo'] == 1 %}
         <h1>{{ user_data['nombre'] | capitalize }} {{ user_data['apellido'] | capitalize }}</h1>
         <p>Dni: {{ user_data['dni'] }} </p>
         <p>Email: {{ user_data['email'] }}</p>
@@ -14,12 +14,12 @@
         <br>
         <a href="">Eliminar cuenta</a>
     {% endif %}
-    {% if user_data['tipo'] == 'enfermero' %}
+    {% if user_data['tipo'] == 2 %}
         <h1>Enfermero {{ user_data['nombre'] }} {{ user_data['apellido'] }}</h1>
         <p> Dni: {{ user_data['dni'] }}</p>
         <p>Zona Asignada: {{ user_data['id_zona'] }}</p>
     {% endif %}
-    {% if user_data['tipo'] == 'admin' %}
+    {% if user_data['tipo'] == 3 %}
         <h1>ADMIN</h1>
     {% endif %}
     

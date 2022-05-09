@@ -15,7 +15,7 @@
         <a href="">Eliminar cuenta</a>
     {% endif %}
     {% if user_data['tipo'] == 2 %}
-        <h1>Enfermero {{ user_data['nombre'] }} {{ user_data['apellido'] }}</h1>
+        <h1>Enfermero {{ user_data['nombre'] | capitalize }} {{ user_data['apellido'] | capitalize }}</h1>
         <p> Dni: {{ user_data['dni'] }}</p>
         <p>Zona Asignada: {{ user_data['id_zona'] }}</p>
     {% endif %}

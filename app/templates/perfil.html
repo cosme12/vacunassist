@@ -1,20 +1,24 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <h1>Perfil {{usuario}}</h1>
     {% if user_data['tipo'] == 'paciente' %}
-        <p>{{ user_data['nombre'] }} {{ user_data['apellido'] }}</p>
+        <h1>{{ user_data['nombre'] | capitalize }} {{ user_data['apellido'] | capitalize }}</h1>
+        <p>Dni: {{ user_data['dni'] }} </p>
         <p>Email: {{ user_data['email'] }}</p>
         <p>Fecha de nacimiento: {{ user_data['fecha_de_nacimiento']}}</p>
+        <a href="">Cambiar contraseña</a>
+        <br>
         <a href="">Mis turnos</a>
+        <br>
         <a href="">Mis vacunas</a>
     {% endif %}
     {% if user_data['tipo'] == 'enfermero' %}
-        <p>Enfermero {{ user_data['nombre'] }} {{ user_data['apellido'] }}</p>
+        <h1>Enfermero {{ user_data['nombre'] }} {{ user_data['apellido'] }}</h1>
+        <p> Dni: {{ user_data['dni'] }}</p>
         <p>Zona Asignada: {{ user_data['id_zona'] }}</p>
     {% endif %}
     {% if user_data['tipo'] == 'admin' %}
-        <p>ADMIN</p>
+        <h1>ADMIN</h1>
     {% endif %}
     
 {% endblock %}

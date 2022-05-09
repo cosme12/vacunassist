@@ -6,11 +6,13 @@
         <p>Dni: {{ user_data['dni'] }} </p>
         <p>Email: {{ user_data['email'] }}</p>
         <p>Fecha de nacimiento: {{ user_data['fecha_de_nacimiento']}}</p>
-        <a href="">Cambiar contraseña</a>
-        <br>
         <a href="">Mis turnos</a>
         <br>
         <a href="">Mis vacunas</a>
+        <br>
+        <a href="">Cambiar contraseña</a>
+        <br>
+        <a href="">Eliminar cuenta</a>
     {% endif %}
     {% if user_data['tipo'] == 'enfermero' %}
         <h1>Enfermero {{ user_data['nombre'] }} {{ user_data['apellido'] }}</h1>

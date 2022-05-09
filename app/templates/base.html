@@ -13,7 +13,7 @@
       {{ bootstrap.load_css() }}
     </head>
     <body>
-      <nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-4">
+      <nav class="navbar navbar-expand-lg navbar-dark bg-secondary mb-4">
         <div class="container">
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
                 aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -22,6 +22,7 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
                 {% if not esconder_navbar %}
+                <li class="nav-item"><a class="nav-link" href="{{ url_for('index') }}" target=""><img src="{{ url_for('static', filename='/images/Logo_VacunAssist.png') }}" alt="Logo_VacunAssist" ></a></li>
                 {{ render_nav_item('index', 'Home', use_li=True) }}
                 {{ render_nav_item('mis_turnos', 'Mis turnos', use_li=True) }}
                 {{ render_nav_item('perfil', 'Mi perfil', use_li=True) }}

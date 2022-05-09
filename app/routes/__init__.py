@@ -66,3 +66,10 @@ def mis_turnos():
         mis_turnos = models.get_turnos_from_usuario(user_data['id']) 
         print(mis_turnos)
         return render_template ('mis_turnos.html', titulo='Mis turnos', usuario=usuario, mis_turnos=mis_turnos)
+
+@app.route('/mis-vacunas')
+@login_required
+def mis_vacunas():
+    usuario = session["usuario"]
+    vacunas_aplicadas = models.get_vacunas_aplicadas(usuario)
+    return render_template ('mis_vacunas.html', titulo = "Vacunas aplicadas", usuario = usuario, vacunas = vacunas_aplicadas)

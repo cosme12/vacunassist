@@ -7,7 +7,7 @@ class LoginForm(FlaskForm):
     dni = StringField('DNI', validators=[DataRequired('Este campo es requerido')])
     password = PasswordField('Contraseña', validators=[DataRequired('Este campo es requerido')])
     token = StringField('Token')
-    enviar = SubmitField('Enviar')
+    iniciar_sesion = SubmitField('Iniciar sesión')
 
 
 class RegistroForm(FlaskForm):

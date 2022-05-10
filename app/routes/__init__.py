@@ -76,7 +76,7 @@ def mis_turnos():
 @app.route('/mis-vacunas') # http://localhost:5000/mis-vacunas
 @login_required
 def mis_vacunas():
-    dni = session["dni"]
-    usuario = models.get_user_data(dni)
+    dni = session['dni']
+    #usuario = models.get_user_data(dni)
     vacunas_aplicadas = models.get_vacunas_aplicadas(dni)
-    return render_template ('mis_vacunas.html', titulo = "Vacunas aplicadas", usuario = usuario, vacunas = vacunas_aplicadas)
+    return render_template ('mis_vacunas.html', titulo = "Vacunas aplicadas", vacunas = vacunas_aplicadas)

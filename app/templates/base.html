@@ -26,6 +26,7 @@
                 {% if session["dni"] %}
                 {{ render_nav_item('index', 'Home', use_li=True) }}
                 {{ render_nav_item('mis_turnos', 'Mis turnos', use_li=True) }}
+                {{ render_nav_item('mis_vacunas', 'Mis vacunas', use_li=True) }}
                 {{ render_nav_item('perfil', 'Mi perfil', use_li=True) }}
                 {{ render_nav_item('logout', 'Cerrar sesión', use_li=True) }}
                 {% endif %}

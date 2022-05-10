@@ -1,5 +1,9 @@
 {% extends "base.html" %}
 
 {% block content %}
-
+    {% if vacunas %}
+        
+    {% else %}
+        <p>No tiene vacunas aplicadas.</p>
+    {% endif %}
 {% endblock %}

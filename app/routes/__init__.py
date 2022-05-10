@@ -70,7 +70,6 @@ def mis_turnos():
         usuario = session['dni']
         user_data = models.get_user_data(usuario)
         mis_turnos = models.get_turnos_from_usuario(user_data['id']) 
-        print(mis_turnos)
         return render_template ('mis_turnos.html', titulo='Mis turnos', usuario=usuario, mis_turnos=mis_turnos)
 
 @app.route('/mis-vacunas') # http://localhost:5000/mis-vacunas
@@ -80,3 +79,9 @@ def mis_vacunas():
     #usuario = models.get_user_data(dni)
     vacunas_aplicadas = models.get_vacunas_aplicadas(dni)
     return render_template ('mis_vacunas.html', titulo = "Vacunas aplicadas", vacunas = vacunas_aplicadas)
+
+@app.route('/cancelar-turno/<id>')
+@login_required
+def cancelar_turno(id):
+    models.delet_turno(id)
+    return redirect(url_for('mis_turnos'))

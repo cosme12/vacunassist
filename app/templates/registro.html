@@ -2,19 +2,21 @@
 {% from 'bootstrap5/form.html' import render_form %}
 
 {% block content %}
-    <h1>Registro</h1>
     <div class="row">
-        {{ render_form(form, form_type='horizontal', horizontal_columns=('lg', 2, 10)) }}
-    </div>
-    <br>
-    <div class="row">
-        <div class="col-md-2"></div>
-        <div class="col-md-4">
-            <button type="button" class="btn btn-secondary" id="add-vacunas-field">
-                <i class="fa fa-plus"></i> Agregar otra vacuna
-            </button>
+        <div class="card p-4 mt-3">
+            <h1 class="pb-4">Registro</h1>
+            {{ render_form(form, form_type='horizontal', horizontal_columns=('lg', 2, 10)) }}
+            <div class="row pt-2">
+                <div class="col-md-2"></div>
+                <div class="col-md-4">
+                    <button type="button" class="btn btn-secondary" id="add-vacunas-field">
+                        <i class="fa fa-plus"></i> Agregar otra vacuna
+                    </button>
+                </div>
+            </div>
         </div>
     </div>
+    <br>
     <br><br>
     
     <script>

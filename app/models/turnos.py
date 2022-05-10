@@ -24,3 +24,11 @@ def get_turnos_from_usuario(id):
                                 """, (id,1)).fetchall()
     conn.close()
     return turnos
+
+
+def delet_turno(id):
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    turnos = cursor.execute(" DELETE FROM turno WHERE id =?;",(id))
+
+    conn.close()

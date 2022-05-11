@@ -29,6 +29,6 @@ def get_turnos_from_usuario(id):
 def delet_turno(id):
     conn = get_db_connection()
     cursor = conn.cursor()
-    turnos = cursor.execute("UPDATE turno SET estado=4 WHERE id =?;",(id,))
+    cursor.execute("UPDATE turno SET estado=4 WHERE id =?;",(id,))
     conn.commit()
     conn.close()

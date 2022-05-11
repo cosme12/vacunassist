@@ -9,6 +9,6 @@ def get_vacunas_aplicadas(dni):
     vacunas = cursor.execute("SELECT * FROM usuario \
                             INNER JOIN vacuna_aplicada ON usuario.id = vacuna_aplicada.id_usuario\
                             INNER JOIN vacuna ON vacuna_aplicada.id_vacuna = vacuna.id \
-                            WHERE usuario.dni = ?;" (dni,)).fetchall()
+                            WHERE usuario.dni = ?;", (dni,)).fetchall()
     conn.close
     return vacunas

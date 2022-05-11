@@ -21,7 +21,7 @@ def get_turnos_from_usuario(id):
                                 INNER JOIN vacuna as e ON e.id = turno.id_vacuna 
                                 INNER JOIN zona as z ON z.id=turno.id_zona 
                                 WHERE id_usuario =? AND estado=?;
-                                """, (id,1)).fetchall()
+                                """, (id,1,)).fetchall()
     conn.close()
     return turnos
 
@@ -29,6 +29,6 @@ def get_turnos_from_usuario(id):
 def delet_turno(id):
     conn = get_db_connection()
     cursor = conn.cursor()
-    turnos = cursor.execute(" DELETE FROM turno WHERE id =?;",(id))
-
+    turnos = cursor.execute("UPDATE turno SET estado=4 WHERE id =?;",(id,))
+    conn.commit()
     conn.close()

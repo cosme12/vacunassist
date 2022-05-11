@@ -80,7 +80,7 @@ def mis_vacunas():
     vacunas_aplicadas = models.get_vacunas_aplicadas(dni)
     return render_template ('mis_vacunas.html', titulo = "Vacunas aplicadas", vacunas = vacunas_aplicadas)
 
-@app.route('/cancelar-turno/<id>')
+@app.route('/cancelar-turno/<int:id>')
 @login_required
 def cancelar_turno(id):
     ## Falta agregar la ventana de confirmacion

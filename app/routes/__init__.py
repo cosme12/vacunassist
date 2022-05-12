@@ -17,6 +17,8 @@ def index():
 
 @app.route('/login', methods=['GET', 'POST'])  # http://localhost:5000/login
 def login():
+    if "dni" in session:  # Si el usuario esta logueado, lo redirige a la pagina principal
+        return redirect(url_for('index'))
     formulario_de_login = LoginForm()
     if formulario_de_login.validate_on_submit():
         # Valida el usuario y contraseña y token si es necesario
@@ -43,7 +45,7 @@ def registro():
     """
     Ruta que se encarga de la logica del registro
     """
-    if "usuario" in session:  # Si el usuario esta logueado, lo redirige a la pagina principal
+    if "dni" in session:  # Si el usuario esta logueado, lo redirige a la pagina principal
         return redirect(url_for('index'))
     form = RegistroForm()
     if form.validate_on_submit():

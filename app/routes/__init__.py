@@ -33,7 +33,8 @@ def login():
 @app.route('/logout')
 @login_required
 def logout():
-    session.pop('dni', None)
+    #session.pop('dni', None)
+    session.clear()
     return redirect(url_for('login'))
 
 

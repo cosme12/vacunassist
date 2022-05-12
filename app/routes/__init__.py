@@ -86,3 +86,23 @@ def cancelar_turno(id):
     ## Falta agregar la ventana de confirmacion
     models.cancel_shift(id)
     return redirect(url_for('mis_turnos'))
+
+
+@app.route('/eliminar_cuenta/<int:id>')
+@login_required
+def eliminar_cuenta(id):
+
+    ## obtener turnos del paciente
+    usuario = session['dni']
+    user_data = models.get_user_data(usuario)
+    mis_turnos = models.get_shift_from_user(user_data['id']) 
+
+    ## cancelar sus turnos
+    for turno in mis_turnos:
+        models.cancel_shift(turno['id'])
+
+    ## eliminar paciente
+    models.delete_user(user_data['id'])
+
+    ## redirigir a pagina de incio de sesion
+    return redirect(url_for('login'))

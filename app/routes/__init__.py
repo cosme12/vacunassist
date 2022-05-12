@@ -69,7 +69,7 @@ def perfil():
 def mis_turnos():
     usuario = session['dni']
     user_data = models.get_user_data(usuario)
-    mis_turnos = models.get_turnos_from_usuario(user_data['id']) 
+    mis_turnos = models.get_shift_from_user(user_data['id']) 
     return render_template ('mis_turnos.html', titulo='Mis turnos', usuario=usuario, mis_turnos=mis_turnos)
 
 @app.route('/mis-vacunas') # http://localhost:5000/mis-vacunas
@@ -84,5 +84,5 @@ def mis_vacunas():
 @login_required
 def cancelar_turno(id):
     ## Falta agregar la ventana de confirmacion
-    models.delet_turno(id)
+    models.cancel_shift(id)
     return redirect(url_for('mis_turnos'))

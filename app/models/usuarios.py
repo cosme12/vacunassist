@@ -94,5 +94,11 @@ def validar_inicio_sesion(dni, contrasena, token=None):
     else:
         return False, "El usuario no está registrado"
 
-
-
+def delete_user(id):
+    """
+    Elimina un usuario con id=id de la tabla usuario.
+    """
+    conn = get_db_connection() 
+    cursor = conn.cursor()  
+    user_data = cursor.execute("DELETE FROM usuario WHERE id =?;", (id,))
+    conn.close()

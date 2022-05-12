@@ -101,4 +101,5 @@ def delete_user(id):
     conn = get_db_connection() 
     cursor = conn.cursor()  
     user_data = cursor.execute("DELETE FROM usuario WHERE id =?;", (id,))
+    conn.commit()
     conn.close()

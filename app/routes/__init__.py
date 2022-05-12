@@ -106,4 +106,4 @@ def eliminar_cuenta(id):
     models.delete_user(user_data['id'])
 
     ## redirigir a pagina de incio de sesion
-    return redirect(url_for('login'))
+    return redirect(url_for('logout'))

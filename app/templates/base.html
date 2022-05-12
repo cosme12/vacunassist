@@ -18,38 +18,50 @@
   
       <nav class="navbar navbar-expand-lg navbar-light shadow-sm" style="background-color: rgb(150, 205, 122);">
         <div class="container">
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
-                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <a class="nav-link" href="{{ url_for('index') }}" target=""><img src="{{ url_for('static', filename='/images/Logo_VacunAssist.png') }}" alt="Logo_VacunAssist" style="width: 70%;"></a>
-
-            <ul class="navbar-nav mr-auto">
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+                      aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                  <span class="navbar-toggler-icon"></span>
+              </button>
+            <div class="col">
+              
+              <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                  <a class="nav-link" href="{{ url_for('index') }}" target=""><img src="{{ url_for('static', filename='/images/Logo_VacunAssist.png') }}" alt="Logo_VacunAssist" style="width: 70%;"></a>
+              </div>
+            </div>
+            <div class="col-6">
+              <ul class="navbar-nav mr-auto" >
+                  {% if session["dni"] %}
+                  <div class=" "></div>
+                  <div class="text-center">
+                    <i class="bi bi-house-fill" style="font-size: 26px;"></i>
+                    {{ render_nav_item('index', 'Inicio') }}
+                  </div>
+                  <div class="text-center">
+                    <i class="bi bi-calendar-date-fill" style="font-size: 26px;"></i>
+                    {{ render_nav_item('mis_turnos', 'Mis turnos') }}
+                  </div>
+                  <div class="text-center">
+                    <i class="bi bi-clipboard2-pulse-fill" style="font-size: 26px;"></i>
+                   {{ render_nav_item('mis_vacunas', 'Mis vacunas', use_li=True) }}
+                  </div>
+                  {% endif %}
+               </ul>
+            </div>
+            <div class="col">
+              <ul class="navbar-nav mr-auto">
                 {% if session["dni"] %}
-                <div class="text-center">
-                  <i class="bi bi-house-fill" style="font-size: 26px;"></i>
-                  {{ render_nav_item('index', 'Inicio') }}
-                </div>
-                <div class="text-center">
-                  <i class="bi bi-calendar-date-fill" style="font-size: 26px;"></i>
-                  {{ render_nav_item('mis_turnos', 'Mis turnos') }}
-                </div>
-                <div class="text-center">
-                  <i class="bi bi-clipboard2-pulse-fill" style="font-size: 26px;"></i>
-                {{ render_nav_item('mis_vacunas', 'Mis vacunas', use_li=True) }}
-                </div>
-                <div class="text-center">
-                  <i class="bi bi-file-earmark-person-fill" style="font-size: 26px;"></i>
-                {{ render_nav_item('perfil', 'Mi perfil', use_li=True) }}
-                </div>
-                <div class="text-center">
-                  <i class="bi bi-door-closed-fill" style="font-size: 26px;"></i>
-                {{ render_nav_item('logout', 'Cerrar sesión', use_li=True) }}
-                </div>
+                  <div class="text-center">
+                    <i class="bi bi-door-closed-fill" style="font-size: 26px;"></i>
+                    {{ render_nav_item('logout', 'Cerrar sesión', use_li=True) }}
+                  </div>
+                  <div class="text-center">
+                    <i class="bi bi-file-earmark-person-fill" style="font-size: 26px;"></i>
+                    {{ render_nav_item('perfil', 'Mi perfil', use_li=True) }}
+                  </div>
                 {% endif %}
-            </ul>
-        </div>
+              </ul>
+            </div>
+          
         </div>
       </nav>
 

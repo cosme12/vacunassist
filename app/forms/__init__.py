@@ -1,4 +1,4 @@
-from flask_wtf import FlaskForm
+from flask_wtf import FlaskForm, Form
 from wtforms import StringField, PasswordField, BooleanField, SubmitField, EmailField, DateField, SelectField, FieldList, FormField
 from wtforms.validators import DataRequired, InputRequired, EqualTo
 
@@ -10,10 +10,10 @@ class LoginForm(FlaskForm):
     iniciar_sesion = SubmitField('Iniciar sesión')
 
 
-class HistorialVacunasForm(FlaskForm):
+class HistorialVacunasForm(Form):
     vacuna = SelectField('¿Qué vacuna ya se aplicó?', choices=[("", "-"), ("covid1", "Covid 1era dosis"), ("covid2", "Covid 2da dosis"),
                                                                 ("fiebre_amarilla", "Fiebre amarilla"), ("gripe", "Gripe")])
-    fecha_aplicacion = DateField('Fecha de aplicación')
+    fecha_aplicacion = DateField('Fecha de aplicación', validators=[])
 
 
 class RegistroForm(FlaskForm):

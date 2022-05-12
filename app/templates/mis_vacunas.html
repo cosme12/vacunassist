@@ -3,16 +3,20 @@
 {% block content %}
     <h1>{{ titulo }}</h1>
     {% if vacunas %}
-        <div class="accordion accordion-flush" id="accordionFlushExample">
+        <div class="accordion accordion-flush" id="accordionFlushExample" >
             {% for vacuna in vacunas %}
                 <div class="accordion-item">
                     <h2 class="accordion-header" id="flush-heading{{loop.index}}">
                     <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapse{{loop.index}}" aria-expanded="false" aria-controls="flush-collapse{{loop.index}}">
-                    <b>Vacuna: {{ vacuna["enfermedad"] | upper}}</b>
+                    <b>{{ vacuna["enfermedad"] | upper}}</b>
                     </button>
                     </h2>
                     <div id="flush-collapse{{loop.index}}" class="accordion-collapse collapse" aria-labelledby="flush-heading{{loop.index}}" data-bs-parent="#accordionFlushExample">
-                        <div class="accordion-body">Fecha: {{ vacuna["fecha"] }} - Laboratorio:  - Lote:  - (Icono PDF)</div>
+                        <div class="accordion-body"><b> Fecha de aplicación:</b> {{ vacuna["fecha"] }} <br>
+                             <b>Laboratorio:</b>   {{ vacuna["laboratorio"] }} <br>
+                             <b>Lote:</b>  {{ vacuna["lote"] }} <br><br>
+                             <button type="button" class="btn btn-outline-secondary">Certificado (Icono PDF)</button> 
+                        </div> 
                     </div>
                 </div>
             {% endfor %}

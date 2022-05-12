@@ -28,19 +28,18 @@
                   <a class="nav-link" href="{{ url_for('index') }}" target=""><img src="{{ url_for('static', filename='/images/Logo_VacunAssist.png') }}" alt="Logo_VacunAssist" style="width: 70%;"></a>
               </div>
             </div>
-            <div class="col-6">
+            <div class="col-6 ">
               <ul class="navbar-nav mr-auto" >
                   {% if session["dni"] %}
-                  <div class=" "></div>
-                  <div class="text-center">
+                  <div class="text-center col-md-2">
                     <i class="bi bi-house-fill" style="font-size: 26px;"></i>
                     {{ render_nav_item('index', 'Inicio') }}
                   </div>
-                  <div class="text-center">
+                  <div class="text-center col-md-3">
                     <i class="bi bi-calendar-date-fill" style="font-size: 26px;"></i>
                     {{ render_nav_item('mis_turnos', 'Mis turnos') }}
                   </div>
-                  <div class="text-center">
+                  <div class="text-center col-md-3">
                     <i class="bi bi-clipboard2-pulse-fill" style="font-size: 26px;"></i>
                    {{ render_nav_item('mis_vacunas', 'Mis vacunas', use_li=True) }}
                   </div>

@@ -13,6 +13,7 @@
                         <i class="fa fa-plus"></i> Agregar otra vacuna
                     </button>
                 </div>
+                <p class="pt-4" style="color: red;">* Para la vacuna de la gripe solo cargue la aplicada en el último año.</p>
             </div>
         </div>
     </div>
@@ -22,11 +23,12 @@
     <script>
         window.onload = function() {
             let addVacunasFieldBtn = document.getElementById('add-vacunas-field');
+            document.getElementsByTagName('legend')[1].remove();  // Eliminar el label Vacunas-0
             addVacunasFieldBtn.addEventListener('click', function(e){
                 e.preventDefault();
                 let todasVacunasFieldWrapper = document.getElementsByTagName('fieldset')[0];
                 let todasVacunasField = document.querySelectorAll('*[id^="vacunas-"]');
-                if(todasVacunasField.length > 4) {
+                if(todasVacunasField.length > 8) {
                     alert('Solo puede seleccionar 5 vacunas');
                     return;
                 }
@@ -36,10 +38,16 @@
                 }
                 let newFieldName = `vacunas-${Math.max(...vacunasInputIds) + 1}`;
                 todasVacunasFieldWrapper.insertAdjacentHTML('beforeend',`
+                <hr>
                 <div class="mb-3 row">
-                <label class="col-form-label col-lg-2" for="${newFieldName}">¿Qué vacuna ya se aplicó?</label>
+                <label class="col-form-label col-lg-2" for="${newFieldName}-vacuna">¿Qué vacuna ya se aplicó?</label>
                 <div class="col-lg-10">
-                        <select class="form-control" id="${newFieldName}" name="${newFieldName}"><option value="">-</option><option value="covid1">Covid 1era dosis</option><option value="covid2">Covid 2da dosis</option><option value="fiebre_amarilla">Fiebre amarilla</option><option value="gripe">Gripe</option></select>
+                        <select class="form-control" id="${newFieldName}-vacuna" name="${newFieldName}-vacuna"><option value="">-</option><option value="covid1">Covid 1era dosis</option><option value="covid2">Covid 2da dosis</option><option value="fiebre_amarilla">Fiebre amarilla</option><option value="gripe">Gripe</option></select>
+                </div></div>
+                <div class="mb-3 row">
+                <label class="col-form-label col-lg-2" for="${newFieldName}-fecha_aplicacion">Fecha de aplicación</label>
+                <div class="col-lg-10">
+                        <input class="form-control" id="${newFieldName}-fecha_aplicacion" name="${newFieldName}-fecha_aplicacion" type="date" value="">
                 </div></div>
                 `);
             });

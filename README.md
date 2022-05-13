@@ -1,4 +1,7 @@
 # vacunassist
+
+![Build Status](https://github.com/cosme12/vacunassist/workflows/Python%20application/badge.svg)
+
 Proyecto para IS2 - Vacunatorio
 
 

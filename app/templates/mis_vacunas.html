@@ -15,7 +15,7 @@
                         <div class="accordion-body"><b> Fecha de aplicación:</b> {{ vacuna["fecha"] }} <br>
                              <b>Laboratorio:</b>   {{ vacuna["laboratorio"] }} <br>
                              <b>Lote:</b>  {{ vacuna["lote"] }} <br><br>
-                             <button type="button" class="btn btn-outline-secondary">Certificado (Icono PDF)</button> 
+                             <button type="button" class="btn btn-outline-secondary"><a href="{{ url_for('pdf_template', id=vacuna.id) }}" target="_blank">Certificado</a>  (Icono PDF)</button> 
                         </div> 
                     </div>
                 </div>

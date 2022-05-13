@@ -1,11 +1,11 @@
 from dataclasses import dataclass
-from flask import render_template, redirect,url_for, session, flash
+from flask import render_template, redirect,url_for, session, flash, make_response
 from app.forms import LoginForm, RegistroForm
 from app.auth import login_required
 from app import models
 from app import app
 from app.models.usuarios import validar_inicio_sesion
-
+import pdfkit
 
 @app.route('/')  # http://localhost:5000/
 @login_required
@@ -81,7 +81,7 @@ def mis_vacunas():
     dni = session['dni']
     #usuario = models.get_user_data(dni)
     vacunas_aplicadas = models.get_vacunas_aplicadas(dni)
-    return render_template ('mis_vacunas.html', titulo = "Vacunas aplicadas", vacunas = vacunas_aplicadas)
+    return render_template ('mis_vacunas.html', titulo = "Vacunas aplicadas", vacunas=vacunas_aplicadas)
 
 @app.route('/cancelar-turno/<int:id>')
 @login_required
@@ -109,3 +109,26 @@ def eliminar_cuenta(id):
 
     ## redirigir a pagina de incio de sesion
     return redirect(url_for('logout'))
+
+@app.route('/mis-vacunas/pdf/<int:id>')
+@login_required
+def pdf_template(id):
+         # Pase la ruta absoluta del programa wkhtmltopdf.exe al objeto de configuración
+    path_wkthmltopdf = r'C:\\Program Files\\wkhtmltopdf\\bin\\wkhtmltopdf.exe'
+    config = pdfkit.configuration(wkhtmltopdf=path_wkthmltopdf)
+
+    dni = session['dni']
+    usuario = models.get_user_data(dni)
+
+    vacuna_aplicada = models.get_vacuna_aplicada(id)
+    #zona = models.get_nombre_zona(vacuna["id_zona"])
+
+    rendered = render_template('pdf.html', usuario = usuario, vacuna = vacuna_aplicada)
+
+    pdf = pdfkit.from_string(rendered, False, configuration=config)
+    
+    response = make_response(pdf)
+    response.headers['Content-Type'] = 'application/pdf'
+    response.headers['Content-Disposition'] = 'inline; filename=certificado.pdf'
+
+    return response

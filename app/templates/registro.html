@@ -10,7 +10,10 @@
                 <div class="col-md-2"></div>
                 <div class="col-md-4">
                     <button type="button" class="btn btn-secondary" id="add-vacunas-field">
-                        <i class="fa fa-plus"></i> Agregar otra vacuna
+                        <i class="fa fa-plus"></i> Agregar vacuna
+                    </button>
+                    <button type="button" class="btn btn-danger" id="remove-vacunas-field">
+                        <i class="fa fa-plus"></i> Quitar vacuna
                     </button>
                 </div>
                 <p class="pt-4" style="color: red;">* Para la vacuna de la gripe solo cargue la aplicada en el último año.</p>
@@ -23,7 +26,13 @@
     <script>
         window.onload = function() {
             let addVacunasFieldBtn = document.getElementById('add-vacunas-field');
-            document.getElementsByTagName('legend')[1].remove();  // Eliminar el label Vacunas-0
+            let removeVacunasFieldBtn = document.getElementById('remove-vacunas-field');
+            /*
+            titulo = document.getElementsByTagName('legend')[1];
+            if (titulo) {
+                titulo.remove();  // Eliminar el label Vacunas-0
+            }
+            */
             addVacunasFieldBtn.addEventListener('click', function(e){
                 e.preventDefault();
                 let todasVacunasFieldWrapper = document.getElementsByTagName('fieldset')[0];
@@ -32,13 +41,13 @@
                     alert('Solo puede seleccionar 5 vacunas');
                     return;
                 }
-                let vacunasInputIds = []
+                let vacunasInputIds = [0]
                 for(let i = 0; i < todasVacunasField.length; i++) {
                     vacunasInputIds.push(parseInt(todasVacunasField[i].name.split('-')[1]));
                 }
                 let newFieldName = `vacunas-${Math.max(...vacunasInputIds) + 1}`;
                 todasVacunasFieldWrapper.insertAdjacentHTML('beforeend',`
-                <hr>
+                <fieldset>
                 <div class="mb-3 row">
                 <label class="col-form-label col-lg-2" for="${newFieldName}-vacuna">¿Qué vacuna ya se aplicó?</label>
                 <div class="col-lg-10">
@@ -47,10 +56,35 @@
                 <div class="mb-3 row">
                 <label class="col-form-label col-lg-2" for="${newFieldName}-fecha_aplicacion">Fecha de aplicación</label>
                 <div class="col-lg-10">
-                        <input class="form-control" id="${newFieldName}-fecha_aplicacion" name="${newFieldName}-fecha_aplicacion" type="date" value="">
-                </div></div>
+                        <input class="form-control" id="${newFieldName}-fecha_aplicacion" name="${newFieldName}-fecha_aplicacion" type="date" value="" min='1899-01-01' max='2000-01-01'>
+                </div></div><hr></fieldset>
                 `);
             });
+
+            removeVacunasFieldBtn.addEventListener('click', function(e){
+                e.preventDefault();
+                let todasVacunasFieldWrapper = document.getElementsByTagName('fieldset');
+                if (todasVacunasFieldWrapper.length > 1) {
+                    todasVacunasFieldWrapper[todasVacunasFieldWrapper.length - 1].remove();
+                }
+            });
+        }
+        function validateNumber(){
+            var z = document.forms[0]["dni"].value;
+            if(!/^[0-9]+$/.test(z)){
+                //alert("Solo caracteres numéricos");
+                document.forms[0]["dni"].value = null;
+            }
+        }
+        function validateChars(event){
+            var n = document.forms[0]["nombre"].value;
+            if(!/^[a-zA-Z]+$/.test(n)){
+                document.forms[0]["nombre"].value = null;
+            }
+            var n = document.forms[0]["apellido"].value;
+            if(!/^[a-zA-Z]+$/.test(n)){
+                document.forms[0]["apellido"].value = null;
+            }
         }
     </script>    
 {% endblock %}

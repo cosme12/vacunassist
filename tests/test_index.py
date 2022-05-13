@@ -1,7 +1,13 @@
-# coding: utf-8
-
-import pytest
+import pytest, sqlite3
 from app import app as flask_app
+
+
+def debuggear_respuesta(html):
+    """
+    Funcion para debuguear el html de la respuesta
+    """
+    with open('tests/log.html', 'w') as f:
+        f.write(html)
 
 
 @pytest.fixture()
@@ -9,11 +15,22 @@ def app():
     flask_app.config.update({
         "TESTING": True,
         "SECRET_KEY": "password-super-dificil",
+        "WTF_CSRF_ENABLED": False,  # no CSRF during tests
+        "DATABASE": "tests/testdb.db"
     })
 
     # other setup can go here
     yield flask_app
     # clean up / reset resources here
+
+
+@pytest.fixture()
+def create_db(app):
+    conn = sqlite3.connect(app.config['DATABASE']) 
+    cursor = conn.cursor()
+    with open('tests/testdb.sql', 'r') as f:
+        cursor.executescript(f.read())
+    conn.close()
 
 
 @pytest.fixture()

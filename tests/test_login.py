@@ -91,7 +91,6 @@ def test_inicio_de_sesion_paciente_registrado(client, create_db):
     }, follow_redirects=True)
     assert response.status_code == 200
     html = response.get_data(as_text=True)
-    assert f'¡Bienvenido {paciente_nuevo["dni"]}!' in html
     assert 'Cerrar sesión' in html
     assert 'Mi perfil' in html
     assert 'Mis vacunas' in html

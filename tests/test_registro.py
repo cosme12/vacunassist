@@ -69,6 +69,8 @@ def test_registrar_paciente_sin_historial(client, create_db):
     assert response.status_code == 200
     #debuggear_respuesta(response.get_data(as_text=True))
     assert response.request.path == '/login' # redirected to login
+    html = response.get_data(as_text=True)
+    assert f'El registro fue exitoso. Hemos enviado un mail a juanperez@example.com con un token que deberá usar junto con su contraseña para iniciar sesión.' in html
 
     # Verifica que los datos del usuario se hayan guardado en la base de datos
     conn = sqlite3.connect(flask_app.config['DATABASE'])
@@ -85,15 +87,4 @@ def test_registrar_paciente_sin_historial(client, create_db):
     assert paciente["telefono"] == '123456789'
     assert paciente["paciente_de_riesgo"] == 1
     assert paciente["tipo"] == 1
-        
-
-    # login con nuevo usuario
-    response = client.post('/login', data={
-        'dni': '00000001',
-        'password': '12345',
-        'token': paciente['token']
-    }, follow_redirects=True)
-    assert response.status_code == 200
-    html = response.get_data(as_text=True)
-    assert '¡Bienvenido 00000001' in html
 

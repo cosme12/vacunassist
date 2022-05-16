@@ -11,3 +11,8 @@ Para ejecutar los tests, ejecute el comando:
 
 `pytest -v`
 
+
+## Generar pdfs
+
+Instalar: [https://wkhtmltopdf.org/downloads.html](https://wkhtmltopdf.org/downloads.html)
+

@@ -11,7 +11,7 @@ def get_turnos():
     conn.close()
     return turnos
 
-def get_shift_from_user(id):
+def get_appointment_from_user(id):
     """
     Devuelve todos los turnos del usuario con id=id
     """
@@ -26,7 +26,7 @@ def get_shift_from_user(id):
     return turnos
 
 
-def cancel_shift(id):
+def cancel_appointment(id):
     conn = get_db_connection()
     cursor = conn.cursor()
     cursor.execute("UPDATE turno SET estado=4 WHERE id =?;",(id,))

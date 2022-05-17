@@ -7,13 +7,22 @@ from app import app
 from app.models.usuarios import validar_inicio_sesion
 import pdfkit
 
+from datetime import datetime
+from dateutil.relativedelta import relativedelta
+
+from app.models.vacunas_aplicadas import tiene_vacuna_aplicada ##pip install python-dateutil
+
 @app.route('/')  # http://localhost:5000/
 @login_required
 def index():
-    usuario = session['dni']
-    todos_los_usuarios = models.get_usuarios()
-    return render_template('index.html', titulo="Inicio", usuario=usuario, todos_los_usuarios=todos_los_usuarios)
+    usuario = models.get_user_data(session['dni'])
+    
+    tiene_fa = models.tiene_vacuna_aplicada(usuario['id'],2)
+    tiene_covid_1= models.tiene_vacuna_aplicada(usuario['id'],4)
+    tiene_covid_2 = models.tiene_vacuna_aplicada(usuario['id'],3)
 
+
+    return render_template('index.html', titulo="Inicio", usuario=usuario, tiene_fa=tiene_fa)
 
 @app.route('/login', methods=['GET', 'POST'])  # http://localhost:5000/login
 def login():

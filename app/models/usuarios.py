@@ -119,3 +119,13 @@ def delete_user(id):
     user_data = cursor.execute("DELETE FROM usuario WHERE id =?;", (id,))
     conn.commit()
     conn.close()
+
+
+def edad_de_usuario(id_usuario):
+
+    conn= get_db_connection()
+    cursor = conn.cursor()
+    edad= cursor.execute("SELECT (julianday('now') - julianday( fecha_de_nacimiento) ) / 365 as edad,\
+        fecha_de_nacimiento FROM usuario WHERE id=?;",(id_usuario,))
+    conn.close()
+    return edad

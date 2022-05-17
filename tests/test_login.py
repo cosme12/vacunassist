@@ -111,4 +111,61 @@ def test_inicio_de_sesion_paciente_registrado_sesion(client, create_db):
         assert response.status_code == 200
         html = response.get_data(as_text=True)
         assert session["dni"] == paciente_nuevo['dni']
-    
+
+
+def test_inicio_de_sesion_paciente_registrado_sin_token(client, create_db):
+    # Crea paciente en la db
+    paciente_nuevo = crear_usuario_paciente()
+
+    # Inicia sesion
+    response = client.post('/login', data={
+        'dni': paciente_nuevo['dni'],
+        'password': '12345'
+    }, follow_redirects=True)
+    assert response.status_code == 200
+    html = response.get_data(as_text=True)
+    assert 'Cerrar sesión' not in html
+    assert 'Mi perfil' not in html
+    assert 'Mis vacunas' not in html
+    assert 'Mis turnos' not in html
+    assert 'Credenciales inválidas' in html
+
+
+def test_inicio_de_sesion_paciente_no_registrado_sin_token(client, create_db):
+    # Crea paciente en la db
+    paciente_nuevo = crear_usuario_paciente()
+
+    # Inicia sesion
+    response = client.post('/login', data={
+        'dni': '9999',
+        'password': '12345'
+    }, follow_redirects=True)
+    assert response.status_code == 200
+    html = response.get_data(as_text=True)
+    assert 'Cerrar sesión' not in html
+    assert 'Mi perfil' not in html
+    assert 'Mis vacunas' not in html
+    assert 'Mis turnos' not in html
+    assert 'El usuario no está registrado' in html
+
+
+def test_inicio_de_sesion_paciente_no_registrado_con_token(client, create_db):
+    # Crea paciente en la db
+    paciente_nuevo = crear_usuario_paciente()
+
+    # Inicia sesion
+    response = client.post('/login', data={
+        'dni': '9999',
+        'password': '12345',
+        'token': paciente_nuevo['token']
+    }, follow_redirects=True)
+    assert response.status_code == 200
+    html = response.get_data(as_text=True)
+    assert 'Cerrar sesión' not in html
+    assert 'Mi perfil' not in html
+    assert 'Mis vacunas' not in html
+    assert 'Mis turnos' not in html
+    assert 'El usuario no está registrado' in html
+
+
+

@@ -1,4 +1,4 @@
-from dataclasses import dataclass
+import datetime
 from flask import render_template, redirect,url_for, session, flash, make_response
 from app.forms import LoginForm, RegistroForm
 from app.auth import login_required
@@ -60,7 +60,8 @@ def registro():
                 return redirect(url_for('login'))
             else:
                 flash(error, 'danger')
-    return render_template('registro.html', titulo="Registro", form=form)
+    hoy = datetime.date.today()
+    return render_template('registro.html', titulo="Registro", form=form, hoy=hoy)
 
 @app.route('/perfil')  # http://localhost:5000/perfil
 @login_required

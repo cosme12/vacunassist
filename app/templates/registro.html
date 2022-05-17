@@ -27,12 +27,15 @@
         window.onload = function() {
             let addVacunasFieldBtn = document.getElementById('add-vacunas-field');
             let removeVacunasFieldBtn = document.getElementById('remove-vacunas-field');
-            /*
-            titulo = document.getElementsByTagName('legend')[1];
-            if (titulo) {
-                titulo.remove();  // Eliminar el label Vacunas-0
+            
+            
+            titulos = document.getElementsByTagName('legend');
+            cant_titulos = titulos.length;
+            // eliminar todos los titulos
+            for (let i = 1; i < cant_titulos; i++) {
+                titulos[1].remove();  // a medida que borra los titulos, los indices cambian
             }
-            */
+            
             addVacunasFieldBtn.addEventListener('click', function(e){
                 e.preventDefault();
                 let todasVacunasFieldWrapper = document.getElementsByTagName('fieldset')[0];
@@ -51,12 +54,12 @@
                 <div class="mb-3 row">
                 <label class="col-form-label col-lg-2" for="${newFieldName}-id_vacuna">¿Qué vacuna ya se aplicó?</label>
                 <div class="col-lg-10">
-                        <select class="form-control" id="${newFieldName}-id_vacuna" name="${newFieldName}-id_vacuna"><option value="4">Covid 1era dosis</option><option value="3">Covid 2da dosis</option><option value="2">Fiebre amarilla</option><option value="1">Gripe</option></select>
+                        <select class="form-control" id="${newFieldName}-id_vacuna" name="${newFieldName}-id_vacuna" required=""><option value="4">Covid 1era dosis</option><option value="3">Covid 2da dosis</option><option value="2">Fiebre amarilla</option><option value="1">Gripe</option></select>
                 </div></div>
                 <div class="mb-3 row">
                 <label class="col-form-label col-lg-2" for="${newFieldName}-fecha_aplicacion">Fecha de aplicación</label>
                 <div class="col-lg-10">
-                        <input class="form-control" id="${newFieldName}-fecha_aplicacion" name="${newFieldName}-fecha_aplicacion" type="date" value="" min='1900-01-01' max='2000-01-01'>
+                        <input class="form-control" id="${newFieldName}-fecha_aplicacion" name="${newFieldName}-fecha_aplicacion" type="date" value="" min="1900-01-01" max="{{ hoy }}" required="">
                 </div></div><hr></fieldset>
                 `);
             });

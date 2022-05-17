@@ -52,6 +52,22 @@ def guardar_usuario(form_data):
     return error
 
 
+def guardar_vacunas_aplicadas(form_data, id_usuario):
+    """
+    Guarda un nuevo ususario en la base de datos
+
+    :param form_data: datos del formulario
+    :param id_usuario: id del usuario
+    """
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    for vacuna in form_data["vacunas"]:
+        cursor.execute("INSERT INTO vacuna_aplicada (fecha, id_vacuna, id_usuario) VALUES (?, ?, ?);",
+                        (vacuna['fecha_aplicacion'], vacuna['id_vacuna'], id_usuario)).fetchall()
+    conn.commit()
+    conn.close()    
+
+
 def hashear_contrasena(contrasena):
     """
     Devuelve un hash de la contraseña

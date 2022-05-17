@@ -12,13 +12,14 @@ class LoginForm(FlaskForm):
 
 
 class HistorialVacunasForm(Form):
-    vacuna = SelectField('¿Qué vacuna ya se aplicó?', choices=[("", "-"), ("covid1", "Covid 1era dosis"), ("covid2", "Covid 2da dosis"),
-                                                                ("fiebre_amarilla", "Fiebre amarilla"), ("gripe", "Gripe")])
-    fecha_aplicacion = DateField('Fecha de aplicación', validators=[], render_kw={'min':'1900-01-01', 'max':datetime.datetime.now().strftime("%Y-%m-%d")})
+    id_vacuna = SelectField('¿Qué vacuna ya se aplicó?', choices=[("4", "Covid 1era dosis"), ("3", "Covid 2da dosis"),
+                                                                ("2", "Fiebre amarilla"), ("1", "Gripe")], 
+                                                                validators=[DataRequired('Este campo es requerido')])
+    fecha_aplicacion = DateField('Fecha de aplicación', validators=[DataRequired('Este campo es requerido')], render_kw={'min':'1900-01-01', 'max':datetime.datetime.now().strftime("%Y-%m-%d")})
 
 
 class RegistroForm(FlaskForm):
-    dni = StringField('DNI', validators=[DataRequired('Este campo es requerido'), Length(min=8, max=8, message='No es un dni válido')], render_kw={'onkeyup':'return validateNumber(event)'})
+    dni = StringField('DNI', validators=[DataRequired('Este campo es requerido'), Length(min=7, max=8, message='No es un dni válido')], render_kw={'onkeyup':'return validateNumber(event)'})
     nombre = StringField('Nombre', validators=[DataRequired('Este campo es requerido')], render_kw={'onkeyup':'return validateChars(event)'})
     apellido = StringField('Apellido', validators=[DataRequired('Este campo es requerido')], render_kw={'onkeyup':'return validateChars(event)'})
     email = EmailField('Email', validators=[DataRequired('Este campo es requerido')])

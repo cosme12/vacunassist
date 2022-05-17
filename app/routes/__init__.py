@@ -54,6 +54,8 @@ def registro():
         else:
             error = models.guardar_usuario(form.data)
             if not error:
+                id_usuario = models.get_user_data(form.dni.data)["id"]
+                models.guardar_vacunas_aplicadas(form.data, id_usuario)
                 flash(f"El registro fue exitoso. Hemos enviado un mail a {form.email.data} con un token que deberá usar junto con su contraseña para iniciar sesión.", "success")
                 return redirect(url_for('login'))
             else:

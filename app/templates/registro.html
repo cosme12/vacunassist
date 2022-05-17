@@ -51,12 +51,12 @@
                 <div class="mb-3 row">
                 <label class="col-form-label col-lg-2" for="${newFieldName}-vacuna">¿Qué vacuna ya se aplicó?</label>
                 <div class="col-lg-10">
-                        <select class="form-control" id="${newFieldName}-vacuna" name="${newFieldName}-vacuna"><option value="">-</option><option value="covid1">Covid 1era dosis</option><option value="covid2">Covid 2da dosis</option><option value="fiebre_amarilla">Fiebre amarilla</option><option value="gripe">Gripe</option></select>
+                        <select class="form-control" id="${newFieldName}-vacuna" name="${newFieldName}-vacuna"><option value="4">Covid 1era dosis</option><option value="3">Covid 2da dosis</option><option value="2">Fiebre amarilla</option><option value="1">Gripe</option></select>
                 </div></div>
                 <div class="mb-3 row">
                 <label class="col-form-label col-lg-2" for="${newFieldName}-fecha_aplicacion">Fecha de aplicación</label>
                 <div class="col-lg-10">
-                        <input class="form-control" id="${newFieldName}-fecha_aplicacion" name="${newFieldName}-fecha_aplicacion" type="date" value="" min='1899-01-01' max='2000-01-01'>
+                        <input class="form-control" id="${newFieldName}-fecha_aplicacion" name="${newFieldName}-fecha_aplicacion" type="date" value="" min='1900-01-01' max='2000-01-01'>
                 </div></div><hr></fieldset>
                 `);
             });

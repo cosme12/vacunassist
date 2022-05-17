@@ -25,7 +25,7 @@ INSERT INTO vacuna (id, enfermedad, descripcion) VALUES (4, 'covid1', NULL);
 
 -- Table: vacuna_aplicada
 DROP TABLE IF EXISTS vacuna_aplicada;
-CREATE TABLE vacuna_aplicada (id INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE NOT NULL, fecha DATETIME NOT NULL, lote TEXT NOT NULL, laboratorio TEXT NOT NULL, id_vacuna INTEGER REFERENCES vacuna (id) NOT NULL, id_usuario INTEGER REFERENCES usuario (id), id_zona INTEGER REFERENCES zona (id) ON DELETE SET NULL);
+CREATE TABLE vacuna_aplicada (id INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE NOT NULL, fecha DATETIME NOT NULL, lote TEXT, laboratorio TEXT, id_vacuna INTEGER REFERENCES vacuna (id) NOT NULL, id_usuario INTEGER REFERENCES usuario (id), id_zona INTEGER REFERENCES zona (id) ON DELETE SET NULL);
 
 -- Table: zona
 DROP TABLE IF EXISTS zona;

@@ -12,3 +12,15 @@ def get_vacunas_aplicadas(dni):
                             WHERE usuario.dni=?;", (dni,)).fetchall()
     conn.close
     return vacunas
+
+
+def tiene_vacuna_aplicada(id_usuario, id_vacuna):
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    vacuna_aplicada = cursor.execute("SELECT * FROM vacuna_aplicada \
+                                    WHERE id_usuario=? and id_vacuna=?;",(id_usuario,id_vacuna,)).fetchone()
+    conn.close
+    if vacuna_aplicada is None:
+        return False
+    else:
+        return True

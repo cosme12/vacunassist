@@ -1,10 +1,10 @@
 import datetime
 from flask import render_template, redirect,url_for, session, flash, make_response
-from app.forms import LoginForm, RegistroForm
+from app.forms import CambiarPasswordForm, LoginForm, RegistroForm
 from app.auth import login_required
 from app import models
 from app import app
-from app.models.usuarios import validar_inicio_sesion
+from app.models.usuarios import validar_contrasena, validar_inicio_sesion
 import pdfkit
 
 from app.models.vacunas_aplicadas import tiene_vacuna_aplicada ##pip install python-dateutil
@@ -143,3 +143,18 @@ def pdf_template(id):
     response.headers['Content-Disposition'] = 'inline; filename=certificado.pdf'
 
     return response
+
+@app.route('/cambiar-password', methods=['GET', 'POST'])
+@login_required
+def cambiar_password():
+    form = CambiarPasswordForm()
+    if form.validate_on_submit():
+        usuario = models.get_user_data(session['dni'])
+        validar_password = validar_contrasena(form.actual_password.data, usuario["password"])      
+        if validar_password:
+            #cambiar password
+            flash(f"La contraseña fue cambiada con éxito.","success")
+            return redirect(url_for('perfil'))
+        else:
+            flash(f"Contraseña incorrecta.","danger")
+    return render_template('cambiar_password.html', titulo="cambiar-password", form=form)    

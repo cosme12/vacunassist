@@ -60,14 +60,27 @@ def registro():
         if form.dni.data == "00000000":
             flash("No pudo validarse su identidad.", 'danger')
         else:
-            error = models.guardar_usuario(form.data)
-            if not error:
-                id_usuario = models.get_user_data(form.dni.data)["id"]
-                models.guardar_vacunas_aplicadas(form.data, id_usuario)
-                flash(f"El registro fue exitoso. Hemos enviado un mail a {form.email.data} con un token que deberá usar junto con su contraseña para iniciar sesión.", "success")
-                return redirect(url_for('login'))
+            # Verificar que las vacunas cargardas sean correctas
+            vacunas_seleccionadas = []
+            vacunas_repetidas = False
+            for vacuna in form.vacunas.data:
+                if vacuna["id_vacuna"] in vacunas_seleccionadas:
+                    vacunas_repetidas = True
+                    break
+                vacunas_seleccionadas.append(vacuna["id_vacuna"])
+            if "3" in vacunas_seleccionadas and "4" not in vacunas_seleccionadas:  # Falta primera dosis
+                flash("Falta seleccionar la primera dosis de la vacuna Covid-19.", 'danger')
+            elif vacunas_repetidas:
+                flash("No pueden seleccionar más de una vez la misma vacuna.", 'danger')
             else:
-                flash(error, 'danger')
+                error = models.guardar_usuario(form.data)
+                if not error:
+                    id_usuario = models.get_user_data(form.dni.data)["id"]
+                    models.guardar_vacunas_aplicadas(form.data, id_usuario)
+                    flash(f"El registro fue exitoso. Hemos enviado un mail a {form.email.data} con un token que deberá usar junto con su contraseña para iniciar sesión.", "success")
+                    return redirect(url_for('login'))
+                else:
+                    flash(error, 'danger')
     hoy = datetime.date.today()
     return render_template('registro.html', titulo="Registro", form=form, hoy=hoy)
 

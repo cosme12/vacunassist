@@ -32,7 +32,7 @@ class RegistroForm(FlaskForm):
     enviar = SubmitField('Registrarse', render_kw={'onkeyup':'return validateChars(event)'})
 
 class CambiarPasswordForm(FlaskForm):
-    actual_password = PasswordField('Constraseña actual', validators=[DataRequired('Este campo es requerido')])
+    actual_password = PasswordField('Contraseña actual', validators=[DataRequired('Este campo es requerido')])
     nueva_password = PasswordField('Contraseña nueva', [InputRequired(), EqualTo('confirmar', message='Las contraseñas deben coincidir')])
     confirmar  = PasswordField('Repetir contraseña')
     enviar = SubmitField('Cambiar contraseña', render_kw={'onkeyup':'return validateChars(event)'})

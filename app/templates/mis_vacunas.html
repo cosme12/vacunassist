@@ -12,10 +12,16 @@
                     </button>
                     </h2>
                     <div id="flush-collapse{{loop.index}}" class="accordion-collapse collapse" aria-labelledby="flush-heading{{loop.index}}" data-bs-parent="#accordionFlushExample">
-                        <div class="accordion-body"><b> Fecha de aplicación:</b> {{ vacuna["fecha"] }} <br>
-                             <b>Laboratorio:</b>   {{ vacuna["laboratorio"] }} <br>
-                             <b>Lote:</b>  {{ vacuna["lote"] }} <br><br>
-                             <button type="button" class="btn btn-outline-secondary"><a href="{{ url_for('pdf_template', id=vacuna.id) }}" target="_blank">Certificado</a>  (Icono PDF)</button> 
+                        <div class="accordion-body">
+                            <b> Fecha de aplicación:</b> {{ vacuna["fecha"] }} <br>
+                            {% if vacuna["laboratorio"] == None %}
+                                Sin datos<br>
+                                <b>Vacuna administrada por fuera del vacunatorio.</b>
+                            {% else %}
+                                <b>Laboratorio:</b>   {{ vacuna["laboratorio"] }} <br>
+                                <b>Lote:</b>  {{ vacuna["lote"] }} <br><br>
+                                <button type="button" class="btn btn-outline-secondary"><a href="{{ url_for('pdf_template', id=vacuna.id) }}" target="_blank">Certificado (ICONO PDF?)</a></button>
+                            {% endif %}
                         </div> 
                     </div>
                 </div>

@@ -6,7 +6,7 @@
         <hr>
         <p><b>Dni: </b> {{ user_data['dni'] }} </p>
         <p><b>E-mail:</b>  {{ user_data['email'] }}</p>
-        <p><b>Fecha de nacimiento:</b> Fecha de nacimiento: {{ user_data['fecha_de_nacimiento']}}</p>
+        <p><b>Fecha de nacimiento:</b> {{ user_data['fecha_de_nacimiento']}}</p>
         <a href="{{ url_for('mis_turnos') }}">Mis turnos</a>
         <br>
         <a href="{{ url_for('mis_vacunas') }}">Mis vacunas</a>

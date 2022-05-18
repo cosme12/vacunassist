@@ -20,7 +20,8 @@
                             {% else %}
                                 <b>Laboratorio:</b>   {{ vacuna["laboratorio"] }} <br>
                                 <b>Lote:</b>  {{ vacuna["lote"] }} <br><br>
-                                <button type="button" class="btn btn-outline-secondary"><a href="{{ url_for('pdf_template', id=vacuna.id) }}" target="_blank">Certificado (ICONO PDF?)</a></button>
+                                <a href="{{ url_for('pdf_template', id=vacuna.id) }}" target="_blank"><button type="button" class="btn btn-outline-secondary">Generar certificado <i class="bi bi-filetype-pdf"></i></button></a>
+                                
                             {% endif %}
                         </div> 
                     </div>

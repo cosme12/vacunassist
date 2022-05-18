@@ -130,3 +130,11 @@ def edad_de_usuario(id_usuario):
     
     conn.close()
     return edad
+
+def cambiar_password(id, password_nueva):
+    hash_password = hashear_contrasena(password_nueva)
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    cursor.execute("UPDATE usuario SET password=? WHERE dni=?;", (hash_password, id,))
+    conn.commit()
+    conn.close()

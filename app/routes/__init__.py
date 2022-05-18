@@ -153,8 +153,8 @@ def cambiar_password():
         validar_password = validar_contrasena(form.actual_password.data, usuario["password"])      
         if validar_password:
             #cambiar password
+            models.cambiar_password(session['dni'], form.nueva_password.data)                
             flash(f"La contraseña fue cambiada con éxito.","success")
-            return redirect(url_for('perfil'))
         else:
-            flash(f"Contraseña incorrecta.","danger")
+            flash(f"Contraseña actual incorrecta.","danger")
     return render_template('cambiar_password.html', titulo="cambiar-password", form=form)    

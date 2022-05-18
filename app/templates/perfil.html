@@ -15,7 +15,7 @@
         <br><br>
         <!--Aca esta el modal sin boton para el eliminar cuenta -->
         <a href="" data-bs-toggle="modal" data-bs-target="#staticBackdrop{{user_data['id']}}">
-            <button type="button" class="btn btn-outline-secondary btn-sm"> <i class="bi bi-trash3-fill"></i>  ELIMINAR CUENTA</button></a>
+            <button type="button" class="btn btn btn-outline-danger btn-sm"> <i class="bi bi-trash3-fill"></i>  ELIMINAR CUENTA</button></a>
         </a>
         
         
@@ -32,7 +32,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
-                    <a href="/eliminar_cuenta/{{user_data['id']}}" class="btn btn-primary">Si</a>
+                    <a href="/eliminar_cuenta/{{user_data['id']}}" class="btn btn-success">Si</a>
                 </div>
             </div>
             </div>

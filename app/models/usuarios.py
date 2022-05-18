@@ -2,6 +2,7 @@ import hashlib
 import random
 import sqlite3
 import string
+from datetime import datetime
 from app.models import get_db_connection
 
 
@@ -43,7 +44,7 @@ def guardar_usuario(form_data):
         cursor.execute("INSERT INTO usuario (nombre, apellido, dni, email, password, fecha_de_nacimiento, \
                                telefono, paciente_de_riesgo, tipo, token) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);",
                               (form_data['nombre'], form_data['apellido'], form_data['dni'], form_data['email'],
-                                hashear_contrasena(form_data['password']), form_data['fecha_de_nacimiento'], form_data['telefono'],
+                                hashear_contrasena(form_data['password']), form_data['fecha_de_nacimiento'].strftime('%d/%m/%Y'), form_data['telefono'],
                                 form_data['paciente_de_riesgo'], 1, token)).fetchall()
         conn.commit()
     except sqlite3.IntegrityError:
@@ -63,7 +64,7 @@ def guardar_vacunas_aplicadas(form_data, id_usuario):
     cursor = conn.cursor()
     for vacuna in form_data["vacunas"]:
         cursor.execute("INSERT INTO vacuna_aplicada (fecha, id_vacuna, id_usuario) VALUES (?, ?, ?);",
-                        (vacuna['fecha_aplicacion'], vacuna['id_vacuna'], id_usuario)).fetchall()
+                        (vacuna['fecha_aplicacion'].strftime('%d/%m/%Y'), vacuna['id_vacuna'], id_usuario)).fetchall()
     conn.commit()
     conn.close()    
 

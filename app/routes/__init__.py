@@ -96,7 +96,7 @@ def perfil():
 def mis_turnos():
     usuario = session['dni']
     user_data = models.get_user_data(usuario)
-    mis_turnos = models.get_appointment_from_user(user_data['id']) 
+    mis_turnos = models.get_appointment_from_user(user_data['id'])
     return render_template ('mis_turnos.html', titulo='Mis turnos', usuario=usuario, mis_turnos=mis_turnos)
 
 @app.route('/mis-vacunas') # http://localhost:5000/mis-vacunas

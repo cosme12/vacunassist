@@ -83,7 +83,7 @@ def test_registrar_paciente_sin_historial(client, create_db):
     assert paciente["apellido"] == 'Perez'
     assert paciente["password"] == '5994471abb01112afcc18159f6cc74b4f511b99806da59b3caf5a9c173cacfc5'
     assert paciente["email"] == 'juanperez@example.com'
-    assert paciente["fecha_de_nacimiento"] == '2000-01-01'
+    assert paciente["fecha_de_nacimiento"] == '01/01/2000'
     assert paciente["telefono"] == '123456789'
     assert paciente["paciente_de_riesgo"] == 1
     assert paciente["tipo"] == 1
@@ -130,7 +130,7 @@ def test_registrar_paciente_con_historial(client, create_db):
     assert paciente["apellido"] == 'Perez'
     assert paciente["password"] == '5994471abb01112afcc18159f6cc74b4f511b99806da59b3caf5a9c173cacfc5'
     assert paciente["email"] == 'juanperez@example.com'
-    assert paciente["fecha_de_nacimiento"] == '2000-01-01'
+    assert paciente["fecha_de_nacimiento"] == '01/01/2000'
     assert paciente["telefono"] == '123456789'
     assert paciente["paciente_de_riesgo"] == 1
     assert paciente["tipo"] == 1
@@ -144,11 +144,10 @@ def test_registrar_paciente_con_historial(client, create_db):
     assert len(vacunas_aplicadas) == 2
     assert vacunas_aplicadas[0]["id_usuario"] == 1
     assert vacunas_aplicadas[0]["id_vacuna"] == 1
-    assert vacunas_aplicadas[0]["fecha"] == '2020-01-01'
+    assert vacunas_aplicadas[0]["fecha"] == '01/01/2020'
     assert vacunas_aplicadas[1]["id_usuario"] == 1
     assert vacunas_aplicadas[1]["id_vacuna"] == 2
-    assert vacunas_aplicadas[1]["fecha"] == '2020-01-02'
+    assert vacunas_aplicadas[1]["fecha"] == '02/01/2020'
     
-
 
 

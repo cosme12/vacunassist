@@ -5,6 +5,7 @@
 <div class="row">
     <h1>Bienvenido {{usuario["nombre"]}}</h1>
     <hr>
+    <!-- TARJETA DE FIEBRE AMARILLA -->
     <div class="col-sm-4">
         <div class="card" style="width: 18rem;">
             <img src=" " class="card-img-top" alt="...">
@@ -19,14 +20,20 @@
                                     <br>
                                     <br>
                                     <br></p>
-                
-                <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                    <button class="btn btn-primary" type="button">Sacar turno</button>
-                </div>
+                {% if tiene_fa or edad > 60 %}
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                        <button href="" class="btn btn-primary" type="button" disabled>Sacar turno</button>
+                    </div>
+                {% else %}
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                        <button href="" class="btn btn-primary" type="button">Sacar turno</button>
+                    </div>
+                {% endif %}
             </div>
         </div>
         <p></p>
     </div>
+    <!-- TARJETA DE COVID -->
     <div class="col-sm-4">
         <div class="card" style="width: 18rem;">
             <img src=" " class="card-img-top" alt="...">
@@ -38,12 +45,23 @@
                                     Por cualquier motivo que no se pueda asistir al turno de la segunda dosis el turno quedará 
                                     a cargo del paciente</p>
                 
-                <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                    <button class="btn btn-primary" type="button">Sacar turno</button>
-                </div>
+                {% if tiene_c2  %} <!-- boton desabilitado-->
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                        <button href="" class="btn btn-primary" type="button" disabled>Sacar turno</button>
+                    </div>
+                {% elif tiene_c1 %}  <!-- Mandar id de vacuna de covid 2 en la ruta-->
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                        <button href="" class="btn btn-primary" type="button">Sacar turno</button>
+                    </div>
+                {% else %} <!-- Mandar id de vacuna covid 1 en la ruta -->
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                        <button href="" class="btn btn-primary" type="button">Sacar turno</button>
+                    </div>
+                {% endif %}
             </div>
         </div>
     </div>
+    <!-- TARJETA DE GRIPE -->
     <div class="col-sm-4">
         <div class="card" style="width: 18rem;">
             <img src=" " class="card-img-top" alt="...">
@@ -59,9 +77,15 @@
                                     <br>
                  </p>
 
-                <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                    <button class="btn btn-primary" type="button">Sacar turno</button>
-                </div>
+                 {% if tiene_gripe %}
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                        <button href="" class="btn btn-primary" type="button" disabled>Sacar turno</button>
+                    </div>
+                {% else %}
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                        <button href="" class="btn btn-primary" type="button">Sacar turno</button>
+                    </div>
+                {% endif %}
             </div>
         </div>
     </div>

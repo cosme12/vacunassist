@@ -24,3 +24,16 @@ def tiene_vacuna_aplicada(id_usuario, id_vacuna):
         return False
     else:
         return True
+
+def tiene_vacuna_gripe(id_usuario):
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    fecha_gripe = cursor.execute("SELECT (julianday('now') - julianday(fecha) )/ 30 as aplicacion, \
+                                fecha FROM vacuna_aplicada WHERE id_vacuna=1 and id_usuario=?;",
+                                (id_usuario,)).fetchone()
+    conn.close()
+    
+    if int(fecha_gripe['aplicacion']) > 12:
+        return False
+    else:
+        return True

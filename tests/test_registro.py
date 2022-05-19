@@ -150,4 +150,74 @@ def test_registrar_paciente_con_historial(client, create_db):
     assert vacunas_aplicadas[1]["fecha"] == '02/01/2020'
     
 
+def test_registrar_paciente_con_historial_vacunas_repetidas(client, create_db):
+    response = client.post('/registro', data={
+        'dni': '00000001',
+        'nombre': 'Juan',
+        'apellido': 'Perez',
+        'email': 'juanperez@example.com',
+        'password': '12345',
+        'confirmar': '12345',
+        'fecha_de_nacimiento': '2000-01-01',
+        'telefono': '123456789',
+        'paciente_de_riesgo': True,
+        'vacunas-0-id_vacuna': '1',
+        'vacunas-0-fecha_aplicacion': '2020-01-01',
+        'vacunas-1-id_vacuna': '1',
+        'vacunas-1-fecha_aplicacion': '2020-01-02'
+    }, follow_redirects=True)
+    assert response.status_code == 200
+    html = response.get_data(as_text=True)
+    assert f'No pueden seleccionar más de una vez la misma vacuna.' in html
+
+    # Verifica que los datos del usuario NO se hayan guardado en la base de datos
+    conn = sqlite3.connect(flask_app.config['DATABASE'])
+    conn.row_factory = sqlite3.Row 
+    cursor = conn.cursor()
+    paciente = cursor.execute("SELECT * FROM usuario WHERE dni = '00000001'").fetchone()
+    conn.close()
+    assert paciente is None
+
+    # Verifica que NO se hayan cargado las vacunas aplicadas
+    conn = sqlite3.connect(flask_app.config['DATABASE'])
+    conn.row_factory = sqlite3.Row 
+    cursor = conn.cursor()
+    vacunas_aplicadas = cursor.execute("SELECT * FROM vacuna_aplicada WHERE id_usuario = 1").fetchall()
+    conn.close()
+    assert len(vacunas_aplicadas) == 0
+
+
+def test_registrar_paciente_con_historial_sin_covid_primera_dosis(client, create_db):
+    response = client.post('/registro', data={
+        'dni': '00000001',
+        'nombre': 'Juan',
+        'apellido': 'Perez',
+        'email': 'juanperez@example.com',
+        'password': '12345',
+        'confirmar': '12345',
+        'fecha_de_nacimiento': '2000-01-01',
+        'telefono': '123456789',
+        'paciente_de_riesgo': True,
+        'vacunas-0-id_vacuna': '3',
+        'vacunas-0-fecha_aplicacion': '2020-01-01'
+    }, follow_redirects=True)
+    assert response.status_code == 200
+    html = response.get_data(as_text=True)
+    assert f'Falta seleccionar la primera dosis de la vacuna Covid-19.' in html
+
+    # Verifica que los datos del usuario NO se hayan guardado en la base de datos
+    conn = sqlite3.connect(flask_app.config['DATABASE'])
+    conn.row_factory = sqlite3.Row 
+    cursor = conn.cursor()
+    paciente = cursor.execute("SELECT * FROM usuario WHERE dni = '00000001'").fetchone()
+    conn.close()
+    assert paciente is None
+
+    # Verifica que NO se hayan cargado las vacunas aplicadas
+    conn = sqlite3.connect(flask_app.config['DATABASE'])
+    conn.row_factory = sqlite3.Row 
+    cursor = conn.cursor()
+    vacunas_aplicadas = cursor.execute("SELECT * FROM vacuna_aplicada WHERE id_usuario = 1").fetchall()
+    conn.close()
+    assert len(vacunas_aplicadas) == 0
 

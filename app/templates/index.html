@@ -6,7 +6,7 @@
     <h1>Bienvenido {{usuario["nombre"]}}</h1>
     <hr>
     <!-- TARJETA DE FIEBRE AMARILLA -->
-    <div class="col-sm-4">
+    <div class="col-lg-4">
         <div class="card" style="width: 18rem;">
             <img src="{{ url_for('static', filename='/images/fiebre-amarilla.png') }} " class="card-img-top" alt="...">
             <div class="card-body">
@@ -21,11 +21,11 @@
                                     <br></p>
                 {% if tiene_fa or edad > 60 %}
                     <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                        <button href="" class="btn btn-primary" type="button" disabled>Sacar turno</button>
+                        <button href="" class="btn btn-success" type="button" disabled>Sacar turno</button>
                     </div>
                 {% else %}
                     <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                        <button href="" class="btn btn-primary" type="button">Sacar turno</button>
+                        <button href="" class="btn btn-success" type="button">Sacar turno</button>
                     </div>
                 {% endif %}
             </div>
@@ -33,7 +33,7 @@
         <p></p>
     </div>
     <!-- TARJETA DE COVID -->
-    <div class="col-sm-4">
+    <div class="col-lg-4">
         <div class="card" style="width: 18rem;">
             <img src="{{ url_for('static', filename='/images/covid.png') }} " class="card-img-top" alt="...">
             <div class="card-body">
@@ -46,25 +46,25 @@
                 
                 {% if tiene_c2  %} <!-- boton desabilitado-->
                     <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                        <button href="" class="btn btn-primary" type="button" disabled>Sacar turno</button>
+                        <button href="" class="btn btn-success" type="button" disabled>Sacar turno</button>
                     </div>
                 {% elif tiene_c1 %}  <!-- Mandar id de vacuna de covid 2 en la ruta-->
                     <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                        <button href="" class="btn btn-primary" type="button">Sacar turno</button>
+                        <button href="" class="btn btn-success" type="button">Sacar turno</button>
                     </div>
                 {% else %} <!-- Mandar id de vacuna covid 1 en la ruta -->
                     <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                        <button href="" class="btn btn-primary" type="button">Sacar turno</button>
+                        <button href="" class="btn btn-success" type="button">Sacar turno</button>
                     </div>
                 {% endif %}
             </div>
         </div>
     </div>
     <!-- TARJETA DE GRIPE -->
-    <div class="col-sm-4">
+    <div class="col-lg-4">
         <div class="card" style="width: 18rem;">
             <img src="{{ url_for('static', filename='/images/influenza.png') }} " class="card-img-top" alt="...">
-            <div class="card-body" class="btn btn-primary">
+            <div class="card-body" class="btn btn-success">
                 <h5 class="card-title">Gripe</h5>
                 <p class="card-text">La vacunas para la gripe consiste en 1 dosis por año y es obligatoria para mayores de 60. <br>
                                     La reserva del turno es siempre manual.
@@ -77,11 +77,11 @@
 
                  {% if tiene_gripe %}
                     <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                        <button href="" class="btn btn-primary" type="button" disabled>Sacar turno</button>
+                        <button href="" class="btn btn-success" type="button" disabled>Sacar turno</button>
                     </div>
                 {% else %}
                     <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                        <button href="" class="btn btn-primary" type="button">Sacar turno</button>
+                        <button href="" class="btn btn-success" type="button">Sacar turno</button>
                     </div>
                 {% endif %}
             </div>

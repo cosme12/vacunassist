@@ -32,8 +32,10 @@ def tiene_vacuna_gripe(id_usuario):
                                 fecha FROM vacuna_aplicada WHERE id_vacuna=1 and id_usuario=?;",
                                 (id_usuario,)).fetchone()
     conn.close()
-    
-    if fecha_gripe['aplicacion'] > 12:
+    if fecha_gripe is None:
         return False
     else:
-        return True
+        if fecha_gripe['aplicacion'] > 12:
+            return False
+        else:
+            return True

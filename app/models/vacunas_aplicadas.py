@@ -33,7 +33,7 @@ def tiene_vacuna_gripe(id_usuario):
                                 (id_usuario,)).fetchone()
     conn.close()
     
-    if int(fecha_gripe['aplicacion']) > 12:
+    if fecha_gripe['aplicacion'] > 12:
         return False
     else:
         return True

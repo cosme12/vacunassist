@@ -1,6 +1,6 @@
 import datetime
 from flask import render_template, redirect,url_for, session, flash, make_response
-from app.forms import CambiarPasswordForm, LoginForm, RegistroForm
+from app.forms import CambiarPasswordForm, ForgotPasswordForm, LoginForm, RegistroForm
 from app.auth import login_required
 from app import models
 from app import app
@@ -163,7 +163,7 @@ def pdf_template(id):
 
     return response
 
-@app.route('/cambiar-password', methods=['GET', 'POST'])
+@app.route('/cambiar-password', methods=['GET', 'POST']) # http://localhost:5000/cambiar-password
 @login_required
 def cambiar_password():
     form = CambiarPasswordForm()
@@ -176,4 +176,21 @@ def cambiar_password():
             flash(f"La contraseña fue cambiada con éxito.","success")
         else:
             flash(f"Contraseña actual incorrecta.","danger")
-    return render_template('cambiar_password.html', titulo="cambiar-password", form=form)    
+    return render_template('cambiar_password.html', titulo="Cambiar contraseña", form=form)    
+
+@app.route('/forgot-password', methods=['GET', 'POST']) # http://localhost:5000/forgot-password
+def forgot_password():
+    forgot_password_form = ForgotPasswordForm()
+    if forgot_password_form.validate_on_submit():
+        usuario = models.get_user_data(forgot_password_form.dni.data)
+        if usuario:
+            email = usuario["email"]
+            flash(f"Hemos enviado un mail a {email} para recuperar su contraseña.", "success")
+            '''
+            if app.config['EMAIL_ENABLED']:
+                enviar_email(email, "Vacunassist - Recuperación de contraseña", f"Para recuperar su contraseña ingrese al siguiente link.\nLINK\nSi usted no solicitó un cambio de contraseña, desestime este mensaje.")
+                return redirect(url_for('login'))
+            ''' 
+        else:
+            flash(f"El usuario con DNI {forgot_password_form.dni.data} no se encuentra registrado.","danger")
+    return render_template('forgot_password.html', titulo="Contraseña olvidada", form=forgot_password_form)

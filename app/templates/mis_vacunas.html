@@ -1,9 +1,9 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <h1>{{ titulo }}</h1>
+    <h1 class="pb-4">{{ titulo }}</h1>
     {% if vacunas %}
-        <div class="accordion accordion-flush" id="accordionFlushExample" >
+        <div class="accordion accordion-flush card" id="accordionFlushExample" >
             {% for vacuna in vacunas %}
                 <div class="accordion-item">
                     <h2 class="accordion-header" id="flush-heading{{loop.index}}">

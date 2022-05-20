@@ -2,8 +2,8 @@
 
 {% block content %}
     {% if usuario %}
-        <h1>Mis turnos</h1>
-        <hr>
+        <h1 class="pb-4">Mis turnos</h1>
+        
         {% if mis_turnos%} 
             <div class="row">
                 {%for turno in mis_turnos%}

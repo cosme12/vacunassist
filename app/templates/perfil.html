@@ -2,22 +2,23 @@
 
 {% block content %}
     {% if user_data['tipo'] == 1 %}
-        <h1>{{ user_data['nombre'] | capitalize }} {{ user_data['apellido'] | capitalize }}</h1>
-        <hr>
+        <h1 class="pb-4">{{ user_data['nombre'] | capitalize }} {{ user_data['apellido'] | capitalize }}</h1>
+
+        <div class="card p-4">
         <p><b>Dni: </b> {{ user_data['dni'] }} </p>
         <p><b>E-mail:</b>  {{ user_data['email'] }}</p>
         <p><b>Fecha de nacimiento:</b> {{ user_data['fecha_de_nacimiento']}}</p>
-        <a href="{{ url_for('mis_turnos') }}"><button type="button" class="btn btn-outline-secondary btn-sm"><i class="bi bi-calendar-date-fill" style="font-size: 13px;"></i>  MIS TURNOS</button></a>
+        <a href="{{ url_for('mis_turnos') }}" class="pb-2"><button type="button" class="btn btn-outline-secondary btn-sm"><i class="bi bi-calendar-date-fill" style="font-size: 13px;"></i>  MIS TURNOS</button></a>
         <br><br>
-        <a href="{{ url_for('mis_vacunas') }}"><button type="button" class="btn btn-outline-secondary btn-sm"><i class="bi bi-clipboard2-pulse-fill" style="font-size: 13px;"></i>  MIS VACUNAS</button></a>
+        <a href="{{ url_for('mis_vacunas') }}" class="pb-2"><button type="button" class="btn btn-outline-secondary btn-sm"><i class="bi bi-clipboard2-pulse-fill" style="font-size: 13px;"></i>  MIS VACUNAS</button></a>
         <br><br>
-        <a href="{{ url_for('cambiar_password') }}"><button type="button" class="btn btn-outline-secondary btn-sm"><i class="bi bi-key-fill"></i> CAMBIAR CONTRASEÑA</button></a>
+        <a href="{{ url_for('cambiar_password') }}" class="pb-2"><button type="button" class="btn btn-outline-secondary btn-sm"><i class="bi bi-key-fill"></i> CAMBIAR CONTRASEÑA</button></a>
         <br><br>
         <!--Aca esta el modal sin boton para el eliminar cuenta -->
-        <a href="" data-bs-toggle="modal" data-bs-target="#staticBackdrop{{user_data['id']}}">
+        <a href="" data-bs-toggle="modal" data-bs-target="#staticBackdrop{{user_data['id']}}" class="pb-2">
             <button type="button" class="btn btn btn-outline-danger btn-sm"> <i class="bi bi-trash3-fill"></i>  ELIMINAR CUENTA</button></a>
         </a>
-        
+    </div>
         
         <!-- Modal -->
         <div class="modal fade" id="staticBackdrop{{user_data['id']}}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">

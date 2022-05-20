@@ -9,6 +9,7 @@ class Config():
     SECRET_KEY = 'password-super-dificil'
     WTF_CSRF_ENABLED = False,
     BOOTSTRAP_BTN_STYLE = 'success'
+    EMAIL_ENABLED = False
 
 
 app = Flask(__name__)

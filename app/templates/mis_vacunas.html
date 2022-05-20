@@ -5,13 +5,13 @@
     {% if vacunas %}
         <div class="accordion accordion-flush card" id="accordionFlushExample" >
             {% for vacuna in vacunas %}
-                <div class="accordion-item">
+                <div class="accordion-item ">
                     <h2 class="accordion-header" id="flush-heading{{loop.index}}">
-                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapse{{loop.index}}" aria-expanded="false" aria-controls="flush-collapse{{loop.index}}">
+                    <button class="accordion-button collapsed btn-secondary" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapse{{loop.index}}" aria-expanded="false" aria-controls="flush-collapse{{loop.index}}">
                     <b>{{ vacuna["enfermedad"] | upper}}</b>
                     </button>
                     </h2>
-                    <div id="flush-collapse{{loop.index}}" class="accordion-collapse collapse" aria-labelledby="flush-heading{{loop.index}}" data-bs-parent="#accordionFlushExample">
+                    <div id="flush-collapse{{loop.index}}" class="accordion-collapse collapse " aria-labelledby="flush-heading{{loop.index}}" data-bs-parent="#accordionFlushExample">
                         <div class="accordion-body">
                             <b> Fecha de aplicación:</b> {{ vacuna["fecha"] }} <br>
                             {% if vacuna["laboratorio"] == None %}

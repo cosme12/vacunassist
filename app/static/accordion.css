@@ -1,0 +1,13 @@
+.accordion-button:not(.collapsed){
+    color: inherit;
+    background: grey;
+    color: black;
+}
+
+.accordion-button:not(.collapsed)::after{
+    filter: brightness(0%);
+}
+
+.accordion-button:focus{
+    box-shadow: inherit;
+}

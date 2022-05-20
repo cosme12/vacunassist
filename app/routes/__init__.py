@@ -4,11 +4,13 @@ from app.forms import CambiarPasswordForm, LoginForm, RegistroForm
 from app.auth import login_required
 from app import models
 from app import app
+from app.handlers.email_enviar import enviar_email
 from app.models.usuarios import validar_contrasena, validar_inicio_sesion
+from app.handlers import *
 import pdfkit
 
 from app.models.vacunas_aplicadas import tiene_vacuna_aplicada ##pip install python-dateutil
-import math
+
 
 @app.route('/')  # http://localhost:5000/
 @login_required
@@ -75,11 +77,13 @@ def registro():
             elif vacunas_repetidas:
                 flash("No pueden seleccionar más de una vez la misma vacuna.", 'danger')
             else:
-                error = models.guardar_usuario(form.data)
+                error, token = models.guardar_usuario(form.data)
                 if not error:
                     id_usuario = models.get_user_data(form.dni.data)["id"]
                     models.guardar_vacunas_aplicadas(form.data, id_usuario)
                     flash(f"El registro fue exitoso. Hemos enviado un mail a {form.email.data} con un token que deberá usar junto con su contraseña para iniciar sesión.", "success")
+                    if app.config['EMAIL_ENABLED']:
+                        enviar_email(form.email.data, "Vacunassist - Registro exitoso", f"Hemos registrado su usuario exitosamente.\n\nSu token de seguridad es: {token}")
                     return redirect(url_for('login'))
                 else:
                     flash(error, 'danger')

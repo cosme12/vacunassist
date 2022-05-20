@@ -50,7 +50,7 @@ def guardar_usuario(form_data):
     except sqlite3.IntegrityError:
         error = "El usuario ya existe."
     conn.close()
-    return error
+    return error, token
 
 
 def guardar_vacunas_aplicadas(form_data, id_usuario):

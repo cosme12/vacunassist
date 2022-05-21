@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm, Form
-from wtforms import StringField, PasswordField, BooleanField, SubmitField, EmailField, DateField, SelectField, FieldList, FormField
+from wtforms import StringField, PasswordField, BooleanField, SubmitField, EmailField, DateField, SelectField, FieldList, FormField, DateTimeField, TimeField
 from wtforms.validators import DataRequired, InputRequired, EqualTo, Length, NumberRange, Regexp
 import datetime
 
@@ -45,3 +45,13 @@ class ResetPasswordForm(FlaskForm):
     new_password = PasswordField('Contraseña', validators=[InputRequired(), EqualTo('confirmar', message='Las contraseñas deben coincidir')])
     confirmar = PasswordField('Repetir contraseña')
     enviar = SubmitField('Recuperar contraseña',render_kw={'onkeyup':'return validateChars(event)'})
+
+class BookAppointmedForm(FlaskForm):
+    id_zona = SelectField('Zona:', choices=[("1", "ZONA TERMINAL"), ("2", "ZONA MUNICIPALIDAD"),
+                                            ("3", "ZONA CEMENTERIO")], 
+                                            validators=[DataRequired('Este campo es requerido')])
+
+    fecha = DateField('Fecha:', validators=[DataRequired('Este campo es requerido')], render_kw={'min':datetime.datetime.now().strftime("%Y-%m-%d")})
+    hora = TimeField ('Hora', validators=[DataRequired('Este campo es requerido')])
+    enviar = SubmitField('Sacar Turno')
+    

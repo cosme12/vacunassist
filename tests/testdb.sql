@@ -13,7 +13,7 @@ CREATE TABLE turno (id INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE NOT NULL, fecha 
 
 -- Table: usuario
 DROP TABLE IF EXISTS usuario;
-CREATE TABLE usuario (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL UNIQUE, nombre TEXT, apellido TEXT, password TEXT, email TEXT UNIQUE, dni TEXT UNIQUE NOT NULL, telefono TEXT, fecha_de_nacimiento DATE, token TEXT UNIQUE, tipo INTEGER NOT NULL, paciente_de_riesgo BOOLEAN, id_zona INTEGER REFERENCES zona (id));
+CREATE TABLE usuario (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL UNIQUE, nombre TEXT, apellido TEXT, password TEXT, email TEXT UNIQUE, dni TEXT UNIQUE NOT NULL, telefono TEXT, fecha_de_nacimiento DATE, token TEXT UNIQUE, tipo INTEGER NOT NULL, paciente_de_riesgo BOOLEAN, reset_password_token TEXT, id_zona INTEGER REFERENCES zona (id));
 
 -- Table: vacuna
 DROP TABLE IF EXISTS vacuna;

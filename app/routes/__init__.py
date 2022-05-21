@@ -213,7 +213,7 @@ def reset_password(token):
             return redirect(url_for('login'))
         return render_template('reset_password.html', titulo="Recuperar contraseña", form=reset_password_form)
     else:
-        flash("El enlace es inválido o ha expirado", "danger")
+        flash("El token es inválido o ha expirado", "danger")
         return redirect(url_for('login'))
 
 

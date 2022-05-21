@@ -93,8 +93,8 @@ def test_inicio_de_sesion_paciente_registrado(client, create_db):
     html = response.get_data(as_text=True)
     assert 'Cerrar sesión' in html
     assert 'Mi perfil' in html
-    assert 'Mis Vacunas' in html
-    assert 'Mis Turnos' in html
+    assert 'Mis vacunas' in html
+    assert 'Mis turnos' in html
 
 
 def test_inicio_de_sesion_paciente_registrado_sesion(client, create_db):
@@ -126,8 +126,8 @@ def test_inicio_de_sesion_paciente_registrado_sin_token(client, create_db):
     html = response.get_data(as_text=True)
     assert 'Cerrar sesión' not in html
     assert 'Mi perfil' not in html
-    assert 'Mis Vacunas' not in html
-    assert 'Mis Turnos' not in html
+    assert 'Mis vacunas' not in html
+    assert 'Mis turnos' not in html
     assert 'Credenciales inválidas' in html
 
 
@@ -144,8 +144,8 @@ def test_inicio_de_sesion_paciente_no_registrado_sin_token(client, create_db):
     html = response.get_data(as_text=True)
     assert 'Cerrar sesión' not in html
     assert 'Mi perfil' not in html
-    assert 'Mis Vacunas' not in html
-    assert 'Mis Turnos' not in html
+    assert 'Mis vacunas' not in html
+    assert 'Mis turnos' not in html
     assert 'El usuario no está registrado' in html
 
 
@@ -163,8 +163,8 @@ def test_inicio_de_sesion_paciente_no_registrado_con_token(client, create_db):
     html = response.get_data(as_text=True)
     assert 'Cerrar sesión' not in html
     assert 'Mi perfil' not in html
-    assert 'Mis Vacunas' not in html
-    assert 'Mis Turnos' not in html
+    assert 'Mis vacunas' not in html
+    assert 'Mis turnos' not in html
     assert 'El usuario no está registrado' in html
 
 

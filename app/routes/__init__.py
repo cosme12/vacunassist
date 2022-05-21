@@ -1,6 +1,6 @@
 import datetime
 from flask import render_template, redirect,url_for, session, flash, make_response
-from app.forms import CambiarPasswordForm, ForgotPasswordForm, LoginForm, RegistroForm, ResetPasswordForm
+from app.forms import BookAppointmedForm, CambiarPasswordForm, ForgotPasswordForm, LoginForm, RegistroForm, ResetPasswordForm
 from app.auth import login_required
 from app import models
 from app import app
@@ -203,3 +203,19 @@ def reset_password():
     return render_template('reset_password.html', titulo="Recuperar contraseña", form=reset_password_form)
 
 
+@app.route('/sacar-turno/<int:id_vacuna>')
+@login_required
+def sacar_turno(id_vacuna):
+    ## variable para formulario
+    form = BookAppointmedForm()
+    vaccine_data= models.get_vacuna(id_vacuna)
+    vaccine_name = vaccine_data['enfermedad']
+
+    if form.validate_on_submit():
+        user_data = models.get_user_data(session['dni'])
+
+
+    
+    return render_template('sacar_turno.html', titulo="Sacar Titulo", form=form,vaccine_name=vaccine_name)
+        
+    

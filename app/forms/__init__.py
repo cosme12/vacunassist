@@ -38,5 +38,5 @@ class CambiarPasswordForm(FlaskForm):
     enviar = SubmitField('Cambiar contraseña', render_kw={'onkeyup':'return validateChars(event)'})
 
 class ForgotPasswordForm(FlaskForm):
-    dni = StringField('DNI', validators=[DataRequired('Este campo es requerido')])
-    enviar = SubmitField('Recuperar contraseña')
+    dni = StringField('DNI', validators=[DataRequired('Este campo es requerido'), Length(min=7, max=8, message='No es un dni válido')])
+    enviar = SubmitField('Recuperar contraseña', render_kw={'onkeyup':'return validateChars(event)'})

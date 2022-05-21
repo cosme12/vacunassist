@@ -1,11 +1,11 @@
 import datetime
 from flask import render_template, redirect,url_for, session, flash, make_response
-from app.forms import CambiarPasswordForm, ForgotPasswordForm, LoginForm, RegistroForm, ResetPasswordForm
+from app.forms import BookAppointmedForm, CambiarPasswordForm, ForgotPasswordForm, LoginForm, RegistroForm, ResetPasswordForm
 from app.auth import login_required
 from app import models
 from app import app
 from app.handlers.email_enviar import enviar_email
-from app.models.usuarios import validar_contrasena, validar_inicio_sesion, generar_reset_password_token, verificar_reset_password_token
+from app.models.usuarios import validar_contrasena, validar_inicio_sesion
 from app.handlers import *
 import pdfkit
 
@@ -90,14 +90,12 @@ def registro():
     hoy = datetime.date.today()
     return render_template('registro.html', titulo="Registro", form=form, hoy=hoy)
 
-
 @app.route('/perfil')  # http://localhost:5000/perfil
 @login_required
 def perfil():  
     usuario = session['dni']
     user_data = models.get_user_data(usuario)
     return render_template('perfil.html', titulo="Perfil", usuario=usuario, user_data=user_data)
-
 
 @app.route('/mis-turnos') # http://localhost:5000/mis-turnos
 @login_required
@@ -107,7 +105,6 @@ def mis_turnos():
     mis_turnos = models.get_appointment_from_user(user_data['id'])
     return render_template ('mis_turnos.html', titulo='Mis turnos', usuario=usuario, mis_turnos=mis_turnos)
 
-
 @app.route('/mis-vacunas') # http://localhost:5000/mis-vacunas
 @login_required
 def mis_vacunas():
@@ -115,7 +112,6 @@ def mis_vacunas():
     #usuario = models.get_user_data(dni)
     vacunas_aplicadas = models.get_vacunas_aplicadas(dni)
     return render_template ('mis_vacunas.html', titulo = "Vacunas aplicadas", vacunas=vacunas_aplicadas)
-
 
 @app.route('/cancelar-turno/<int:id>')
 @login_required
@@ -144,7 +140,6 @@ def eliminar_cuenta(id):
     flash(f"Cuenta eliminada del sistema","success")
     return redirect(url_for('logout'))
 
-
 @app.route('/mis-vacunas/pdf/<int:id>')
 @login_required
 def pdf_template(id):
@@ -168,7 +163,6 @@ def pdf_template(id):
 
     return response
 
-
 @app.route('/cambiar-password', methods=['GET', 'POST']) # http://localhost:5000/cambiar-password
 @login_required
 def cambiar_password():
@@ -184,7 +178,6 @@ def cambiar_password():
             flash(f"Contraseña actual incorrecta.","danger")
     return render_template('cambiar_password.html', titulo="Cambiar contraseña", form=form)    
 
-
 @app.route('/forgot-password', methods=['GET', 'POST']) # http://localhost:5000/forgot-password
 def forgot_password():
     forgot_password_form = ForgotPasswordForm()
@@ -192,32 +185,37 @@ def forgot_password():
         usuario = models.get_user_data(forgot_password_form.dni.data)
         if usuario:
             email = usuario["email"]
-            token = generar_reset_password_token(usuario["id"])
-            flash(f"Hemos enviado un mail a {email} para recuperar su contraseña.", "success")        
+            
+            flash(f"Hemos enviado un mail a {email} para recuperar su contraseña.", "success")
+            '''
             if app.config['EMAIL_ENABLED']:
-                enviar_email(email, "Vacunassist - Recuperación de contraseña", f"Para recuperar su contraseña ingrese al siguiente link.\nhttp://localhost:5000/forgot-password/{token}\nSi usted no solicitó un cambio de contraseña, ignore este mensaje.")
-            return redirect(url_for('login'))          
+                enviar_email(email, "Vacunassist - Recuperación de contraseña", f"Para recuperar su contraseña ingrese al siguiente link.\nLINK\nSi usted no solicitó un cambio de contraseña, desestime este mensaje.")
+                return redirect(url_for('login'))
+            ''' 
         else:
             flash(f"El usuario con DNI {forgot_password_form.dni.data} no se encuentra registrado.","danger")
     return render_template('forgot_password.html', titulo="Contraseña olvidada", form=forgot_password_form)
 
+@app.route('/reset-password', methods=['GET', 'POST'])
+def reset_password():
+    reset_password_form = ResetPasswordForm()
 
-@app.route('/reset-password/<token>', methods=['GET', 'POST']) # http://localhost:5000/forgot-password/<token>
-def reset_password(token):
-    usuario = verificar_reset_password_token(token)
-    if usuario:
-        reset_password_form = ResetPasswordForm()
-        if reset_password_form.validate_on_submit():
-            models.cambiar_password(usuario['dni'], reset_password_form.new_password.data)                
-            flash(f"La contraseña fue cambiada con éxito.","success")
-            return redirect(url_for('login'))
-        return render_template('reset_password.html', titulo="Recuperar contraseña", form=reset_password_form)
-    else:
-        flash("El token es inválido o ha expirado", "danger")
-        return redirect(url_for('login'))
+    return render_template('reset_password.html', titulo="Recuperar contraseña", form=reset_password_form)
 
 
-@app.route('/admin')
-def admin():  
-    return render_template('admin.html', titulo="Admin")
+@app.route('/sacar-turno/<int:id_vacuna>')
+@login_required
+def sacar_turno(id_vacuna):
+    ## variable para formulario
+    form = BookAppointmedForm()
+    vaccine_data= models.get_vacuna(id_vacuna)
+    vaccine_name = vaccine_data['enfermedad']
 
+    if form.validate_on_submit():
+        user_data = models.get_user_data(session['dni'])
+
+
+    
+    return render_template('sacar_turno.html', titulo="Sacar Titulo", form=form,vaccine_name=vaccine_name)
+        
+    

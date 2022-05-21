@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% from 'bootstrap5/form.html' import render_form %}
+
+{% block content %}
+    <div class="row">
+        <div class="card p-4 mt-3">
+            <h1 class="pb-4">Turno para {{vaccine_name}}</h1>
+            {{ render_form(form, form_type='horizontal', horizontal_columns=('lg', 2, 10)) }}
+        </div>
+    </div>
+    <br>
+    <br><br>
+{% endblock %}

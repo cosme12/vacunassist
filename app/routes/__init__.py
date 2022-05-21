@@ -1,6 +1,6 @@
 import datetime
 from flask import render_template, redirect,url_for, session, flash, make_response
-from app.forms import CambiarPasswordForm, ForgotPasswordForm, LoginForm, RegistroForm
+from app.forms import CambiarPasswordForm, ForgotPasswordForm, LoginForm, RegistroForm, ResetPasswordForm
 from app.auth import login_required
 from app import models
 from app import app
@@ -185,6 +185,7 @@ def forgot_password():
         usuario = models.get_user_data(forgot_password_form.dni.data)
         if usuario:
             email = usuario["email"]
+            
             flash(f"Hemos enviado un mail a {email} para recuperar su contraseña.", "success")
             '''
             if app.config['EMAIL_ENABLED']:
@@ -194,3 +195,11 @@ def forgot_password():
         else:
             flash(f"El usuario con DNI {forgot_password_form.dni.data} no se encuentra registrado.","danger")
     return render_template('forgot_password.html', titulo="Contraseña olvidada", form=forgot_password_form)
+
+@app.route('/reset-password', methods=['GET', 'POST'])
+def reset_password():
+    reset_password_form = ResetPasswordForm()
+
+    return render_template('reset_password.html', titulo="Recuperar contraseña", form=reset_password_form)
+
+

@@ -5,7 +5,7 @@ from app.auth import login_required
 from app import models
 from app import app
 from app.handlers.email_enviar import enviar_email
-from app.models.usuarios import validar_contrasena, validar_inicio_sesion
+from app.models.usuarios import validar_contrasena, validar_inicio_sesion, generar_reset_password_token, verificar_reset_password_token
 from app.handlers import *
 import pdfkit
 
@@ -185,22 +185,29 @@ def forgot_password():
         usuario = models.get_user_data(forgot_password_form.dni.data)
         if usuario:
             email = usuario["email"]
-            
-            flash(f"Hemos enviado un mail a {email} para recuperar su contraseña.", "success")
-            '''
+            token = generar_reset_password_token(usuario["id"])
+            flash(f"Hemos enviado un mail a {email} para recuperar su contraseña.", "success")   
             if app.config['EMAIL_ENABLED']:
-                enviar_email(email, "Vacunassist - Recuperación de contraseña", f"Para recuperar su contraseña ingrese al siguiente link.\nLINK\nSi usted no solicitó un cambio de contraseña, desestime este mensaje.")
-                return redirect(url_for('login'))
-            ''' 
+                enviar_email(email, "Vacunassist - Recuperación de contraseña", f"Para recuperar su contraseña ingrese al siguiente link.\nhttp://localhost:5000/forgot-password/{token}\nSi usted no solicitó un cambio de contraseña, ignore este mensaje.")
+            return redirect(url_for('login'))
+            
         else:
             flash(f"El usuario con DNI {forgot_password_form.dni.data} no se encuentra registrado.","danger")
     return render_template('forgot_password.html', titulo="Contraseña olvidada", form=forgot_password_form)
 
-@app.route('/reset-password', methods=['GET', 'POST'])
-def reset_password():
-    reset_password_form = ResetPasswordForm()
-
-    return render_template('reset_password.html', titulo="Recuperar contraseña", form=reset_password_form)
+@app.route('/reset-password/<token>', methods=['GET', 'POST']) # http://localhost:5000/forgot-password/<token>
+def reset_password(token):
+    usuario = verificar_reset_password_token(token)
+    if usuario:
+        reset_password_form = ResetPasswordForm()
+        if reset_password_form.validate_on_submit():
+            models.cambiar_password(usuario['dni'], reset_password_form.new_password.data)                
+            flash(f"La contraseña fue cambiada con éxito.","success")
+            return redirect(url_for('login'))
+        return render_template('reset_password.html', titulo="Recuperar contraseña", form=reset_password_form)
+    else:
+        flash("El enlace es inválido o ha expirado", "danger")
+        return redirect(url_for('login'))
 
 
 @app.route('/sacar-turno/<int:id_vacuna>')

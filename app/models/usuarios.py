@@ -4,7 +4,7 @@ import sqlite3
 import string
 from datetime import datetime
 from app.models import get_db_connection
-
+import time
 
 def existe_usuario(nombre):
     """
@@ -139,3 +139,20 @@ def cambiar_password(id, password_nueva):
     cursor.execute("UPDATE usuario SET password=? WHERE dni=?;", (hash_password, id,))
     conn.commit()
     conn.close()
+
+def generar_reset_password_token(id_usuario):
+    token = str(time.time()) + "supersecreto"
+    token = hashear_contrasena(token)
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    cursor.execute("UPDATE usuario SET reset_password_token=? WHERE id=?;", (token, id_usuario,))
+    conn.commit()
+    conn.close()
+    return token
+
+def verificar_reset_password_token(token):
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    usuario = cursor.execute("SELECT * FROM usuario WHERE reset_password_token=?;", (token,)).fetchone()
+    conn.close()
+    return usuario

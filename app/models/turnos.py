@@ -51,3 +51,12 @@ def cancel_appointment(id):
     cursor.execute("UPDATE turno SET estado=4 WHERE id =?;",(id,))
     conn.commit()
     conn.close()
+
+    
+def reservar_turno(fecha,id_usuario,id_vacuna, id_zona):
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    cursor.execute("INSERT INTO turno (fecha,estado, id_usuario, id_vacuna, id_zona)\
+                     VALUES ( ? , 1, ?, ?, ?);",(fecha,id_usuario,id_vacuna,id_zona,))
+    conn.commit()
+    conn.close()

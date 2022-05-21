@@ -90,12 +90,14 @@ def registro():
     hoy = datetime.date.today()
     return render_template('registro.html', titulo="Registro", form=form, hoy=hoy)
 
+
 @app.route('/perfil')  # http://localhost:5000/perfil
 @login_required
 def perfil():  
     usuario = session['dni']
     user_data = models.get_user_data(usuario)
     return render_template('perfil.html', titulo="Perfil", usuario=usuario, user_data=user_data)
+
 
 @app.route('/mis-turnos') # http://localhost:5000/mis-turnos
 @login_required
@@ -105,6 +107,7 @@ def mis_turnos():
     mis_turnos = models.get_appointment_from_user(user_data['id'])
     return render_template ('mis_turnos.html', titulo='Mis turnos', usuario=usuario, mis_turnos=mis_turnos)
 
+
 @app.route('/mis-vacunas') # http://localhost:5000/mis-vacunas
 @login_required
 def mis_vacunas():
@@ -112,6 +115,7 @@ def mis_vacunas():
     #usuario = models.get_user_data(dni)
     vacunas_aplicadas = models.get_vacunas_aplicadas(dni)
     return render_template ('mis_vacunas.html', titulo = "Vacunas aplicadas", vacunas=vacunas_aplicadas)
+
 
 @app.route('/cancelar-turno/<int:id>')
 @login_required
@@ -140,6 +144,7 @@ def eliminar_cuenta(id):
     flash(f"Cuenta eliminada del sistema","success")
     return redirect(url_for('logout'))
 
+
 @app.route('/mis-vacunas/pdf/<int:id>')
 @login_required
 def pdf_template(id):
@@ -163,6 +168,7 @@ def pdf_template(id):
 
     return response
 
+
 @app.route('/cambiar-password', methods=['GET', 'POST']) # http://localhost:5000/cambiar-password
 @login_required
 def cambiar_password():
@@ -177,6 +183,7 @@ def cambiar_password():
         else:
             flash(f"Contraseña actual incorrecta.","danger")
     return render_template('cambiar_password.html', titulo="Cambiar contraseña", form=form)    
+
 
 @app.route('/forgot-password', methods=['GET', 'POST']) # http://localhost:5000/forgot-password
 def forgot_password():
@@ -196,10 +203,15 @@ def forgot_password():
             flash(f"El usuario con DNI {forgot_password_form.dni.data} no se encuentra registrado.","danger")
     return render_template('forgot_password.html', titulo="Contraseña olvidada", form=forgot_password_form)
 
+
 @app.route('/reset-password', methods=['GET', 'POST'])
 def reset_password():
     reset_password_form = ResetPasswordForm()
 
     return render_template('reset_password.html', titulo="Recuperar contraseña", form=reset_password_form)
 
+
+@app.route('/admin')
+def admin():  
+    return render_template('admin.html', titulo="Admin")
 

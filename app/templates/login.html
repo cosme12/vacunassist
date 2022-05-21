@@ -11,6 +11,8 @@
       {% else %}
       <title>¡Bienvenido a Vacunassist</title>
       {% endif %}
+      <link rel="shortcut icon" href="{{ url_for('static', filename='/images/favicon.ico') }}" type="image/x-icon">
+      <link rel="icon" href="{{ url_for('static', filename='/images/favicon.ico') }}" type="image/x-icon">
 
       {{ bootstrap.load_css() }}
       <style>
@@ -32,12 +34,11 @@
     <body class="text-center bg-light">
       <main class="container">
         {{ render_messages(container=False, dismissible=True) }}
-
+        <br>
         <div class="login-page bg-light">
             <div class="container">
                 <div class="row">
                     <div class="col-lg-10 offset-lg-1">
-                      <h3 class="mb-3">VACUNASSIST</h3>
                         <div class="bg-white shadow rounded">
                             <div class="row">
                                 <div class="col-md-7 pe-0">

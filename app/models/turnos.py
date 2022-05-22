@@ -69,14 +69,14 @@ def cancel_appointment(id):
     conn.close()
 
     
-def reservar_turno(fecha,id_usuario,id_vacuna, id_zona):
+def reservar_turno(fecha,id_usuario,id_vacuna, id_zona, hora):
     estado_turno = 2
     if id_vacuna == 2:
         estado_turno = 1
     conn = get_db_connection()
     cursor = conn.cursor()
-    cursor.execute("INSERT INTO turno (fecha,estado, id_usuario, id_vacuna, id_zona)\
-                     VALUES ( ?, ?, ?, ?, ?);",(fecha.strftime('%d/%m/%Y'),estado_turno,id_usuario,id_vacuna,id_zona,))
+    cursor.execute("INSERT INTO turno (fecha,estado, id_usuario, id_vacuna, id_zona,hora)\
+                     VALUES ( ?, ?, ?, ?, ?, ?);",(fecha.strftime('%d/%m/%Y'),estado_turno,id_usuario,id_vacuna,id_zona,hora.strftime("%H:%M"),))
     conn.commit()
     conn.close()
 

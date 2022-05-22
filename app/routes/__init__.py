@@ -230,7 +230,9 @@ def sacar_turno(id_vacuna):
 
     if form.validate_on_submit():
         user_data = models.get_user_data(session['dni'])
-        models.reservar_turno(form.fecha.data, user_data['id'], id_vacuna,form.id_zona.data)
+        print(form.hora.data)
+        print(type(form.hora.data))
+        models.reservar_turno(form.fecha.data, user_data['id'], id_vacuna, form.id_zona.data, form.hora.data)
         if id_vacuna == 2:
             flash("Su turno fue solicitado y está pendiente de aprobación. Le enviaremos un email cuando el mismo sea aprobado.", "success")
         else:

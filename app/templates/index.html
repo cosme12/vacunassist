@@ -21,11 +21,11 @@
                                     <br></p>
                 {% if habilitar_fiebre_amarilla %}
                     <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                        <a href="/sacar-turno/2"><button href="/sacar-turno/2" class="btn btn-success" type="button">Sacar turno</button></a>
+                        <a href="/sacar-turno/2"><button href="/sacar-turno/2" class="btn btn-success" type="button">Reservar turno</button></a>
                     </div>
                 {% else %} <!-- boton desabilitado-->
                     <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                        <button href="" class="btn btn-success" type="button" disabled>Sacar turno</button>
+                        <button href="" class="btn btn-success" type="button" disabled>Reservar turno</button>
                     </div>  
                 {% endif %}
             </div>
@@ -47,16 +47,16 @@
                 {% if habilitar_covid  %}
                     {% if tiene_covid1 %} <!-- Mandar id de vacuna de covid 2 en la ruta-->
                         <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                            <a href="/sacar-turno/3"></a><button class="btn btn-success" type="button">Sacar turno</button></a>
+                            <a href="/sacar-turno/3"></a><button class="btn btn-success" type="button">Reservar turno</button></a>
                         </div>
                     {% else %}  <!-- Mandar id de vacuna covid 1 en la ruta -->
                         <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                            <a href="/sacar-turno/4"><button  class="btn btn-success" type="button" >Sacar turno</button></a>
+                            <a href="/sacar-turno/4"><button  class="btn btn-success" type="button" >Reservar turno</button></a>
                         </div>
                         {% endif %}   
                 {% else %} <!-- boton desabilitado-->    
                     <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                        <button href="" class="btn btn-success" type="button" disabled>Sacar turno</button>
+                        <button href="" class="btn btn-success" type="button" disabled>Reservar turno</button>
                     </div>
                 {% endif %}
             </div>
@@ -79,11 +79,11 @@
 
                  {% if habilitar_gripe %}
                     <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                        <a href="/sacar-turno/1"></a><button href="/sacar-turno/1" class="btn btn-success" type="button">Sacar turno</button></a>
+                        <a href="/sacar-turno/1"></a><button href="/sacar-turno/1" class="btn btn-success" type="button">Reservar turno</button></a>
                     </div>
                 {% else %}
                     <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                        <button href="" class="btn btn-success" type="button" disabled>Sacar turno</button>
+                        <button href="" class="btn btn-success" type="button" disabled>Reservar turno</button>
                     </div>
                 {% endif %}
             </div>

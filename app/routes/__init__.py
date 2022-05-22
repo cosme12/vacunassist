@@ -77,7 +77,7 @@ def registro():
             if "3" in vacunas_seleccionadas and "4" not in vacunas_seleccionadas:  # Falta primera dosis
                 flash("Falta seleccionar la primera dosis de la vacuna Covid-19.", 'danger')
             elif vacunas_repetidas:
-                flash("No pueden seleccionar más de una vez la misma vacuna.", 'danger')
+                flash("No puede seleccionar más de una vez la misma vacuna.", 'danger')
             else:
                 error, token = models.guardar_usuario(form.data)
                 if not error:

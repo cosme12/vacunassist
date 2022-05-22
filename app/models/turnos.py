@@ -1,6 +1,7 @@
 
 from app.models import get_db_connection
 
+
 def get_turnos():
     """
     Devuelve todos los turnos
@@ -10,6 +11,21 @@ def get_turnos():
     turnos = cursor.execute("select * from turno;").fetchall()
     conn.close()
     return turnos
+
+
+def get_turnos_aprobados():
+    """
+    Devuelve todos los turnos aprobados (con estado 2)
+    """
+    conn = get_db_connection()
+    cursos = conn.cursor()
+    turnos = cursos.execute("""SELECT * FROM turno as t INNER JOIN usuario as u ON t.id_usuario = u.id
+                            INNER JOIN vacuna as v ON t.id_vacuna = v.id
+                            INNER JOIN zona as z ON t.id_zona = z.id
+                            WHERE estado=?;""",(2,)).fetchall()
+    conn.close()
+    return turnos
+
 
 def get_appointment_from_user(id):
     """
@@ -73,3 +89,4 @@ def tiene_turno_pendiente(id_usuario, id_vacuna):
         if (turno["estado"] == 1 or turno["estado"] == 2):
             return True 
     return False
+

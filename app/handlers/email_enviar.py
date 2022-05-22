@@ -40,5 +40,8 @@ def enviar_email(receiver,subject, msg):
     raw = base64.urlsafe_b64encode(message.as_bytes())
     raw = raw.decode()
     body = {'raw' : raw}
-    message = (service.users().messages().send(userId='me', body=body).execute())
+    try:
+        message = (service.users().messages().send(userId='me', body=body).execute())
+    except Exception as e:
+        print(e)
 

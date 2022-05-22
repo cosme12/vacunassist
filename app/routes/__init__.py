@@ -33,8 +33,11 @@ def login():
         # Valida el usuario y contraseña y token si es necesario
         validar_inicio, error = validar_inicio_sesion(formulario_de_login.dni.data, formulario_de_login.password.data, 
                                 formulario_de_login.token.data)
+        usuario = models.get_user_data(formulario_de_login.dni.data)
         if validar_inicio:
             session['dni'] = formulario_de_login.dni.data
+            session['nombre'] = usuario["nombre"]
+            session['apellido'] = usuario["apellido"]
             return redirect(url_for('index'))
         else:
             flash(error, 'danger')

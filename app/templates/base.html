@@ -24,7 +24,7 @@
           <div class="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2">
             <ul class="navbar-nav me-auto">
               {% if session["dni"] %}
-                {{ render_nav_item('index', 'Inicio') }}
+                {{ render_nav_item('index', 'Reservar turno') }}
                 {{ render_nav_item('mis_turnos', 'Mis turnos') }}
                 {{ render_nav_item('mis_vacunas', 'Mis vacunas', use_li=True) }}
               {% endif %}
@@ -41,7 +41,7 @@
               {% if session["dni"] %}
                     <li class="nav-item dropdown">
                       <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        <i class="bi bi-person-circle" style="font-size: 30px;"></i></a>
+                        <div style="display: inline;">{{ session['nombre'] | upper }} {{ session['apellido'] | upper }}  <i class="bi bi-person-circle" style="font-size: 24px;"></i></div></a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                           <li><a class="dropdown-item" href="{{ url_for('perfil')}}"><i class="bi bi-person-circle" style="font-size: 20px;"></i> Perfil</a></li>
                           <li><a class="dropdown-item" href="{{ url_for('logout')}}"><i class="bi bi-door-closed-fill" style="font-size: 20px;"></i> Cerrar sesión</a></li>

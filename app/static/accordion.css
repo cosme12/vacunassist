@@ -11,3 +11,7 @@
 .accordion-button:focus{
     box-shadow: inherit;
 }
+
+.dropdown-item.active, .dropdown-item:active {
+    background-color: #198754;
+}

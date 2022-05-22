@@ -53,5 +53,7 @@ class BookAppointmedForm(FlaskForm):
 
     fecha = DateField('Fecha:', validators=[DataRequired('Este campo es requerido')], render_kw={'min':(datetime.datetime.now() + datetime.timedelta(7)).strftime("%Y-%m-%d")})
     hora = TimeField ('Hora', validators=[DataRequired('Este campo es requerido')])
-    enviar = SubmitField('Sacar Turno')
-    
+    enviar = SubmitField('Reservar Turno')
+
+class EnviarEmailsAdminForm(FlaskForm):
+    enviar = SubmitField('ENVIAR EMAILS')

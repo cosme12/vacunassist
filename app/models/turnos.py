@@ -20,8 +20,8 @@ def get_appointment_from_user(id):
     turnos = cursor.execute("""SELECT * FROM turno 
                                 INNER JOIN vacuna as e ON e.id = turno.id_vacuna 
                                 INNER JOIN zona as z ON z.id=turno.id_zona 
-                                WHERE id_usuario =? AND estado=?;
-                                """, (id,1,)).fetchall()
+                                WHERE id_usuario =? AND (estado=? OR estado=?);
+                                """, (id,1,2)).fetchall()
     conn.close()
     return turnos
 
@@ -36,7 +36,7 @@ def tiene_appointment_covid1_from_user(id):
                                 INNER JOIN vacuna as e ON e.id = turno.id_vacuna  
                                 INNER JOIN zona as z ON z.id=turno.id_zona 
                                 WHERE id_usuario =? AND estado=? AND id_vacuna=?;
-                                """, (id, 1, 4)).fetchone()
+                                """, (id, 2, 4)).fetchone()
     if turnos[0] > 0:
         turnos = True
     else:
@@ -48,7 +48,7 @@ def tiene_appointment_covid1_from_user(id):
 def cancel_appointment(id):
     conn = get_db_connection()
     cursor = conn.cursor()
-    cursor.execute("UPDATE turno SET estado=4 WHERE id =?;",(id,))
+    cursor.execute("UPDATE turno SET estado=5 WHERE id =?;",(id,))
     conn.commit()
     conn.close()
 
@@ -60,7 +60,7 @@ def reservar_turno(fecha,id_usuario,id_vacuna, id_zona):
     conn = get_db_connection()
     cursor = conn.cursor()
     cursor.execute("INSERT INTO turno (fecha,estado, id_usuario, id_vacuna, id_zona)\
-                     VALUES ( ?, ?, ?, ?, ?);",(fecha,estado_turno,id_usuario,id_vacuna,id_zona,))
+                     VALUES ( ?, ?, ?, ?, ?);",(fecha.strftime('%d/%m/%Y'),estado_turno,id_usuario,id_vacuna,id_zona,))
     conn.commit()
     conn.close()
 

@@ -50,7 +50,7 @@ def crear_usuario_paciente():
         'apellido': 'Perez',
         'email': 'juanperez@example.com',
         'password': '5994471abb01112afcc18159f6cc74b4f511b99806da59b3caf5a9c173cacfc5',
-        'fecha_de_nacimiento': '2005-05-01',
+        'fecha_de_nacimiento': '01/05/2005',
         'telefono': '123456789',
         'paciente_de_riesgo': True,
         'token': '1x3A',
@@ -109,7 +109,6 @@ def test_inicio_de_sesion_paciente_registrado_sesion(client, create_db):
             'token': paciente_nuevo['token']
         }, follow_redirects=True)
         assert response.status_code == 200
-        html = response.get_data(as_text=True)
         assert session["dni"] == paciente_nuevo['dni']
 
 

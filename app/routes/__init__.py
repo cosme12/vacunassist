@@ -17,14 +17,25 @@ from app.models.vacunas_aplicadas import tiene_vacuna_aplicada ##pip install pyt
 def index():
     usuario = models.get_user_data(session['dni'])
 
+    habilitar_covid = models.apto_vacuna_covid(usuario["id"])
+    tiene_covid1 = models.tiene_covid1(usuario["id"])
+    habilitar_gripe = models.apto_vacuna_gripe(usuario["id"])
+    habilitar_fiebre_amarilla = models.apto_vacuna_fiebre_amarilla(usuario["id"])
+    return render_template('index.html', titulo="Inicio", usuario=usuario, habilitar_covid=habilitar_covid,
+    tiene_covid1=tiene_covid1, habilitar_fiebre_amarilla=habilitar_fiebre_amarilla, habilitar_gripe=habilitar_gripe)
+
+    """
     edad = models.edad_de_usuario(usuario['id'])
     tiene_fa = models.tiene_vacuna_aplicada(usuario['id'],2)
     tiene_c1= models.tiene_vacuna_aplicada(usuario['id'],4)
     tiene_c2 = models.tiene_vacuna_aplicada(usuario['id'],3)
     tiene_gripe = models.tiene_vacuna_gripe(usuario['id'])
     
+
     return render_template('index.html', titulo="Inicio", usuario=usuario, tiene_fa=tiene_fa,
             tiene_c1=tiene_c1, tiene_c2=tiene_c2, tiene_gripe=tiene_gripe,edad=edad)
+    """
+    
 
 @app.route('/login', methods=['GET', 'POST'])  # http://localhost:5000/login
 def login():

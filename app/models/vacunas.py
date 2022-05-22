@@ -7,7 +7,7 @@ def get_vacuna(id):
     conn = get_db_connection()
     cursor = conn.cursor()
     vacuna = cursor.execute("SELECT * FROM vacuna where id =?;",(id,)).fetchone()
-    conn.close
+    conn.close()
     return vacuna
 
 def get_vacuna_aplicada(id):
@@ -20,5 +20,15 @@ def get_vacuna_aplicada(id):
                             FROM vacuna_aplicada AS va INNER JOIN vacuna ON va.id_vacuna=vacuna.id\
                             INNER JOIN zona ON id_zona=zona.id\
                             WHERE va.id =?;",(id,)).fetchone()
-    conn.close
+    conn.close()
+    return vacuna
+
+def get_id_vacuna(enfermedad):
+    """
+    Devuelve el id de la vacuna con enfermedad=enfermedad
+    """
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    vacuna = cursor.execute("SELECT id FROM vacuna WHERE enfermedad=?;",(enfermedad,)).fetchone()
+    conn.close()
     return vacuna

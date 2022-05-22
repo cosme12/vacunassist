@@ -12,7 +12,7 @@ def get_vacunas_aplicadas(dni):
                             FROM usuario INNER JOIN vacuna_aplicada AS va ON usuario.id = va.id_usuario\
                             INNER JOIN vacuna ON va.id_vacuna = vacuna.id\
                             WHERE usuario.dni=?;", (dni,)).fetchall()
-    conn.close
+    conn.close()
     return vacunas
 
 
@@ -21,7 +21,7 @@ def tiene_vacuna_aplicada(id_usuario, id_vacuna):
     cursor = conn.cursor()
     vacuna_aplicada = cursor.execute("SELECT * FROM vacuna_aplicada \
                                     WHERE id_usuario=? and id_vacuna=?;",(id_usuario,id_vacuna,)).fetchone()
-    conn.close
+    conn.close()
     if vacuna_aplicada is None:
         return False
     else:
@@ -45,4 +45,3 @@ def tiene_vacuna_gripe(id_usuario):
         return False
     else:
         return True
-

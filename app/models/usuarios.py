@@ -5,6 +5,10 @@ import string
 from datetime import date
 from app.models import get_db_connection
 import time
+from app.models.turnos import tiene_turno
+from app.models.vacunas import get_id_vacuna, get_vacuna
+
+from app.models.vacunas_aplicadas import tiene_vacuna_aplicada, tiene_vacuna_gripe
 
 def existe_usuario(nombre):
     """
@@ -164,3 +168,43 @@ def verificar_reset_password_token(token):
     usuario = cursor.execute("SELECT * FROM usuario WHERE reset_password_token=?;", (token,)).fetchone()
     conn.close()
     return usuario
+
+def apto_vacuna_covid(id):
+    id_covid1 = 4
+    id_covid2 = 3
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    dosis2 = tiene_vacuna_aplicada(id, id_covid2)
+    if not dosis2:
+        turno = tiene_turno(id, id_covid1) or tiene_turno(id, id_covid2)
+        return not turno
+    return False
+
+def apto_vacuna_gripe(id):
+    id_gripe = 1
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    vacuna = tiene_vacuna_gripe(id)
+    if not vacuna:
+        turno = tiene_turno(id, id_gripe)
+        return not turno
+    return False
+
+def apto_vacuna_fiebre_amarilla(id):
+    id_fiebre_amarilla = 2
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    edad = edad_de_usuario(id)
+    if edad < 60:
+        vacuna = tiene_vacuna_aplicada(id, id_fiebre_amarilla)
+        if not vacuna:
+            turno = tiene_turno(id, id_fiebre_amarilla)
+            return not turno
+    return False
+
+def tiene_covid1(id):
+    id_covid1 = 4
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    return tiene_vacuna_aplicada(id, id_covid1)
+    

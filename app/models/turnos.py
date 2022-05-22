@@ -60,3 +60,10 @@ def reservar_turno(fecha,id_usuario,id_vacuna, id_zona):
                      VALUES ( ? , 1, ?, ?, ?);",(fecha,id_usuario,id_vacuna,id_zona,))
     conn.commit()
     conn.close()
+
+def tiene_turno(id_usuario, id_vacuna):
+    conn = get_db_connection()
+    cursos = conn.cursor()
+    turno = cursos.execute("SELECT * FROM turno WHERE id_usuario=? and id_vacuna=?;",(id_usuario, id_vacuna,)).fetchone()
+    conn.close()
+    return turno

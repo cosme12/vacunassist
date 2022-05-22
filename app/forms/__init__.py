@@ -51,7 +51,7 @@ class BookAppointmedForm(FlaskForm):
                                             ("3", "ZONA CEMENTERIO")], 
                                             validators=[DataRequired('Este campo es requerido')])
 
-    fecha = DateField('Fecha:', validators=[DataRequired('Este campo es requerido')], render_kw={'min':datetime.datetime.now().strftime("%Y-%m-%d")})
+    fecha = DateField('Fecha:', validators=[DataRequired('Este campo es requerido')], render_kw={'min':(datetime.datetime.now() + datetime.timedelta(7)).strftime("%Y-%m-%d")})
     hora = TimeField ('Hora', validators=[DataRequired('Este campo es requerido')])
     enviar = SubmitField('Sacar Turno')
     

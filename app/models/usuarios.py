@@ -5,7 +5,7 @@ import string
 from datetime import date
 from app.models import get_db_connection
 import time
-from app.models.turnos import tiene_turno
+from app.models.turnos import tiene_turno_pendiente
 from app.models.vacunas import get_id_vacuna, get_vacuna
 
 from app.models.vacunas_aplicadas import tiene_vacuna_aplicada, tiene_vacuna_gripe
@@ -176,7 +176,7 @@ def apto_vacuna_covid(id):
     cursor = conn.cursor()
     dosis2 = tiene_vacuna_aplicada(id, id_covid2)
     if not dosis2:
-        turno = tiene_turno(id, id_covid1) or tiene_turno(id, id_covid2)
+        turno = tiene_turno_pendiente(id, id_covid1) or tiene_turno_pendiente(id, id_covid2)
         return not turno
     return False
 
@@ -186,7 +186,7 @@ def apto_vacuna_gripe(id):
     cursor = conn.cursor()
     vacuna = tiene_vacuna_gripe(id)
     if not vacuna:
-        turno = tiene_turno(id, id_gripe)
+        turno = tiene_turno_pendiente(id, id_gripe)
         return not turno
     return False
 
@@ -198,7 +198,7 @@ def apto_vacuna_fiebre_amarilla(id):
     if edad < 60:
         vacuna = tiene_vacuna_aplicada(id, id_fiebre_amarilla)
         if not vacuna:
-            turno = tiene_turno(id, id_fiebre_amarilla)
+            turno = tiene_turno_pendiente(id, id_fiebre_amarilla)
             return not turno
     return False
 

@@ -54,16 +54,22 @@ def cancel_appointment(id):
 
     
 def reservar_turno(fecha,id_usuario,id_vacuna, id_zona):
+    estado_turno = 2
+    if id_vacuna == 2:
+        estado_turno = 1
     conn = get_db_connection()
     cursor = conn.cursor()
     cursor.execute("INSERT INTO turno (fecha,estado, id_usuario, id_vacuna, id_zona)\
-                     VALUES ( ? , 1, ?, ?, ?);",(fecha,id_usuario,id_vacuna,id_zona,))
+                     VALUES ( ?, ?, ?, ?, ?);",(fecha,estado_turno,id_usuario,id_vacuna,id_zona,))
     conn.commit()
     conn.close()
 
-def tiene_turno(id_usuario, id_vacuna):
+def tiene_turno_pendiente(id_usuario, id_vacuna):
     conn = get_db_connection()
     cursos = conn.cursor()
-    turno = cursos.execute("SELECT * FROM turno WHERE id_usuario=? and id_vacuna=?;",(id_usuario, id_vacuna,)).fetchone()
+    turnos = cursos.execute("SELECT * FROM turno WHERE id_usuario=? and id_vacuna=?;",(id_usuario, id_vacuna,)).fetchall()
     conn.close()
-    return turno
+    for turno in turnos:
+        if (turno["estado"] == 1 or turno["estado"] == 2):
+            return True 
+    return False

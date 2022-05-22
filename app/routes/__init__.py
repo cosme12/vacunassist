@@ -230,7 +230,10 @@ def sacar_turno(id_vacuna):
     if form.validate_on_submit():
         user_data = models.get_user_data(session['dni'])
         models.reservar_turno(form.fecha.data, user_data['id'], id_vacuna,form.id_zona.data)
-        flash("Su turno se a registrado con exito. Te enviaremos un recordatorio a tu email 24 horas antes del mismo.","success")
+        if id_vacuna == 2:
+            flash("Su turno fue solicitado con exito y está pendiente de aprobación. Te enviaremos email cuando el mismo sea aprobado.","success")
+        else:
+            flash("Su turno se a registrado con exito. Te enviaremos un recordatorio a tu email 24 horas antes del mismo.","success")
         return redirect(url_for('index'))
 
     return render_template('sacar_turno.html', titulo="Sacar Titulo", form=form,vaccine_name=vaccine_name)

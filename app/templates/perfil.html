@@ -2,7 +2,7 @@
 
 {% block content %}
     {% if user_data['tipo'] == 1 %}
-        <h1 class="pb-4">{{ user_data['nombre'] | capitalize }} {{ user_data['apellido'] | capitalize }}</h1>
+        <h1 class="pb-4"> <i class="bi bi-person-circle" style="font-size: 26px;"></i> {{ user_data['nombre'] | capitalize }} {{ user_data['apellido'] | capitalize }}</h1>
         
         <div class="card p-4 ">
             <div class="container ">

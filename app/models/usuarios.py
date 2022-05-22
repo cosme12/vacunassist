@@ -2,7 +2,7 @@ import hashlib
 import random
 import sqlite3
 import string
-from datetime import datetime
+from datetime import date
 from app.models import get_db_connection
 import time
 
@@ -122,15 +122,22 @@ def delete_user(id):
     conn.close()
 
 
-def edad_de_usuario(id_usuario):
 
+def edad_de_usuario(id_usuario):
+    """
+    Devuelve una lista con un solo elemento conteniendo la edad del usuario
+    """
     conn= get_db_connection()
     cursor = conn.cursor()
-    edad = cursor.execute("SELECT (julianday('now') - julianday( fecha_de_nacimiento) ) / 365 as edad,\
-        fecha_de_nacimiento FROM usuario WHERE id=?;",(id_usuario,)).fetchone()
-    
+    user_data = cursor.execute("SELECT * FROM usuario WHERE id =?;", (id_usuario,)).fetchone()
     conn.close()
+    fecha_de_nacimiento = user_data["fecha_de_nacimiento"].split("/")
+    # Cada elemento de fecha_de_nacimiento a int
+    fecha_de_nacimiento = [int(i) for i in fecha_de_nacimiento]
+    today = date.today()
+    edad = today.year - fecha_de_nacimiento[2] - ((today.month, today.day) < (fecha_de_nacimiento[1], fecha_de_nacimiento[0]))
     return edad
+
 
 def cambiar_password(id, password_nueva):
     hash_password = hashear_contrasena(password_nueva)
@@ -139,6 +146,7 @@ def cambiar_password(id, password_nueva):
     cursor.execute("UPDATE usuario SET password=? WHERE dni=?;", (hash_password, id,))
     conn.commit()
     conn.close()
+
 
 def generar_reset_password_token(id_usuario):
     token = str(time.time()) + "supersecreto"

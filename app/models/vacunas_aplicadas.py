@@ -1,4 +1,6 @@
+from datetime import date
 from app.models import get_db_connection
+
 
 def get_vacunas_aplicadas(dni):
     """
@@ -28,14 +30,19 @@ def tiene_vacuna_aplicada(id_usuario, id_vacuna):
 def tiene_vacuna_gripe(id_usuario):
     conn = get_db_connection()
     cursor = conn.cursor()
-    fecha_gripe = cursor.execute("SELECT (julianday('now') - julianday(fecha) )/ 30 as aplicacion, \
-                                fecha FROM vacuna_aplicada WHERE id_vacuna=1 and id_usuario=?;",
+    fecha_gripe = cursor.execute("SELECT * FROM vacuna_aplicada WHERE id_vacuna=1 and id_usuario=? ORDER BY ID DESC;",
                                 (id_usuario,)).fetchone()
     conn.close()
     if fecha_gripe is None:
         return False
+    fecha_aplicacion = fecha_gripe["fecha"].split("/")
+    # Cada elemento de fecha_aplicacion a int
+    fecha_aplicacion = [int(i) for i in fecha_aplicacion]
+    today = date.today()
+    anios = today.year - fecha_aplicacion[2] - ((today.month, today.day) < (fecha_aplicacion[1], fecha_aplicacion[0]))
+    
+    if anios >= 1:
+        return False
     else:
-        if fecha_gripe['aplicacion'] > 12:
-            return False
-        else:
-            return True
+        return True
+

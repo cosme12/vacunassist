@@ -17,8 +17,7 @@ from app.models.vacunas_aplicadas import tiene_vacuna_aplicada ##pip install pyt
 def index():
     usuario = models.get_user_data(session['dni'])
 
-    calcular_edad = models.edad_de_usuario(usuario['id']) 
-    edad = int(calcular_edad['edad'])
+    edad = models.edad_de_usuario(usuario['id'])
     tiene_fa = models.tiene_vacuna_aplicada(usuario['id'],2)
     tiene_c1= models.tiene_vacuna_aplicada(usuario['id'],4)
     tiene_c2 = models.tiene_vacuna_aplicada(usuario['id'],3)

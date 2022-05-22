@@ -8,12 +8,13 @@
             <div class="row">
                 {%for turno in mis_turnos%}
                     <div class="col-sm-4">
-                        <div class="card" style="width: 18rem;">
+                        <div class="card" style="width: 20rem;">
                             <!-- <img src="..." class="card-img-top" alt="..."> -->
                             <div class="card-body">
-                                <h5 class="card-title">Fecha: {{turno["fecha"]}}</h5>
+                                <h5 class="card-title">Fecha: {{turno["fecha"]}} - {{turno["hora"]}} hs</h5>
+                                <hr>
                                 <p class="card-text">Vacuna: {{turno["enfermedad"]}}</p>
-                                <p class="card-text">Direccion: {{turno["direccion"]}}</p>
+                                <p class="card-text">Zona: {{turno["nombre"]  | capitalize }}</p>
                                 <!-- Button trigger modal -->
                                 <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#staticBackdrop{{turno['id']}}">
                                     Cancelar turno

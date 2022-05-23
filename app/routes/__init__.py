@@ -122,8 +122,8 @@ def mis_vacunas():
 @app.route('/cancelar-turno/<int:id>')
 @login_required
 def cancelar_turno(id):
-    ## Falta agregar la ventana de confirmacion
     models.cancel_appointment(id)
+    flash("Su turno ha sido cancelado.", "success")
     return redirect(url_for('mis_turnos'))
 
 

@@ -162,8 +162,8 @@ def test_mis_vacunas_route_con_vacunas_aplicadas(client, create_db):
         assert vacunas_aplicadas[2]['fecha'] in html
         assert 'Vacuna administrada por fuera del vacunatorio' in html
         assert 'GRIPE' in html
-        assert 'FIEBRE_AMARILLA' in html
-        assert 'COVID1' in html
+        assert 'FIEBRE AMARILLA' in html
+        assert 'COVID PRIMERA DOSIS' in html
         assert 'Generar certificado' in html
         assert 'None' not in html
 

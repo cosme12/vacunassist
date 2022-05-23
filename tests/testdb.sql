@@ -8,7 +8,7 @@ BEGIN TRANSACTION;
 
 -- Table: turno
 DROP TABLE IF EXISTS turno;
-CREATE TABLE turno (id INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE NOT NULL, fecha DATETIME NOT NULL, estado INTEGER NOT NULL, id_usuario INTEGER REFERENCES usuario (id) ON DELETE SET NULL ON UPDATE SET NULL, id_vacuna INTEGER REFERENCES vacuna (id) NOT NULL, id_zona INTEGER REFERENCES zona (id));
+CREATE TABLE turno (id INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE NOT NULL, fecha DATETIME NOT NULL, hora DATETIME NOT NULL, estado INTEGER NOT NULL, id_usuario INTEGER REFERENCES usuario (id) ON DELETE SET NULL ON UPDATE SET NULL, id_vacuna INTEGER REFERENCES vacuna (id) NOT NULL, id_zona INTEGER REFERENCES zona (id));
 
 
 -- Table: usuario
@@ -18,10 +18,10 @@ CREATE TABLE usuario (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL UNIQUE, nomb
 -- Table: vacuna
 DROP TABLE IF EXISTS vacuna;
 CREATE TABLE vacuna (id INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE NOT NULL, enfermedad TEXT NOT NULL, descripcion TEXT);
-INSERT INTO vacuna (id, enfermedad, descripcion) VALUES (1, 'gripe', NULL);
-INSERT INTO vacuna (id, enfermedad, descripcion) VALUES (2, 'fiebre_amarilla', NULL);
-INSERT INTO vacuna (id, enfermedad, descripcion) VALUES (3, 'covid2', NULL);
-INSERT INTO vacuna (id, enfermedad, descripcion) VALUES (4, 'covid1', NULL);
+INSERT INTO vacuna (id, enfermedad, descripcion) VALUES (1, 'Gripe', NULL);
+INSERT INTO vacuna (id, enfermedad, descripcion) VALUES (2, 'Fiebre Amarilla', NULL);
+INSERT INTO vacuna (id, enfermedad, descripcion) VALUES (3, 'Covid SEGUNDA DOSIS', NULL);
+INSERT INTO vacuna (id, enfermedad, descripcion) VALUES (4, 'Covid PRIMERA DOSIS', NULL);
 
 -- Table: vacuna_aplicada
 DROP TABLE IF EXISTS vacuna_aplicada;

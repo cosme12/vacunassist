@@ -2,8 +2,8 @@ from flask import redirect, url_for, session, request, flash
 from functools import wraps
 from app.models.turnos import get_appointment_from_user
 from app.models.usuarios import edad_de_usuario, get_user_data
-from app.models.turnos import tiene_appointment_covid1_from_user
-from app.models. vacunas_aplicadas import tiene_vacuna_aplicada
+from app.models.turnos import tiene_appointment_covid1_from_user, tiene_turno_pendiente
+from app.models.vacunas_aplicadas import tiene_vacuna_aplicada, tiene_vacuna_gripe
 
 
 def login_required(func):
@@ -17,9 +17,14 @@ def login_required(func):
                 edad = edad_de_usuario(usuario['id'])
                 tiene_turno_covid = tiene_appointment_covid1_from_user(usuario['id'])
                 vucuna_covid_1 = tiene_vacuna_aplicada(usuario['id'], 4)
+                vacuna_gripe = tiene_vacuna_gripe(usuario['id'])
+                tiene_turno_gripe = tiene_turno_pendiente(usuario['id'], 1)
                 if not vucuna_covid_1 and not tiene_turno_covid and (usuario['paciente_de_riesgo'] or edad > 60):
                     flash("Antes de poder acceder al resto del sitio debe reservar un turno para aplicarse la primera dosis de la vacuna de COVID-19.", "danger")
                     return redirect(url_for('sacar_turno', id_vacuna=4))
+                elif not vacuna_gripe and not tiene_turno_gripe and edad > 60:
+                    flash("Antes de poder acceder al resto del sitio debe reservar un turno para aplicarse la vacuna de la GRIPE.", "danger")
+                    return redirect(url_for('sacar_turno', id_vacuna=1))
         return func(*args, **kwargs)
     return decorated_function
 

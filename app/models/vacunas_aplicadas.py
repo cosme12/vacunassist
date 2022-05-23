@@ -20,12 +20,13 @@ def tiene_vacuna_aplicada(id_usuario, id_vacuna):
     conn = get_db_connection()
     cursor = conn.cursor()
     vacuna_aplicada = cursor.execute("SELECT * FROM vacuna_aplicada \
-                                    WHERE id_usuario=? and id_vacuna=?;",(id_usuario,id_vacuna,)).fetchone()
+                                    WHERE id_usuario=? and id_vacuna=? ORDER BY id DESC;",(id_usuario,id_vacuna,)).fetchone()
     conn.close()
     if vacuna_aplicada is None:
         return False
     else:
         return True
+
 
 def tiene_vacuna_gripe(id_usuario):
     conn = get_db_connection()

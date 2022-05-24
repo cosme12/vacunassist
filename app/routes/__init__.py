@@ -197,7 +197,7 @@ def forgot_password():
             token = generar_reset_password_token(usuario["id"])
             flash(f"Hemos enviado un mail a {email} para recuperar su contraseña.", "success")   
             if app.config['EMAIL_ENABLED']:
-                enviar_email(email, "Vacunassist - Recuperación de contraseña", f"Para recuperar su contraseña ingrese al siguiente link.\n\nhttp://localhost:5000/reset-password/{token}\n\nSi usted no solicitó un cambio de contraseña, ignore este mensaje.")
+                enviar_email(email, "Vacunassist - Recuperación de contraseña", f"Para recuperar su contraseña ingrese al siguiente link.\n\nhttp://127.0.0.1:5000/reset-password/{token}\n\nSi usted no solicitó un cambio de contraseña, ignore este mensaje.")
             return redirect(url_for('login'))
             
         else:

@@ -46,3 +46,10 @@ def tiene_vacuna_gripe(id_usuario):
         return False
     else:
         return True
+
+def get_vacuna_aplicada_covid1(id_usuario):
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    vacuna = cursor.execute("SELECT * FROM vacuna_aplicada WHERE id_usuario=? and id_vacuna=4;", (id_usuario,)).fetchone()
+    conn.close()
+    return vacuna

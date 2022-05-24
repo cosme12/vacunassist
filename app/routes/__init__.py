@@ -10,7 +10,7 @@ from app.models.turnos import get_turnos_aprobados
 from app.handlers import *
 import pdfkit
 
-from app.models.vacunas_aplicadas import tiene_vacuna_aplicada ##pip install python-dateutil
+from app.models.vacunas_aplicadas import tiene_vacuna_aplicada, get_vacuna_aplicada_covid1 ##pip install python-dateutil
 
 
 @app.route('/')  # http://localhost:5000/
@@ -46,7 +46,7 @@ def login():
     return render_template('login.html', titulo="Login", formulario_de_login=formulario_de_login)
 
 
-@app.route('/logout')
+@app.route('/logout') # http://localhost:5000/logout
 @login_required
 def logout():
     #session.pop('dni', None)
@@ -54,7 +54,7 @@ def logout():
     return redirect(url_for('login'))
 
 
-@app.route('/registro', methods=['GET', 'POST'])
+@app.route('/registro', methods=['GET', 'POST']) # http://localhost:5000/registro
 def registro():
     """
     Ruta que se encarga de la logica del registro
@@ -119,7 +119,7 @@ def mis_vacunas():
     return render_template ('mis_vacunas.html', titulo = "Vacunas aplicadas", vacunas=vacunas_aplicadas)
 
 
-@app.route('/cancelar-turno/<int:id>')
+@app.route('/cancelar-turno/<int:id>') # http://localhost:5000/cancelar-turno/<id_turno>
 @login_required
 def cancelar_turno(id):
     models.cancel_appointment(id)
@@ -127,7 +127,7 @@ def cancelar_turno(id):
     return redirect(url_for('mis_turnos'))
 
 
-@app.route('/eliminar_cuenta/<int:id>')
+@app.route('/eliminar_cuenta/<int:id>') # http://localhost:5000/eliminar-cuenta/<id_usuario>
 @login_required
 def eliminar_cuenta(id):
 
@@ -147,7 +147,7 @@ def eliminar_cuenta(id):
     return redirect(url_for('logout'))
 
 
-@app.route('/mis-vacunas/pdf/<int:id>')
+@app.route('/mis-vacunas/pdf/<int:id>') # http://localhost:5000/mis-vacunas/pdf/<id_vacuna_aplicada>
 @login_required
 def pdf_template(id):
          # Pase la ruta absoluta del programa wkhtmltopdf.exe al objeto de configuración
@@ -220,13 +220,25 @@ def reset_password(token):
         return redirect(url_for('login'))
 
 
-@app.route('/sacar-turno/<int:id_vacuna>', methods=['GET', 'POST'])
+@app.route('/sacar-turno/<int:id_vacuna>', methods=['GET', 'POST'])# http://localhost:5000/sacar-turnos/<id_vacuna>
 @login_required
 def sacar_turno(id_vacuna):
     ## variable para formulario
     form = BookAppointmedForm()
     vaccine_data= models.get_vacuna(id_vacuna)
     vaccine_name = vaccine_data['enfermedad']
+    
+    #Seteo de la fecha minima habilitada para turno de vacuna covid2
+    if id_vacuna == 3: 
+        usuario = models.get_user_data(session['dni'])
+        id_usuario = usuario["id"]
+        vacuna_covid1 = models.get_vacuna_aplicada_covid1(id_usuario)
+        fecha_covid1 = datetime.datetime.strptime(vacuna_covid1['fecha'], "%d/%m/%Y").date()
+        fecha_min_covid2 = fecha_covid1 + datetime.timedelta(90)
+        la_semana_que_viene = datetime.datetime.strptime((datetime.datetime.now() + datetime.timedelta(7)).strftime("%d/%m/%Y"), "%d/%m/%Y").date()
+        if (fecha_min_covid2 < la_semana_que_viene):
+            fecha_min_covid2 = la_semana_que_viene
+        form.fecha.render_kw = {'min':(fecha_min_covid2).strftime("%Y-%m-%d")}
 
     if form.validate_on_submit():
         user_data = models.get_user_data(session['dni'])
@@ -242,7 +254,7 @@ def sacar_turno(id_vacuna):
     return render_template('sacar_turno.html', titulo="Sacar Titulo", form=form,vaccine_name=vaccine_name)
 
 
-@app.route('/admin', methods=['GET', 'POST'])
+@app.route('/admin', methods=['GET', 'POST']) # http://localhost:5000/admin
 def admin():
     form = EnviarEmailsAdminForm()
     turnos_aprobados = models.get_turnos_aprobados()

@@ -234,7 +234,7 @@ def sacar_turno(id_vacuna):
         id_usuario = usuario["id"]
         vacuna_covid1 = models.get_vacuna_aplicada_covid1(id_usuario)
         fecha_covid1 = datetime.datetime.strptime(vacuna_covid1['fecha'], "%d/%m/%Y").date()
-        fecha_min_covid2 = fecha_covid1 + datetime.timedelta(90)
+        fecha_min_covid2 = fecha_covid1 + datetime.timedelta(21)
         la_semana_que_viene = datetime.datetime.strptime((datetime.datetime.now() + datetime.timedelta(7)).strftime("%d/%m/%Y"), "%d/%m/%Y").date()
         if (fecha_min_covid2 < la_semana_que_viene):
             fecha_min_covid2 = la_semana_que_viene

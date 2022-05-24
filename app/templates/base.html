@@ -43,9 +43,17 @@
                       <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                         <div style="display: inline;">{{ session['nombre'] | upper }} {{ session['apellido'] | upper }}  <i class="bi bi-person-circle" style="font-size: 24px;"></i></div></a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                          
                           <li><a class="dropdown-item" href="{{ url_for('perfil')}}"><i class="bi bi-person-circle" style="font-size: 20px;"></i> Perfil</a></li>
                           <li><a class="dropdown-item" href="{{ url_for('logout')}}"><i class="bi bi-door-closed-fill" style="font-size: 20px;"></i> Cerrar sesión</a></li>
-                        
+                          <!--
+                          <li><a class="dropdown-item" href="{{ url_for('perfil')}}">Perfil <i class="bi bi-person-circle" style="font-size: 20px; float: right;"></i></a></li>
+                          <li><a class="dropdown-item" href="{{ url_for('logout')}}">Cerrar sesión <i class="bi bi-door-closed-fill" style="font-size: 20px; float: right;"></i></a></li>
+                          
+                          <li><a class="dropdown-item text-end" href="{{ url_for('perfil')}}"><i class="bi bi-person-circle" style="font-size: 20px; float: left;"></i> Perfil</a></li>
+                          <li><a class="dropdown-item text-end" href="{{ url_for('logout')}}"><i class="bi bi-door-closed-fill" style="font-size: 20px; float: left;"></i> Cerrar sesión</a></li>
+                          -->
+                          
                         </ul>
                     </li>
                     

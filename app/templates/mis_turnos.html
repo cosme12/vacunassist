@@ -15,6 +15,11 @@
                                 <hr>
                                 <p class="card-text">Vacuna: {{turno["enfermedad"]}}</p>
                                 <p class="card-text">Zona: {{turno["nombre"]  | capitalize }}</p>
+                                {% if turno["id_vacuna"] == 2 and turno["estado"]  == 2 %}
+                                    <p class="card-text">Estado: <span class="badge bg-warning text-dark">Aprobado</span></p>
+                                {% else %}
+                                    <p class="card-text">Estado: <span class="badge bg-warning text-dark">Pendiente</span></p>
+                                {%endif%}
                                 <!-- Button trigger modal -->
                                 <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#staticBackdrop{{turno['id']}}">
                                     Cancelar turno

@@ -107,7 +107,12 @@ def mis_turnos():
     usuario = session['dni']
     user_data = models.get_user_data(usuario)
     mis_turnos = models.get_appointment_from_user(user_data['id'])
-    return render_template ('mis_turnos.html', titulo='Mis turnos', usuario=usuario, mis_turnos=mis_turnos)
+    hoy= datetime.datetime.strptime((datetime.datetime.now() + datetime.timedelta(hours=8)).strftime("%d/%m/%Y %H:%M"), "%d/%m/%Y %H:%M")
+    fechas_y_horas = []
+    for turno in mis_turnos:
+        fecha_y_hora = datetime.datetime.strptime((turno['fecha']+" "+ turno['hora']), "%d/%m/%Y %H:%M")
+        fechas_y_horas.append(fecha_y_hora)
+    return render_template ('mis_turnos.html', titulo='Mis turnos', usuario=usuario, mis_turnos=mis_turnos, hoy=hoy, fechas_y_horas=fechas_y_horas)
 
 
 @app.route('/mis-vacunas') # http://localhost:5000/mis-vacunas

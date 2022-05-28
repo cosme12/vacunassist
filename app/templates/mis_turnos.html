@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 
+
 {% block content %}
     {% if usuario %}
         <h1 class="pb-4"><i class="bi bi-calendar-date-fill" style="font-size: 40px;"></i> Mis turnos</h1>
@@ -23,9 +24,16 @@
                                     {%endif%}
                                 {% endif %}
                                 <!-- Button trigger modal -->
-                                <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#staticBackdrop{{turno['id']}}">
-                                    Cancelar turno
-                                </button>
+                                
+                                {% if hoy < fechas_y_horas[loop.index-1] %}
+                                    <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#staticBackdrop{{turno['id']}}">
+                                        Cancelar turno
+                                    </button>
+                                {% else %}
+                                    <button type="button" class="btn btn-success" data-bs-toggle="modal" disabled>
+                                        Cancelar turno
+                                    </button>
+                                {% endif %}
                                 
                                 <!-- Modal -->
                                 <div class="modal fade" id="staticBackdrop{{turno['id']}}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">

@@ -35,7 +35,7 @@ def get_usuarios():
 
 def guardar_usuario(form_data):
     """
-    Guarda un nuevo ususario en la base de datos
+    Guarda un nuevo ususario en la base de datos. Solo se usa para pacientes
 
     :param form_data: datos del formulario
     """
@@ -55,6 +55,26 @@ def guardar_usuario(form_data):
         error = "El usuario ya existe."
     conn.close()
     return error, token
+
+
+def guardar_enfermero(form_data):
+    """
+    Guarda un nuevo enfermero en la base de datos
+
+    :param form_data: datos del formulario
+    """
+    conn = get_db_connection()  # Me conecto a la db
+    cursor = conn.cursor()  # Creo un cursor para poder ejecutar comandos SQL
+    error = None
+    try:
+        cursor.execute("INSERT INTO usuario (nombre, apellido, dni, email, password, tipo, id_zona) VALUES (?, ?, ?, ?, ?, ?, ?);",
+                              (form_data['nombre'], form_data['apellido'], form_data['dni'], form_data['email'],
+                                hashear_contrasena(form_data['dni']), 2, form_data['id_zona'])).fetchall()
+        conn.commit()
+    except sqlite3.IntegrityError:
+        error = "El usuario ya existe."
+    conn.close()
+    return error
 
 
 def guardar_vacunas_aplicadas(form_data, id_usuario):

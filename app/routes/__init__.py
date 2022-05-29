@@ -41,7 +41,12 @@ def login():
             session['nombre'] = usuario["nombre"]
             session['apellido'] = usuario["apellido"]
             session['tipo'] = usuario["tipo"]
-            return redirect(url_for('index'))
+            if session["tipo"] == 1:
+                return redirect(url_for('index'))
+            elif session["tipo"] == 2:
+                return redirect(url_for('turnos_del_dia'))
+            elif session["tipo"] == 3:
+                return redirect(url_for('registrar_enfermero'))
         else:
             flash(error, 'danger')
     return render_template('login.html', titulo="Login", formulario_de_login=formulario_de_login)

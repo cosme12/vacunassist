@@ -3,7 +3,7 @@
 
 {% block content %}
     <h1 class="text-end">ZONA {{ zona['nombre'] | upper }}</h1>
-    <table id="data" class="table table-striped" data-order='[[ 0, "asc" ]]' data-page-length='25'>
+    <table id="data" class="table table-striped" data-order='[[ 0, "asc" ]]'>
         <thead>
         <tr>
             <th>Hora</th>
@@ -32,6 +32,8 @@
         <script>
             $(document).ready(function () {
             $('#data').DataTable({
+                        paging: false,
+                        //scrollY: 400,
                         columns: [
                         {searchable: false},
                         {orderable: false},
@@ -39,7 +41,12 @@
                         null,
                         {searchable: false}], 
                         "language": {
-                            "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json"
+                            //"url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json",
+                            "info": "Mostrando _START_ a _END_ de _TOTAL_ turnos",
+                            "lengthMenu": "Mostrar _MENU_ entradas por página",
+                            "zeroRecords": "No se encontraron resultados",
+                            "infoEmpty": "",
+                            "infoFiltered": "(Filtrado de un total de _MAX_ entradas)",
                         }
                         
                     });

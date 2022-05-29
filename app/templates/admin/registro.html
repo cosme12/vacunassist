@@ -1,0 +1,95 @@
+{% extends "base.html" %}
+{% from 'bootstrap5/form.html' import render_form %}
+
+{% block content %}
+    <div class="row">
+        <div class="card p-4 mt-3">
+            <h1 class="pb-4">Registro</h1>
+            {{ render_form(form, form_type='horizontal', horizontal_columns=('lg', 2, 10)) }}
+        </div>
+    </div>
+    <br>
+    <br><br>
+    
+    <script>
+        window.onload = function() {
+
+            titulos = document.getElementsByTagName('legend');
+            cant_titulos = titulos.length;
+            // eliminar todos los titulos
+            for (let i = 1; i < cant_titulos; i++) {
+                titulos[1].remove();  // a medida que borra los titulos, los indices cambian
+            }
+            titulo = document.getElementsByTagName('fieldset')[0];
+            titulo.insertAdjacentHTML('afterend', `
+            <div class="row">
+            <div class="col-md-2"></div>
+                    <div class="col-md-10">
+                        <button type="button" class="btn btn-secondary" id="add-vacunas-field">
+                            <i class="fa fa-plus"></i> Agregar vacuna
+                        </button>
+                        <button type="button" class="btn btn-danger" id="remove-vacunas-field">
+                            <i class="fa fa-plus"></i> Quitar vacuna
+                        </button>
+                    <p class="pt-4" style="color: red;">* Para la vacuna de la gripe solo cargue la aplicada en el último año.</p>
+            </div>
+            `);
+
+            let addVacunasFieldBtn = document.getElementById('add-vacunas-field');
+            let removeVacunasFieldBtn = document.getElementById('remove-vacunas-field');
+            
+            addVacunasFieldBtn.addEventListener('click', function(e){
+                e.preventDefault();
+                let todasVacunasFieldWrapper = document.getElementsByTagName('fieldset')[0];
+                let todasVacunasField = document.querySelectorAll('*[id^="vacunas-"]');
+                if(todasVacunasField.length > 8) {
+                    alert('Solo puede seleccionar 5 vacunas');
+                    return;
+                }
+                let vacunasInputIds = [0]
+                for(let i = 0; i < todasVacunasField.length; i++) {
+                    vacunasInputIds.push(parseInt(todasVacunasField[i].name.split('-')[1]));
+                }
+                let newFieldName = `vacunas-${Math.max(...vacunasInputIds) + 1}`;
+                todasVacunasFieldWrapper.insertAdjacentHTML('beforeend',`
+                <fieldset>
+                <div class="mb-3 row">
+                <label class="col-form-label col-lg-2" for="${newFieldName}-id_vacuna">¿Qué vacuna ya se aplicó?</label>
+                <div class="col-lg-10">
+                        <select class="form-control" id="${newFieldName}-id_vacuna" name="${newFieldName}-id_vacuna" required=""><option value="4">Covid 1era dosis</option><option value="3">Covid 2da dosis</option><option value="2">Fiebre amarilla</option><option value="1">Gripe</option></select>
+                </div></div>
+                <div class="mb-3 row">
+                <label class="col-form-label col-lg-2" for="${newFieldName}-fecha_aplicacion">Fecha de aplicación</label>
+                <div class="col-lg-10">
+                        <input class="form-control" id="${newFieldName}-fecha_aplicacion" name="${newFieldName}-fecha_aplicacion" type="date" value="" min="1900-01-01" max="{{ hoy }}" required="">
+                </div></div><hr></fieldset>
+                `);
+            });
+
+            removeVacunasFieldBtn.addEventListener('click', function(e){
+                e.preventDefault();
+                let todasVacunasFieldWrapper = document.getElementsByTagName('fieldset');
+                if (todasVacunasFieldWrapper.length > 1) {
+                    todasVacunasFieldWrapper[todasVacunasFieldWrapper.length - 1].remove();
+                }
+            });
+        }
+        function validateNumber(){
+            var z = document.forms[0]["dni"].value;
+            if(!/^[0-9]+$/.test(z)){
+                //alert("Solo caracteres numéricos");
+                document.forms[0]["dni"].value = null;
+            }
+        }
+        function validateChars(event){
+            var n = document.forms[0]["nombre"].value;
+            if(!/^[a-zA-Z]+$/.test(n)){
+                document.forms[0]["nombre"].value = null;
+            }
+            var n = document.forms[0]["apellido"].value;
+            if(!/^[a-zA-Z]+$/.test(n)){
+                document.forms[0]["apellido"].value = null;
+            }
+        }
+    </script>    
+{% endblock %}

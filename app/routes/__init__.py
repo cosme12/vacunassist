@@ -9,6 +9,7 @@ from app.models.usuarios import validar_contrasena, validar_inicio_sesion, gener
 from app.models.turnos import get_turnos_aprobados
 from app.handlers import *
 import pdfkit
+from app.routes.admin import *
 
 from app.models.vacunas_aplicadas import tiene_vacuna_aplicada, get_vacuna_aplicada_covid1 ##pip install python-dateutil
 
@@ -271,3 +272,9 @@ def admin():
                 flash("Se enviaron los emails con éxito.", "success")
     return render_template('admin.html', titulo="Admin", form=form, turnos_aprobados=turnos_aprobados, cant=len(turnos_aprobados))
 
+@app.route('/turnos-del-dia') #http://localhost:5000/turnosdel-dia
+def turnos_del_dia():
+    id_zona = 3
+    zona = models.get_nombre_zona(id_zona)
+    turnos = models.get_turnos_del_dia(datetime.date.today().strftime("%d/%m/%Y"), id_zona)
+    return render_template('turnos_del_dia.html', titulo="Turnos del dia", zona=zona, turnos=turnos)

@@ -90,3 +90,15 @@ def tiene_turno_pendiente(id_usuario, id_vacuna):
             return True 
     return False
 
+def get_turnos_del_dia(fecha, zona):
+    conn = get_db_connection()
+    cursos = conn.cursor()
+    turnos = cursos.execute("SELECT t.fecha, t.hora, u.dni, u.nombre, u.apellido, z.nombre as zona, v.enfermedad as vacuna \
+                            FROM turno AS t \
+                            INNER JOIN usuario AS u ON t.id_usuario=u.id \
+                            INNER JOIN vacuna AS v ON t.id_vacuna=v.id \
+                            INNER JOIN zona AS z ON t.id_zona=z.id \
+                            WHERE t.fecha=? and t.estado=? and t.id_zona=? \
+                            ORDER BY t.hora, u.apellido;", (fecha, 2, zona)).fetchall()
+    conn.close()
+    return turnos

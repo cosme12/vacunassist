@@ -16,14 +16,16 @@
         <tbody>
 
                 {% for turno in turnos %}
+                    
                     <tr>
-                    <td>{{ turno['hora'] }}</td>
-                    <td>{{ turno['dni'] }}</td>
-                    <td>{{ turno['nombre'] }}</td>
-                    <td>{{ turno['apellido'] }}</td>
-                    <td>{{ turno['vacuna'] }}</td>
-                    <td><a href=""><button>Confirmar asistencia</button></a></td>
+                        <td>{{ turno['hora'] }}</td>
+                        <td>{{ turno['dni'] }}</td>
+                        <td>{{ turno['nombre'] }}</td>
+                        <td>{{ turno['apellido'] }}</td>
+                        <td>{{ turno['vacuna'] }}</td>
+                        <td><a href=""><button class="btn btn-success" >Confirmar asistencia</button></a></td>
                     </tr>
+                    
                 {% endfor %}
 
                 

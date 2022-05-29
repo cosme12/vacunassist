@@ -69,3 +69,10 @@ class RegistroEnfermeroForm(FlaskForm):
                                             validators=[DataRequired('Este campo es requerido')])
     enviar = SubmitField('Registrarse', render_kw={'onkeyup':'return validateChars(event)'})
 
+class VacunaAplicadaForm(FlaskForm):
+    vacuna = StringField('Vacuna',  validators=[DataRequired('Este campo es requerido')], render_kw={'onkeyup':'return validateChars(event)'})
+    lote = StringField('Lote', validators=[DataRequired('Este campo es requerido')] )
+    laboratorio = StringField('Laboratorio', validators=[DataRequired('Este campo es requerido')])
+    observaciones = StringField('Observaciones', validators=[DataRequired('Este campo es requerido')])
+    enviarse = SubmitField('Confirmar operacion')
+

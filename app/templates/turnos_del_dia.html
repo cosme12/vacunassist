@@ -2,7 +2,7 @@
 
 
 {% block content %}
-    <h1 class="text-end">ZONA {{ zona['nombre'] | upper }}</h1>
+    <h1 class="text-end pb-5">ZONA {{ zona['nombre'] | upper }}</h1>
     <table id="data" class="table table-striped" data-order='[[ 0, "asc" ]]'>
         <thead>
         <tr>
@@ -10,7 +10,8 @@
             <th>DNI</th>
             <th>Nombre</th>
             <th>Apellido</th>
-            <th>Vacuna</th>    
+            <th>Vacuna</th>
+            <th>Acciones</th>
         </tr>
         </thead>
         <tbody>
@@ -31,18 +32,17 @@
                 
         </tbody>
     </table>
+    <br><br>
     {% block scripts %}
-        <script>
-            $(document).ready(function () {
+    <script type="text/javascript" charset="utf8" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.js"></script>
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.12.1/js/dataTables.bootstrap5.js"></script>
+    <script>
+        $(document).ready(function () {
+            table = $('#data').DataTable();
+            table.destroy();
+            
             $('#data').DataTable({
-                        paging: false,
-                        //scrollY: 400,
-                        columns: [
-                        {searchable: false},
-                        {orderable: false},
-                        null,
-                        null,
-                        {searchable: false}], 
                         "language": {
                             //"url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json",
                             "info": "Mostrando _START_ a _END_ de _TOTAL_ turnos",
@@ -51,9 +51,7 @@
                             "infoEmpty": "",
                             "infoFiltered": "(Filtrado de un total de _MAX_ entradas)",
                         }
-                        
                     });
-                
             });
         </script>
     {% endblock %}

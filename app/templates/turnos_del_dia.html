@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+
+{% block content %}
+    <h1 class="text-end">ZONA {{ zona['nombre'] | upper }}</h1>
+  <table id="data" class="table table-striped">
+    <thead>
+      <tr>
+        <th>Hora</th>
+        <th>DNI</th>
+        <th>Nombre</th>
+        <th>Apellido</th>
+        <th>Vacuna</th>    
+      </tr>
+    </thead>
+    <tbody>
+      {% for turno in turnos %}
+        <tr>
+          <td>{{ turno['hora'] }}</td>
+          <td>{{ turno['dni'] }}</td>
+          <td>{{ turno['nombre'] }}</td>
+          <td>{{ turno['apellido'] }}</td>
+          <td>{{ turno['vacuna'] }}</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</body>
+</html>
+{% endblock %}

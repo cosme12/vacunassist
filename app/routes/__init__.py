@@ -281,5 +281,6 @@ def admin():
 def turnos_del_dia():
     id_zona = 3
     zona = models.get_nombre_zona(id_zona)
-    turnos = models.get_turnos_del_dia(datetime.date.today().strftime("%d/%m/%Y"), id_zona)
-    return render_template('turnos_del_dia.html', titulo="Turnos del dia", zona=zona, turnos=turnos)
+    hoy = datetime.date.today().strftime("%d/%m/%Y")
+    turnos = models.get_turnos_del_dia(hoy, id_zona)
+    return render_template('turnos_del_dia.html', titulo="Turnos del dia", zona=zona, turnos=turnos, hoy=hoy)

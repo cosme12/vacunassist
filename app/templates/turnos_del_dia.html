@@ -2,6 +2,7 @@
 
 
 {% block content %}
+    <h3 class=" text-end">{{ hoy }}</h3>
     <h1 class="text-end pb-5">ZONA {{ zona['nombre'] | upper }}</h1>
     <table id="data" class="table table-striped" data-order='[[ 0, "asc" ]]'>
         <thead>
@@ -25,16 +26,58 @@
                         <td>{{ turno['nombre'] }}</td>
                         <td>{{ turno['apellido'] }}</td>
                         <td>{{ turno['vacuna'] }}</td>
-                        <td><a href=""><button class="btn btn-secondary">Ver detalle</button></a></td>
-                        <td><a href=""><button class="btn btn-success" >Confirmar asistencia</button></a></td>
+                        <td><button class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#staticBackdrop{{turno['id']}}">Ver detalle</button></td>
+                        <td><button class="btn btn-success" >Confirmar asistencia</button></td>
                     </tr>
                     
-                {% endfor %}
-
-                
+                {% endfor %}   
         </tbody>
     </table>
-    <br><br>
+    <!-- Modal -->
+    {% for turno in turnos %}
+        <div class="modal fade" id="staticBackdrop{{ turno['id']}}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">{{turno['nombre']}} {{ turno['apellido'] }}</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row justify-content-evenly ">
+                        <div class="col-md-12">
+                            <dl class="row">
+                                <dt class="col-sm-6">DNI</dt>
+                                <dd class="col-sm-6">{{ turno['dni'] }}</dd>
+                              
+                                <dt class="col-sm-6">Fecha de nacimiento</dt>
+                                <dd class="col-sm-6">{{ turno['fecha_de_nacimiento'] }}</dd>
+    
+                                <dt class="col-sm-6">Paciente de riesgo COVID</dt>
+                                {% if turno["paciente_de_riesgo"] == 1 %}
+                                    <dd class="col-sm-6">SI</dd>
+                                {% else %}
+                                    <dd class="col-sm-6">NO</dd>
+                                {% endif %}
+                            </dl>
+                            <hr>
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item">An item</li>
+                                <li class="list-group-item">A second item</li>
+                                <li class="list-group-item">A third item</li>
+                                <li class="list-group-item">A fourth item</li>
+                                <li class="list-group-item">And a fifth one</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+            </div>
+        </div>
+    {% endfor %}
+        <br><br>
     {% block scripts %}
     <script type="text/javascript" charset="utf8" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.js"></script>

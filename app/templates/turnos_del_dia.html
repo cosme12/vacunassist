@@ -43,13 +43,23 @@
             table.destroy();
             
             $('#data').DataTable({
+                        //paging: false,
+                        //scrollY: 400,
+                        columns: [
+                        {searchable: false},
+                        {orderable: false},
+                        null,
+                        null,
+                        {searchable: false},
+                        {sercheable: false, orderable:false}],
                         "language": {
                             //"url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json",
-                            "info": "Mostrando _START_ a _END_ de _TOTAL_ turnos",
-                            "lengthMenu": "Mostrar _MENU_ entradas por página",
+                            "info": "Mostrando _START_-_END_ de _TOTAL_ turnos",
+                            "lengthMenu": "Mostrar _MENU_ turnos por página",
                             "zeroRecords": "No se encontraron resultados",
                             "infoEmpty": "",
-                            "infoFiltered": "(Filtrado de un total de _MAX_ entradas)",
+                            "search": "Buscar: ",
+                            "infoFiltered": "(Filtrado de un total de _MAX_ turnos)",
                         }
                     });
             });

@@ -5,7 +5,7 @@ from app import models
 from app import app
 
 
-@app.route('/admin/registar-enfermero')
+@app.route('/admin/registrar-enfermero')
 @login_required
 def registrar_enfermero():
     form = RegistroEnfermeroForm()

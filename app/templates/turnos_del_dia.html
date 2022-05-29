@@ -3,28 +3,48 @@
 
 {% block content %}
     <h1 class="text-end">ZONA {{ zona['nombre'] | upper }}</h1>
-  <table id="data" class="table table-striped">
-    <thead>
-      <tr>
-        <th>Hora</th>
-        <th>DNI</th>
-        <th>Nombre</th>
-        <th>Apellido</th>
-        <th>Vacuna</th>    
-      </tr>
-    </thead>
-    <tbody>
-      {% for turno in turnos %}
+    <table id="data" class="table table-striped" data-order='[[ 0, "asc" ]]' data-page-length='25'>
+        <thead>
         <tr>
-          <td>{{ turno['hora'] }}</td>
-          <td>{{ turno['dni'] }}</td>
-          <td>{{ turno['nombre'] }}</td>
-          <td>{{ turno['apellido'] }}</td>
-          <td>{{ turno['vacuna'] }}</td>
+            <th>Hora</th>
+            <th>DNI</th>
+            <th>Nombre</th>
+            <th>Apellido</th>
+            <th>Vacuna</th>    
         </tr>
-      {% endfor %}
-    </tbody>
-  </table>
-</body>
-</html>
+        </thead>
+        <tbody>
+
+                {% for turno in turnos %}
+                    <tr>
+                    <td>{{ turno['hora'] }}</td>
+                    <td>{{ turno['dni'] }}</td>
+                    <td>{{ turno['nombre'] }}</td>
+                    <td>{{ turno['apellido'] }}</td>
+                    <td>{{ turno['vacuna'] }}</td>
+                    </tr>
+                {% endfor %}
+
+                
+        </tbody>
+    </table>
+    {% block scripts %}
+        <script>
+            $(document).ready(function () {
+            $('#data').DataTable({
+                        columns: [
+                        {searchable: false},
+                        {orderable: false},
+                        null,
+                        null,
+                        {searchable: false}], 
+                        "language": {
+                            "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json"
+                        }
+                        
+                    });
+                
+            });
+        </script>
+    {% endblock %}
 {% endblock %}

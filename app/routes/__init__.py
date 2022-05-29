@@ -17,7 +17,6 @@ from app.models.vacunas_aplicadas import tiene_vacuna_aplicada, get_vacuna_aplic
 @login_required
 def index():
     usuario = models.get_user_data(session['dni'])
-
     habilitar_covid = models.apto_vacuna_covid(usuario["id"])
     tiene_covid1 = models.tiene_covid1(usuario["id"])
     habilitar_gripe = models.apto_vacuna_gripe(usuario["id"])
@@ -40,6 +39,7 @@ def login():
             session['dni'] = formulario_de_login.dni.data
             session['nombre'] = usuario["nombre"]
             session['apellido'] = usuario["apellido"]
+            session['tipo'] = usuario["tipo"]
             return redirect(url_for('index'))
         else:
             flash(error, 'danger')

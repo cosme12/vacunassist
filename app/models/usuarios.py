@@ -109,9 +109,11 @@ def validar_inicio_sesion(dni, contrasena, token=None):
                 return True, "Inicio de sesion correcto"
             else:
                 return False, "Credenciales inválidas"
-        else:
-            # Verificar si es enfermero o administrador
-            pass
+        else: # Verifica si es enfermero o administrador
+            if (usuario["tipo"] == 2 or usuario["tipo"] == 3) and validar_contrasena(contrasena, usuario["password"]): 
+                return True, "Inicio de sesion correcto"
+            else:
+                return False, "Credenciales inválidas"
     else:
         return False, "El usuario no está registrado"
 

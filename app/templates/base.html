@@ -39,7 +39,13 @@
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".dual-collapse2">
               <span class="navbar-toggler-icon"></span>
             </button>
-            <a class="navbar-brand mx-auto" href="{{ url_for('index') }}" target=""><img src="{{ url_for('static', filename='/images/Logo_VacunAssist_largo.png') }}" alt="Logo_VacunAssist"></a>
+            {% if session["dni"] and session["tipo"] == 1%}
+              <a class="navbar-brand mx-auto" href="{{ url_for('index') }}" target=""><img src="{{ url_for('static', filename='/images/Logo_VacunAssist_largo.png') }}" alt="Logo_VacunAssist"></a>
+            {% elif session["dni"] and session["tipo"] == 2%}
+              <a class="navbar-brand mx-auto" href="{{ url_for('turnos_del_dia') }}" target=""><img src="{{ url_for('static', filename='/images/Logo_VacunAssist_largo.png') }}" alt="Logo_VacunAssist"></a>
+            {% elif session["dni"] and session["tipo"] == 3%}
+              <a class="navbar-brand mx-auto" href="{{ url_for('registrar_enfermero') }}" target=""><img src="{{ url_for('static', filename='/images/Logo_VacunAssist_largo.png') }}" alt="Logo_VacunAssist"></a>
+            {% endif %}
           </div>
           <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
             <ul class="navbar-nav ms-auto">

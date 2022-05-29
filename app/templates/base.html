@@ -23,10 +23,15 @@
         <div class="container-fluid">
           <div class="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2">
             <ul class="navbar-nav me-auto">
-              {% if session["dni"] %}
+              {% if session["dni"] and session["tipo"] == 1%}
                 {{ render_nav_item('index', 'Reservar turno') }}
                 {{ render_nav_item('mis_turnos', 'Mis turnos') }}
                 {{ render_nav_item('mis_vacunas', 'Mis vacunas', use_li=True) }}
+              {% elif session["dni"] and session["tipo"] == 2%}
+                {{ render_nav_item('turnos_del_dia', 'Turnos del dia') }}
+              {% elif session["dni"] and session["tipo"] == 3%}
+                {{ render_nav_item('registrar_enfermero', 'Registrar Enfermero') }}
+                {{ render_nav_item('admin', 'Enviar Mails') }}
               {% endif %}
             </ul>
           </div>

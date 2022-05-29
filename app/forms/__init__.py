@@ -57,3 +57,15 @@ class BookAppointmedForm(FlaskForm):
 
 class EnviarEmailsAdminForm(FlaskForm):
     enviar = SubmitField('ENVIAR EMAILS')
+
+
+class RegistroEnfermeroForm(FlaskForm):
+    dni = StringField('DNI', validators=[DataRequired('Este campo es requerido'), Length(min=7, max=8, message='No es un dni válido')], render_kw={'onkeyup':'return validateNumber(event)'})
+    nombre = StringField('Nombre', validators=[DataRequired('Este campo es requerido')], render_kw={'onkeyup':'return validateChars(event)'})
+    apellido = StringField('Apellido', validators=[DataRequired('Este campo es requerido')], render_kw={'onkeyup':'return validateChars(event)'})
+    email = EmailField('Email', validators=[DataRequired('Este campo es requerido')])
+    id_zona = SelectField('Zona:', choices=[("1", "ZONA TERMINAL"), ("2", "ZONA MUNICIPALIDAD"),
+                                            ("3", "ZONA CEMENTERIO")], 
+                                            validators=[DataRequired('Este campo es requerido')])
+    enviar = SubmitField('Registrarse', render_kw={'onkeyup':'return validateChars(event)'})
+

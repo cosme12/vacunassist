@@ -9,6 +9,7 @@ from app.models.usuarios import validar_contrasena, validar_inicio_sesion, gener
 from app.models.turnos import get_turnos_aprobados
 from app.handlers import *
 import pdfkit
+from app.routes.admin import *
 
 from app.models.vacunas_aplicadas import tiene_vacuna_aplicada, get_vacuna_aplicada_covid1 ##pip install python-dateutil
 

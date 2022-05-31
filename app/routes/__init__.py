@@ -1,6 +1,6 @@
 import datetime
 from flask import render_template, redirect,url_for, session, flash, make_response
-from app.forms import BookAppointmedForm, CambiarPasswordForm, ForgotPasswordForm, LoginForm, RegistroForm, ResetPasswordForm, EnviarEmailsAdminForm
+from app.forms import BookAppointmedForm, CambiarPasswordForm, ForgotPasswordForm, LoginForm, RegistroForm, ResetPasswordForm, EnviarEmailsAdminForm, VacunaAplicadaForm
 from app.auth import login_required
 from app import models
 from app import app
@@ -284,4 +284,5 @@ def turnos_del_dia():
     zona = models.get_nombre_zona(id_zona)
     hoy = datetime.date.today().strftime("%d/%m/%Y")
     turnos = models.get_turnos_del_dia(hoy, id_zona)
-    return render_template('turnos_del_dia.html', titulo="Turnos del dia", zona=zona, turnos=turnos, hoy=hoy)
+    form = VacunaAplicadaForm()
+    return render_template('turnos_del_dia.html', titulo="Turnos del dia", zona=zona, turnos=turnos, hoy=hoy, form=form)

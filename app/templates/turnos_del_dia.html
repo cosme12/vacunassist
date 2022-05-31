@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-
+{% from 'bootstrap5/form.html' import render_form %}
 
 {% block content %}
     <h3 class=" text-end">{{ hoy }}</h3>
@@ -27,7 +27,7 @@
                         <td>{{ turno['apellido'] }}</td>
                         <td>{{ turno['vacuna'] }}</td>
                         <td><button class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#staticBackdrop{{turno['id']}}">Ver detalle</button></td>
-                        <td><button class="btn btn-success" >Confirmar asistencia</button></td>
+                        <td><button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#formualrioVacunaAplicada{{turno['id']}}" >Confirmar asistencia</button></td>
                     </tr>
                     
                 {% endfor %}   
@@ -72,6 +72,26 @@
                 </div>
                 <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+            </div>
+        </div>
+        <!-- Modal Confirmar asistencia-->
+        <div class="modal fade" id="formualrioVacunaAplicada{{ turno['id']}}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">Cargue los datos de la vacuna aplicada</h5>
+                </div>
+                <div class="modal-body">
+                    <div class="row justify-content-evenly ">
+                        <div class="col-md-14">
+                            {{ render_form(form, form_type='horizontal', horizontal_columns=('lg', 4, 8)) }}
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer mx-auto">
+                <button type="button" class="btn btn-secondary " data-bs-dismiss="modal">Close</button>
                 </div>
             </div>
             </div>

@@ -194,8 +194,6 @@ def verificar_reset_password_token(token):
 def apto_vacuna_covid(id):
     id_covid1 = 4
     id_covid2 = 3
-    conn = get_db_connection()
-    cursor = conn.cursor()
     dosis2 = tiene_vacuna_aplicada(id, id_covid2)
     if not dosis2:
         turno = tiene_turno_pendiente(id, id_covid1) or tiene_turno_pendiente(id, id_covid2)
@@ -204,8 +202,6 @@ def apto_vacuna_covid(id):
 
 def apto_vacuna_gripe(id):
     id_gripe = 1
-    conn = get_db_connection()
-    cursor = conn.cursor()
     vacuna = tiene_vacuna_gripe(id)
     if not vacuna:
         turno = tiene_turno_pendiente(id, id_gripe)
@@ -214,8 +210,6 @@ def apto_vacuna_gripe(id):
 
 def apto_vacuna_fiebre_amarilla(id):
     id_fiebre_amarilla = 2
-    conn = get_db_connection()
-    cursor = conn.cursor()
     edad = edad_de_usuario(id)
     if edad < 60:
         vacuna = tiene_vacuna_aplicada(id, id_fiebre_amarilla)
@@ -226,7 +220,5 @@ def apto_vacuna_fiebre_amarilla(id):
 
 def tiene_covid1(id):
     id_covid1 = 4
-    conn = get_db_connection()
-    cursor = conn.cursor()
     return tiene_vacuna_aplicada(id, id_covid1)
     

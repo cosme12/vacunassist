@@ -44,7 +44,7 @@ def login():
             if session["tipo"] == 1:
                 return redirect(url_for('index'))
             elif session["tipo"] == 2:
-                #id_zona = models.get_id_zona(session['dni'])
+                #id_zona = usuario['id_zona']
                 return redirect(url_for('turnos_del_dia'))
             elif session["tipo"] == 3:
                 return redirect(url_for('registrar_enfermero'))

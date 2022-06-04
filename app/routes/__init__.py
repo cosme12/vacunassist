@@ -44,6 +44,7 @@ def login():
             if session["tipo"] == 1:
                 return redirect(url_for('index'))
             elif session["tipo"] == 2:
+                #id_zona = models.get_id_zona(session['dni'])
                 return redirect(url_for('turnos_del_dia'))
             elif session["tipo"] == 3:
                 return redirect(url_for('registrar_enfermero'))
@@ -277,12 +278,15 @@ def admin():
                 flash("Se enviaron los emails con éxito.", "success")
     return render_template('admin.html', titulo="Admin", form=form, turnos_aprobados=turnos_aprobados, cant=len(turnos_aprobados))
 
-@app.route('/turnos-del-dia') #http://localhost:5000/turnosdel-dia
+@app.route('/turnos-del-dia') #http://localhost:5000/turnos-del-dia/<id_zona>
 @login_required
 def turnos_del_dia():
     id_zona = 3
     zona = models.get_nombre_zona(id_zona)
     hoy = datetime.date.today().strftime("%d/%m/%Y")
     turnos = models.get_turnos_del_dia(hoy, id_zona)
+    vacunas_aplicadas = {}
+    for turno in turnos :
+        vacunas_aplicadas[turno['dni']] = models.get_vacunas_aplicadas(turno['dni'])
     form = VacunaAplicadaForm()
-    return render_template('turnos_del_dia.html', titulo="Turnos del dia", zona=zona, turnos=turnos, hoy=hoy, form=form)
+    return render_template('turnos_del_dia.html', titulo="Turnos del dia", zona=zona, turnos=turnos, hoy=hoy, vacunas_aplicadas=vacunas_aplicadas, form=form)

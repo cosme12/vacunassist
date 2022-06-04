@@ -61,11 +61,19 @@
                             </dl>
                             <hr>
                             
-                            <ul class="list-group list-group-flush"><dt>Vacunas Aplicadas</dt> 
-                                <li class="list-group-item">An item</li>
-                                <li class="list-group-item">A second item</li>
-                                <li class="list-group-item">A third item</li>
-                                <li class="list-group-item">A fourth item</li>
+                            <ul class="list-group list-group-flush"><dt>Vacunas Aplicadas</dt>
+                                
+                            {% if vacunas_aplicadas[turno['dni']] %}
+                                {% for vacuna in vacunas_aplicadas[turno['dni']] %}
+                                    <li class="list-group-item">{{ vacuna['fecha']}} - {{ vacuna['enfermedad'] }} <br>
+                                        {% if vacuna['laboratorio'] %} Laboratorio: {{ vacuna['laboratorio'] }} - Lote:{{ vacuna['lote']}}
+                                        {% else %}Sin datos de aplicación.
+                                        {% endif %}
+                                    </li>
+                                {% endfor %}
+                            {% else %}
+                                <li class="list-group-item"> Sin vacunas registradas </li>
+                            {% endif %}  
                             </ul>
                         </div>
                     </div>

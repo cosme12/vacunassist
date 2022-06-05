@@ -85,7 +85,7 @@
             </div>
         </div>
         <!-- Modal Confirmar asistencia-->
-        <div class="modal fade" id="formualrioVacunaAplicada{{ turno['id']}}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal fade" id="formualrioVacunaAplicada{{turno['id']}}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
             <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -94,13 +94,42 @@
                 <div class="modal-body">
                     <div class="row justify-content-evenly ">
                         <div class="col-md-14">
-                            {{ render_form(form, form_type='horizontal', horizontal_columns=('lg', 4, 8)) }}
+                            <!--{{ render_form(form, form_type='horizontal', horizontal_columns=('lg', 4, 8)) }}-->
+                            
+                            <form action="" method="post" class="form">
+                                {{ form.csrf_token }}
+                                <div class="mb-3 required">
+                                {{form.id_usuario(value=turno['id_usuario'])}}
+                                </div>
+                                <div class="mb-3 required">
+                                {{form.id_turno(value= turno['id'])}}
+                                </div>
+                                <div class="mb-3 required">
+                                {{ form.vacuna.label }}
+                                {{form.vacuna}}
+                                </div>
+                                <div class="mb-3 required">
+                                {{ form.lote.label }}
+                                {{form.lote}}
+                                </div>
+                                <div class="mb-3 required">
+                                {{ form.laboratorio.label }}
+                                {{form.laboratorio}}
+                                </div>
+                                <div class="mb-3 required">
+                                {{ form.observaciones.label }}
+                                {{form.observaciones}}
+                                </div>
+                                
+                                <div class="modal-footer mx-auto">
+                                    {{form.enviarse}}
+                                    <button type="button" class="btn btn-secondary " data-bs-dismiss="modal">Cerrar</button>
+                                </div>
+                            </form>
                         </div>
                     </div>
                 </div>
-                <div class="modal-footer mx-auto">
-                <button type="button" class="btn btn-secondary " data-bs-dismiss="modal">Close</button>
-                </div>
+                
             </div>
             </div>
         </div>

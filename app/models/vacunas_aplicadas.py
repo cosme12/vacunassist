@@ -53,3 +53,11 @@ def get_vacuna_aplicada_covid1(id_usuario):
     vacuna = cursor.execute("SELECT * FROM vacuna_aplicada WHERE id_usuario=? and id_vacuna=4;", (id_usuario,)).fetchone()
     conn.close()
     return vacuna
+
+def cargar_vacuna_aplicada(fecha,lote,laboratorio, id_vacuna, id_usuario,id_zona):
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    cursor.execute("INSERT INTO vacuna_aplicada (fecha,lote,laboratorio, id_vacuna, id_usuario,  id_zona)\
+                        VALUES ( ?, ?, ?, ?, ?, ?);",(fecha, lote, laboratorio, id_vacuna,id_usuario,id_zona,))
+    conn.commit()
+    conn.close()

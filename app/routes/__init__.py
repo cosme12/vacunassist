@@ -278,7 +278,7 @@ def admin():
                 flash("Se enviaron los emails con éxito.", "success")
     return render_template('admin.html', titulo="Admin", form=form, turnos_aprobados=turnos_aprobados, cant=len(turnos_aprobados))
 
-@app.route('/turnos-del-dia') #http://localhost:5000/turnos-del-dia/<id_zona>
+@app.route('/turnos-del-dia/', methods=['GET', 'POST']) #http://localhost:5000/turnos-del-dia/<id_zona>
 @login_required
 def turnos_del_dia():
     id_zona = 3
@@ -289,4 +289,9 @@ def turnos_del_dia():
     for turno in turnos :
         vacunas_aplicadas[turno['dni']] = models.get_vacunas_aplicadas(turno['dni'])
     form = VacunaAplicadaForm()
+    if form.validate_on_submit():
+        models.cargar_vacuna_aplicada(hoy,form.lote.data,form.laboratorio.data, form.vacuna.data, form.id_usuario.data ,id_zona)
+        models.finalizar_turno(form.id_turno.data)
+        flash('La vacuna fue cargada con éxito. Turno finalizado.')
+        redirect (url_for('turnos_del_dia'))
     return render_template('turnos_del_dia.html', titulo="Turnos del dia", zona=zona, turnos=turnos, hoy=hoy, vacunas_aplicadas=vacunas_aplicadas, form=form)

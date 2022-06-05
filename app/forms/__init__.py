@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm, Form
-from wtforms import StringField, PasswordField, BooleanField, SubmitField, EmailField, DateField, SelectField, FieldList, FormField, DateTimeField, TimeField
+from wtforms import StringField, PasswordField, BooleanField, SubmitField, EmailField, DateField, SelectField, FieldList, FormField, DateTimeField, HiddenField, TimeField
 from wtforms.validators import DataRequired, InputRequired, EqualTo, Length, NumberRange, Regexp
 import datetime
 
@@ -70,10 +70,12 @@ class RegistroEnfermeroForm(FlaskForm):
     enviar = SubmitField('Registrarse', render_kw={'onkeyup':'return validateChars(event)'})
 
 class VacunaAplicadaForm(FlaskForm):
+    id_usuario = HiddenField()
+    id_turno = HiddenField()
     vacuna = SelectField('Vacuna:', choices=[("1", "GRIPE"), ("2", "FIEBRE AMARILLA"),
                                             ("3", "Covid SEGUNDA DOSIS"), ("4", "Covid PRIMERA DOSIS")])
     lote = StringField('Lote', validators=[DataRequired('Este campo es requerido')] )
     laboratorio = StringField('Laboratorio', validators=[DataRequired('Este campo es requerido')])
     observaciones = StringField('Observaciones', validators=[DataRequired('Este campo es requerido')])
-    enviarse = SubmitField('Confirmar operacion')
+    enviarse = SubmitField('Cargar Vacuna')
 

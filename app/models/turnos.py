@@ -93,7 +93,7 @@ def tiene_turno_pendiente(id_usuario, id_vacuna):
 def get_turnos_del_dia(fecha, zona):
     conn = get_db_connection()
     cursos = conn.cursor()
-    turnos = cursos.execute("SELECT t.id, t.fecha, t.hora, \
+    turnos = cursos.execute("SELECT t.id, t.fecha, t.hora, t.id_usuario, t.id_vacuna, \
                             u.dni, u.nombre, u.apellido, u.fecha_de_nacimiento, u.paciente_de_riesgo, \
                             z.nombre as zona, v.enfermedad as vacuna \
                             FROM turno AS t \
@@ -101,6 +101,13 @@ def get_turnos_del_dia(fecha, zona):
                             INNER JOIN vacuna AS v ON t.id_vacuna=v.id \
                             INNER JOIN zona AS z ON t.id_zona=z.id \
                             WHERE t.fecha=? and t.estado=? and t.id_zona=? \
-                            ORDER BY t.hora, u.apellido;", (fecha, 2, zona)).fetchall()
+                            ORDER BY t.hora, u.apellido;", (fecha, 2, zona,)).fetchall()
     conn.close()
     return turnos
+
+def finalizar_turno(id):
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    cursor.execute("UPDATE turno SET estado=3 WHERE id =?;",(id,))
+    conn.commit()
+    conn.close()

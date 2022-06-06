@@ -41,10 +41,10 @@ def login():
             session['nombre'] = usuario["nombre"]
             session['apellido'] = usuario["apellido"]
             session['tipo'] = usuario["tipo"]
+            session['id_zona'] = usuario["id_zona"]
             if session["tipo"] == 1:
                 return redirect(url_for('index'))
             elif session["tipo"] == 2:
-                #id_zona = usuario['id_zona']
                 return redirect(url_for('turnos_del_dia'))
             elif session["tipo"] == 3:
                 return redirect(url_for('registrar_enfermero'))
@@ -281,7 +281,7 @@ def admin():
 @app.route('/turnos-del-dia/', methods=['GET', 'POST']) #http://localhost:5000/turnos-del-dia/<id_zona>
 @login_required
 def turnos_del_dia():
-    id_zona = 3
+    id_zona = session['id_zona']
     zona = models.get_nombre_zona(id_zona)
     hoy = datetime.date.today().strftime("%d/%m/%Y")
     turnos = models.get_turnos_del_dia(hoy, id_zona)

@@ -33,6 +33,28 @@
                 {% endfor %}   
         </tbody>
     </table>
+
+    <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#cancelarTodos">Cancelar todos</button>
+    <!-- Modal Cancelar todos-->
+    <div class="modal fade" id="cancelarTodos" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="staticBackdropLabel">Cancelar turnos del día</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              ¿Querés cancelar todos los turnos? <br>
+              <small class="text-danger">Esta acción no podrá deshacerse.</small>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+              <button type="button" class="btn btn-success">Confirmar</button>
+            </div>
+          </div>
+        </div>
+    </div>
+
     <!-- Modal -->
     {% for turno in turnos %}
         <div class="modal fade" id="staticBackdrop{{ turno['id']}}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">

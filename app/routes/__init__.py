@@ -134,7 +134,7 @@ def mis_vacunas():
 @app.route('/cancelar-turno/<int:id>') # http://localhost:5000/cancelar-turno/<id_turno>
 @login_required
 def cancelar_turno(id):
-    models.cancel_appointment(id)
+    models.cancel_appointment(id, 5)
     flash("Su turno ha sido cancelado.", "success")
     return redirect(url_for('mis_turnos'))
 
@@ -293,5 +293,16 @@ def turnos_del_dia():
         models.cargar_vacuna_aplicada(hoy,form.lote.data,form.laboratorio.data, form.vacuna.data, form.id_usuario.data ,id_zona)
         models.finalizar_turno(form.id_turno.data)
         flash('La vacuna fue cargada con éxito. Turno finalizado.')
-        redirect (url_for('turnos_del_dia'))
+        return redirect (url_for('turnos_del_dia'))
     return render_template('turnos_del_dia.html', titulo="Turnos del dia", zona=zona, turnos=turnos, hoy=hoy, vacunas_aplicadas=vacunas_aplicadas, form=form)
+
+@app.route('/cancelar-turnos-del-dia') #http://localhost:5000//cancelar-turnos-del-dia/<hoy>
+@login_required
+def cancelar_turnos_del_dia():
+    hoy = datetime.date.today().strftime("%d/%m/%Y")
+    id_zona = session['id_zona']
+    turnos = models.get_turnos_del_dia(hoy, id_zona)
+    for turno in turnos:
+        models.cancel_appointment(turno['id'], 4)
+    flash("Los turnos han sido cancelados.", "success")
+    return redirect(url_for('turnos_del_dia'))

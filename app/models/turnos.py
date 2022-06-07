@@ -61,10 +61,10 @@ def tiene_appointment_covid1_from_user(id):
     return turnos
 
 
-def cancel_appointment(id):
+def cancel_appointment(id, estado):
     conn = get_db_connection()
     cursor = conn.cursor()
-    cursor.execute("UPDATE turno SET estado=5 WHERE id =?;",(id,))
+    cursor.execute("UPDATE turno SET estado=? WHERE id =?;",(estado, id,))
     conn.commit()
     conn.close()
 

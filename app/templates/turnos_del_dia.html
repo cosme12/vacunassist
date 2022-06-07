@@ -48,8 +48,8 @@
               <small class="text-danger">Esta acción no podrá deshacerse.</small>
             </div>
             <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-              <button type="button" class="btn btn-success">Confirmar</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+                <a href="/cancelar-turnos-del-dia" class="btn btn-danger">Si</a>
             </div>
           </div>
         </div>
@@ -181,10 +181,16 @@
                             //"url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json",
                             "info": "Mostrando _START_-_END_ de _TOTAL_ turnos",
                             "lengthMenu": "Mostrar _MENU_ turnos por página",
-                            "zeroRecords": "No se encontraron resultados",
+                            "zeroRecords": "No hay turnos para mostrar",
                             "infoEmpty": "",
                             "search": "Buscar: ",
                             "infoFiltered": "(Filtrado de un total de _MAX_ turnos)",
+                            "paginate": {
+                                "first": "Primero",
+                                "last": "Último",
+                                "next": "Siguiente",
+                                "previous": "Anterior"
+                            },
                         }
                     });
             });

@@ -69,7 +69,7 @@ def guardar_enfermero(form_data):
     try:
         cursor.execute("INSERT INTO usuario (nombre, apellido, dni, email, password, tipo, id_zona) VALUES (?, ?, ?, ?, ?, ?, ?);",
                               (form_data['nombre'], form_data['apellido'], form_data['dni'], form_data['email'],
-                                hashear_contrasena(form_data['dni']), 2, form_data['id_zona'])).fetchall()
+                                '-', 2, form_data['id_zona'])).fetchall()
         conn.commit()
     except sqlite3.IntegrityError:
         error = "El usuario ya existe."

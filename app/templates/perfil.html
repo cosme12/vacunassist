@@ -105,9 +105,46 @@
 
     {% endif %}
     {% if user_data['tipo'] == 2 %}
-        <h1>Enfermero {{ user_data['nombre'] | capitalize }} {{ user_data['apellido'] | capitalize }}</h1>
-        <p> Dni: {{ user_data['dni'] }}</p>
-        <p>Zona Asignada: {{ user_data['id_zona'] }}</p>
+    <h1 class="pb-4"> <i class="bi bi-person-circle" style="font-size: 40px;"></i> Enfermero {{ user_data['nombre'] | capitalize }} {{ user_data['apellido'] | capitalize }}</h1>
+        
+    <div class="card p-4 ">
+        <div class="container ">
+            <div class="row  ">
+                <div class="col-md-6">
+                    <dl class="row">
+                        <dt class="col-sm-4">DNI</dt>
+                        <dd class="col-sm-8">{{ user_data['dni'] }}</dd>
+                      
+                        <dt class="col-sm-4">E-MAIL</dt>
+                        <dd class="col-sm-8">{{ user_data['email'] }}</dd>
+                    
+                        <dt class="col-sm-4">ZONA ASIGNADA</dt>
+                        <dd class="col-sm-8">{{ user_data['id_zona'] }}</dd>
+
+                      </dl>
+                    <!--
+                    <p><b>Dni: </b> {{ user_data['dni'] }} </p>
+                    <p><b>E-mail:</b>  {{ user_data['email'] }}</p>
+                    <p><b>Fecha de nacimiento:</b> {{ user_data['fecha_de_nacimiento']}}</p>
+                    -->
+                </div>
+            </div>
+            <div class="row justify-content-evenly ">
+                <div class="col">
+                    <a href="{{ url_for('cambiar_password') }}" class="pb-2"><button type="button" class="btn btn-outline-secondary btn-sm"><i class="bi bi-key-fill"></i> CAMBIAR CONTRASEÑA</button></a>
+                    <br><br>
+                </div> 
+            </div>
+        </div>
+    </div>
+    
+    <!--
+    <a href="{{ url_for('mis_turnos') }}" class="pb-2"><button type="button" class="btn btn-outline-secondary btn-sm"><i class="bi bi-calendar-date-fill" style="font-size: 13px;"></i>  MIS TURNOS</button></a>
+    <br>
+    <a href="{{ url_for('mis_vacunas') }}" class="pb-2"><button type="button" class="btn btn-outline-secondary btn-sm"><i class="bi bi-clipboard2-pulse-fill" style="font-size: 13px;"></i>  MIS VACUNAS</button></a>
+    <br>
+    -->
+        
     {% endif %}
     {% if user_data['tipo'] == 3 %}
         <h1>ADMIN</h1>

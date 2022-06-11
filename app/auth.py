@@ -26,6 +26,10 @@ def login_required(func):
                     elif not vacuna_gripe and not tiene_turno_gripe and edad > 60:
                         flash("Antes de poder acceder al resto del sitio debe reservar un turno para aplicarse la vacuna de la GRIPE.", "danger")
                         return redirect(url_for('sacar_turno', id_vacuna=1))
+            elif session["tipo"]==2:
+                if request.path != url_for('perfil') and request.path != url_for('turnos_del_dia') and request.path != url_for('logout') and request.path != url_for('cancelar_turnos_del_dia') and request.path != url_for('cambiar_password') :
+                    return redirect(url_for('turnos_del_dia'))
         return func(*args, **kwargs)
     return decorated_function
+
 

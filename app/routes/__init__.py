@@ -290,10 +290,12 @@ def turnos_del_dia():
         vacunas_aplicadas[turno['dni']] = models.get_vacunas_aplicadas(turno['dni'])
     form = VacunaAplicadaForm()
     if form.validate_on_submit():
-        models.cargar_vacuna_aplicada(hoy,form.lote.data,form.laboratorio.data, form.vacuna.data, form.id_usuario.data ,id_zona)
+        models.cargar_vacuna_aplicada(hoy,form.lote.data,form.laboratorio.data, form.id_vacuna.data, form.id_usuario.data ,id_zona)
         models.finalizar_turno(form.id_turno.data)
-        flash('La vacuna fue cargada con éxito. Turno finalizado.')
+        flash('La vacuna fue cargada con éxito. Turno finalizado.',"success")
         return redirect (url_for('turnos_del_dia'))
+    else:
+        print(form.errors)
     return render_template('turnos_del_dia.html', titulo="Turnos del dia", zona=zona, turnos=turnos, hoy=hoy, vacunas_aplicadas=vacunas_aplicadas, form=form)
 
 @app.route('/cancelar-turnos-del-dia') #http://localhost:5000//cancelar-turnos-del-dia/<hoy>

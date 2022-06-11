@@ -131,8 +131,11 @@
                                 {{form.id_turno(value= turno['id'])}}
                                 </div>
                                 <div class="mb-3 required">
-                                {{ form.vacuna.label }}
-                                {{form.vacuna}}
+                                {{form.id_vacuna(value= turno['id_vacuna'])}}
+                                </div>
+                                <div class="mb-3 required">
+                                {{form.vacuna.label}}
+                                {{form.vacuna(value=turno['vacuna'])}}
                                 </div>
                                 <div class="mb-3 required">
                                 {{ form.lote.label }}

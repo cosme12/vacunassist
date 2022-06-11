@@ -72,10 +72,10 @@ class RegistroEnfermeroForm(FlaskForm):
 class VacunaAplicadaForm(FlaskForm):
     id_usuario = HiddenField()
     id_turno = HiddenField()
-    vacuna = SelectField('Vacuna:', choices=[("1", "GRIPE"), ("2", "FIEBRE AMARILLA"),
-                                            ("3", "Covid SEGUNDA DOSIS"), ("4", "Covid PRIMERA DOSIS")], render_kw={'class': 'form-control'})
+    id_vacuna = HiddenField()
+    vacuna = StringField('Vacuna:',  render_kw={'class': 'form-control', 'disabled': 'disabled'})
     lote = StringField('Lote', render_kw={'class': 'form-control'}, validators=[DataRequired('Este campo es requerido')] )
     laboratorio = StringField('Laboratorio', render_kw={'class': 'form-control'}, validators=[DataRequired('Este campo es requerido')])
-    observaciones = StringField('Observaciones', render_kw={'class': 'form-control'}, validators=[DataRequired('Este campo es requerido')])
+    observaciones = StringField('Observaciones', render_kw={'class': 'form-control'})
     enviarse = SubmitField('Cargar Vacuna', render_kw={'class': 'btn btn-success btn-md'})
 

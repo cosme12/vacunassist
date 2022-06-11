@@ -118,6 +118,17 @@ def get_user_data(usuario):
     return user_data
 
 
+def get_user_data_por_id(id):
+    """
+    Devuelve los datos del usuario
+    """
+    conn = get_db_connection() 
+    cursor = conn.cursor()  
+    user_data = cursor.execute("SELECT * FROM usuario WHERE id=?;", (id,)).fetchone()
+    conn.close()
+    return user_data
+
+
 def validar_inicio_sesion(dni, contrasena, token=None):
     """
     Verifica el inicio de sesion de un paciente

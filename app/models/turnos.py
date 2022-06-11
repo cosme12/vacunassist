@@ -13,6 +13,17 @@ def get_turnos():
     return turnos
 
 
+def get_turno_por_id(id_turno):
+    """
+    Devuelve un determinado turno
+    """
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    turno = cursor.execute("select * from turno where id=?;",(id_turno,)).fetchone()
+    conn.close()
+    return turno
+
+
 def get_turnos_aprobados():
     """
     Devuelve todos los turnos aprobados (con estado 2)

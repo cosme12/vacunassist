@@ -5,7 +5,7 @@ from app.auth import login_required
 from app import models
 from app import app
 from app.handlers.email_enviar import enviar_email
-from app.models.usuarios import validar_contrasena, validar_inicio_sesion, generar_reset_password_token, verificar_reset_password_token
+from app.models.usuarios import validar_contrasena, validar_inicio_sesion, generar_reset_password_token, verificar_reset_password_token, get_user_data_por_id
 from app.models.turnos import get_turnos_aprobados
 from app.handlers import *
 import pdfkit
@@ -278,6 +278,7 @@ def admin():
                 flash("Se enviaron los emails con éxito.", "success")
     return render_template('admin.html', titulo="Admin", form=form, turnos_aprobados=turnos_aprobados, cant=len(turnos_aprobados))
 
+
 @app.route('/turnos-del-dia/', methods=['GET', 'POST']) #http://localhost:5000/turnos-del-dia/<id_zona>
 @login_required
 def turnos_del_dia():
@@ -291,12 +292,24 @@ def turnos_del_dia():
     form = VacunaAplicadaForm()
     if form.validate_on_submit():
         models.cargar_vacuna_aplicada(hoy,form.lote.data,form.laboratorio.data, form.id_vacuna.data, form.id_usuario.data ,id_zona)
-        models.finalizar_turno(form.id_turno.data)
+        models.finalizar_turno(form.id_turno.data)        
+        #registra turno automatico para 2da dosis COVID
+        if form.id_vacuna.data == '4':
+            turno = models.get_turno_por_id(form.id_turno.data)
+            fecha_2da_dosis = (datetime.datetime.now() + datetime.timedelta(21))
+            hora = datetime.datetime.strptime(turno['hora'], '%H:%M').time()
+            models.reservar_turno(fecha_2da_dosis, form.id_usuario.data, 3, id_zona, hora)
+            if app.config['EMAIL_ENABLED']:
+                usuario = models.get_user_data_por_id(form.id_usuario.data)
+                zona = models.get_zona(id_zona)
+                print(f'Hola {usuario["nombre"]}, tu turno para la segunda dosis de la vacuna contra el covid es el {fecha_2da_dosis} a las {turno["hora"]} en el vacunatorio zona {zona["nombre"]} {zona["direccion"]}.\n\nPodés reprogramarlo desde tu cuenta.\n\nTe enviaremos un recordatorio a este mail 24 hs antes del mismo.')
+                enviar_email(usuario["email"], f'Hola {usuario["nombre"]}, tu turno para la segunda dosis de la vacuna contra el covid es el {fecha_2da_dosis} a las {turno["hora"]} en el vacunatorio zona {zona["nombre"]} {zona["direccion"]}.\n\nPodés reprogramarlo desde tu cuenta.\n\nTe enviaremos un recordatorio a este mail 24 hs antes del mismo.')
         flash('La vacuna fue cargada con éxito. Turno finalizado.',"success")
         return redirect (url_for('turnos_del_dia'))
     else:
         print(form.errors)
     return render_template('turnos_del_dia.html', titulo="Turnos del dia", zona=zona, turnos=turnos, hoy=hoy, vacunas_aplicadas=vacunas_aplicadas, form=form)
+
 
 @app.route('/cancelar-turnos-del-dia') #http://localhost:5000//cancelar-turnos-del-dia/<hoy>
 @login_required

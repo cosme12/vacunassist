@@ -2,6 +2,13 @@
 {% from 'bootstrap5/form.html' import render_form %}
 
 {% block content %}
+    <style>
+        .page-item.active .page-link {
+            background-color: #5c636a;
+            border-color: #5c636a;
+        }
+    </style>
+
     <h3 class=" text-end">{{ hoy }}</h3>
     <h1 class="text-end pb-5">ZONA {{ zona['nombre'] | upper }}</h1>
     <table id="data" class="table table-striped" data-order='[[ 0, "asc" ]]'>

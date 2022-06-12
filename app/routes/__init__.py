@@ -105,7 +105,9 @@ def registro():
 def perfil():  
     usuario = session['dni']
     user_data = models.get_user_data(usuario)
-    return render_template('perfil.html', titulo="Perfil", usuario=usuario, user_data=user_data)
+    if user_data["id_zona"]:
+        zona = models.get_zona(user_data["id_zona"])
+    return render_template('perfil.html', titulo="Perfil", usuario=usuario, user_data=user_data, zona=zona)
 
 
 @app.route('/mis-turnos') # http://localhost:5000/mis-turnos

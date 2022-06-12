@@ -113,7 +113,7 @@ def get_user_data(usuario):
     """
     conn = get_db_connection() 
     cursor = conn.cursor()  
-    user_data = cursor.execute("SELECT * FROM usuario WHERE dni =?;", (usuario,)).fetchone()
+    user_data = cursor.execute("SELECT * FROM usuario INNER JOIN zona as z ON id_zona=z.id WHERE dni =?;", (usuario,)).fetchone()
     conn.close()
     return user_data
 

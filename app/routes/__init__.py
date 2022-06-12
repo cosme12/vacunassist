@@ -107,6 +107,8 @@ def perfil():
     user_data = models.get_user_data(usuario)
     if user_data["id_zona"]:
         zona = models.get_zona(user_data["id_zona"])
+    else:
+        zona = None
     return render_template('perfil.html', titulo="Perfil", usuario=usuario, user_data=user_data, zona=zona)
 
 

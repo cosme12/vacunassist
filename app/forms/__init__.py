@@ -67,7 +67,7 @@ class RegistroEnfermeroForm(FlaskForm):
     id_zona = SelectField('Zona:', choices=[("1", "ZONA TERMINAL"), ("2", "ZONA MUNICIPALIDAD"),
                                             ("3", "ZONA CEMENTERIO")], 
                                             validators=[DataRequired('Este campo es requerido')])
-    enviar = SubmitField('Registrarse', render_kw={'onkeyup':'return validateChars(event)'})
+    enviar = SubmitField('Registrar', render_kw={'onkeyup':'return validateChars(event)'})
 
 class VacunaAplicadaForm(FlaskForm):
     id_usuario = HiddenField()

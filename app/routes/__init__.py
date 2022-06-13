@@ -307,7 +307,7 @@ def turnos_del_dia():
                 usuario = models.get_user_data_por_id(form.id_usuario.data)
                 zona = models.get_zona(id_zona)
                 print(f'Hola {usuario["nombre"]}, tu turno para la segunda dosis de la vacuna contra el covid es el {fecha_2da_dosis} a las {turno["hora"]} en el vacunatorio zona {zona["nombre"]} {zona["direccion"]}.\n\nPodés reprogramarlo desde tu cuenta.\n\nTe enviaremos un recordatorio a este mail 24 hs antes del mismo.')
-                enviar_email(usuario["email"], f'Hola {usuario["nombre"]}, tu turno para la segunda dosis de la vacuna contra el covid es el {fecha_2da_dosis} a las {turno["hora"]} en el vacunatorio zona {zona["nombre"]} {zona["direccion"]}.\n\nPodés reprogramarlo desde tu cuenta.\n\nTe enviaremos un recordatorio a este mail 24 hs antes del mismo.')
+                enviar_email(usuario["email"], "Vacunassist - Turno covid 2da dosis",f'Hola {usuario["nombre"]}, tu turno para la segunda dosis de la vacuna contra el covid es el {fecha_2da_dosis} a las {turno["hora"]} en el vacunatorio zona {zona["nombre"]} {zona["direccion"]}.\n\nPodés reprogramarlo desde tu cuenta.\n\nTe enviaremos un recordatorio a este mail 24 hs antes del mismo.')
         flash('La vacuna fue cargada con éxito. Turno finalizado.',"success")
         return redirect (url_for('turnos_del_dia'))
     else:

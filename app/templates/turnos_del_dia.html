@@ -81,16 +81,21 @@
                             <dl class="row">
                                 <dt class="col-sm-6">DNI</dt>
                                 <dd class="col-sm-6">{{ turno['dni'] }}</dd>
-                              
+                                <!--
                                 <dt class="col-sm-6">Fecha de nacimiento</dt>
                                 <dd class="col-sm-6">{{ turno['fecha_de_nacimiento'] }}</dd>
-    
+                                -->
+                                <dt class="col-sm-6">Edad</dt>
+                                <dd class="col-sm-6">{{ edades[turno['id_usuario']] }}</dd>
+                                
                                 <dt class="col-sm-6">Paciente de riesgo COVID</dt>
                                 {% if turno["paciente_de_riesgo"] == 1 %}
                                     <dd class="col-sm-6">SI</dd>
                                 {% else %}
                                     <dd class="col-sm-6">NO</dd>
                                 {% endif %}
+
+                                
                             </dl>
                             <hr>
                             

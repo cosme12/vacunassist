@@ -17,7 +17,8 @@ def app():
         "TESTING": True,
         "SECRET_KEY": "password-super-dificil",
         "WTF_CSRF_ENABLED": False,  # no CSRF during tests
-        "DATABASE": "tests/testdb.db"
+        "DATABASE": "tests/testdb.db",
+        "EMAIL_ENABLED": False
     })
 
     # other setup can go here

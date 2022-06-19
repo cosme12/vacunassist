@@ -92,7 +92,7 @@ def test_perfil_route(client, create_db):
         assert response.status_code == 200
         html = response.get_data(as_text=True)
         assert 'Cerrar sesión' in html
-        assert 'Mi perfil' in html
+        assert 'Perfil' in html
         assert 'Mis vacunas' in html
         assert 'Mis turnos' in html
         assert paciente_nuevo['nombre'] in html

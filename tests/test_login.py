@@ -171,7 +171,7 @@ def test_inicio_de_sesion_paciente_registrado(client, create_db):
     assert response.request.path == "/"
     html = response.get_data(as_text=True)
     assert 'Cerrar sesión' in html
-    assert 'Mi perfil' in html
+    assert 'Perfil' in html
     assert 'Mis vacunas' in html
     assert 'Mis turnos' in html
 
@@ -203,7 +203,7 @@ def test_inicio_de_sesion_paciente_registrado_sin_token(client, create_db):
     assert response.status_code == 200
     html = response.get_data(as_text=True)
     assert 'Cerrar sesión' not in html
-    assert 'Mi perfil' not in html
+    assert 'Perfil' not in html
     assert 'Mis vacunas' not in html
     assert 'Mis turnos' not in html
     assert 'Credenciales inválidas' in html
@@ -221,7 +221,7 @@ def test_inicio_de_sesion_paciente_no_registrado_sin_token(client, create_db):
     assert response.status_code == 200
     html = response.get_data(as_text=True)
     assert 'Cerrar sesión' not in html
-    assert 'Mi perfil' not in html
+    assert 'Perfil' not in html
     assert 'Mis vacunas' not in html
     assert 'Mis turnos' not in html
     assert 'El usuario no está registrado' in html
@@ -240,7 +240,7 @@ def test_inicio_de_sesion_paciente_no_registrado_con_token(client, create_db):
     assert response.status_code == 200
     html = response.get_data(as_text=True)
     assert 'Cerrar sesión' not in html
-    assert 'Mi perfil' not in html
+    assert 'Perfil' not in html
     assert 'Mis vacunas' not in html
     assert 'Mis turnos' not in html
     assert 'El usuario no está registrado' in html
@@ -260,7 +260,7 @@ def test_inicio_de_sesion_paciente_registrado_sin_covid_de_riesgo(client, create
     assert response.request.path == "/sacar-turno/4"
     html = response.get_data(as_text=True)
     assert 'Cerrar sesión' in html
-    assert 'Mi perfil' in html
+    assert 'Perfil' in html
     assert 'Mis vacunas' in html
     assert 'Mis turnos' in html
     assert 'Reservar turno para vacuna de Covid PRIMERA DOSIS' in html
@@ -280,7 +280,7 @@ def test_inicio_de_sesion_paciente_registrado_sin_covid_60(client, create_db):
     assert response.request.path == "/sacar-turno/4"
     html = response.get_data(as_text=True)
     assert 'Cerrar sesión' in html
-    assert 'Mi perfil' in html
+    assert 'Perfil' in html
     assert 'Mis vacunas' in html
     assert 'Mis turnos' in html
     assert 'Reservar turno para vacuna de Covid PRIMERA DOSIS' in html
@@ -302,7 +302,7 @@ def test_inicio_de_sesion_paciente_registrado_con_covid_60(client, create_db):
     html = response.get_data(as_text=True)
     debuggear_respuesta(html)
     assert 'Cerrar sesión' in html
-    assert 'Mi perfil' in html
+    assert 'Perfil' in html
     assert 'Mis vacunas' in html
     assert 'Mis turnos' in html
     assert 'Reservar turno para vacuna de Gripe' in html

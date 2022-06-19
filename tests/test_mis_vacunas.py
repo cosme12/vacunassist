@@ -129,7 +129,7 @@ def test_mis_vacunas_route_sin_vacunas_aplicadas(client, create_db):
         assert response.status_code == 200
         html = response.get_data(as_text=True)
         assert 'Cerrar sesión' in html
-        assert 'Mi perfil' in html
+        assert 'Perfil' in html
         assert 'Mis vacunas' in html
         assert 'Mis turnos' in html
         assert 'No tiene vacunas aplicadas' in html
@@ -150,7 +150,7 @@ def test_mis_vacunas_route_con_vacunas_aplicadas(client, create_db):
         assert response.status_code == 200
         html = response.get_data(as_text=True)
         assert 'Cerrar sesión' in html
-        assert 'Mi perfil' in html
+        assert 'Perfil' in html
         assert 'Mis vacunas' in html
         assert 'Mis turnos' in html
         assert 'No tiene vacunas aplicadas' not in html

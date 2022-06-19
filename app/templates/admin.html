@@ -1,28 +1,48 @@
 {% extends "base.html" %}
-{% from 'bootstrap5/form.html' import render_form %}
-
 
 {% block content %}
-        <h1 class="pb-4">Enviar Emails</h1>
+<h1 class="pb-4"> <i class="bi bi-person-circle" style="font-size: 40px;"></i> ADMINISTRADOR </h1>
         
-        <div class="card p-4 col-md-8">
-            <div class="row justify-content-evenly ">
-                <div class="col-md-12">
-                    <dl class="row">
-                        <dt class="col-sm-4">CANTIDAD DE EMAILS:</dt>
-                        <dd class="col-sm-8">{{ cant }}</dd>
-                      
-                        <dt class="col-sm-4">LISTA:</dt>
-                        
-                        <dd class="col-sm-8">{% for turno in turnos_aprobados %}{{ turno["email"] }}<br>{% endfor %} </dd>
-                                               
-                      </dl>
-                    <dl class="row">
-                        {{ render_form(form) }}
-                    </dl>
+        <div class="card p-4 ">
+            <div class="container ">
+                <div class="row justify-content-evenly ">
+                    <div class="w-100 d-none d-block"></div>
+                    <div class="col ">
+                        <a href="{{ url_for('enviar_recordatorios') }}" class="pb-2" style="text-decoration: none;">  
+                            <div class="card text-white bg-secondary mb-3 text-center " style="min-width: 10rem; max-width: 12rem;">
+                                <div class="card-header"><h5>Enviar recordatorios</h5></div>
+                                <div class="card-body">
+                                    <h5 class="card-title"><i class="bi bi-calendar-date-fill" style="font-size: 40px;"></i></h5>
+                                    <p class="card-text"></p>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col">
+                        <a href="{{ url_for('registrar_enfermero') }}" class="pb-2" style="text-decoration: none;">  
+                            <div class="card text-white bg-secondary mb-3 text-center" style="min-width: 12rem; max-width: 12rem;">
+                                <div class="card-header"><h5>Registrar enfermero</h5></div>
+                                <div class="card-body">
+                                <h5 class="card-title"><i class="bi bi-clipboard2-pulse-fill" style="font-size: 40px;"></i></i></h5>
+                                <p class="card-text"></p>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col">
+                        <a href="{{ url_for('estadisticas') }}" class="pb-2" style="text-decoration: none;">  
+                            <div class="card text-white bg-secondary mb-3 text-center" style="min-width: 12rem; max-width: 12rem;">
+                                <div class="card-header"><h5>Estadísticas</h5></div>
+                                <div class="card-body">
+                                <h5 class="card-title"><i class="bi bi-clipboard2-pulse-fill" style="font-size: 40px;"></i></i></h5>
+                                <p class="card-text"></p>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
                 </div>
-                <div class="col-md-4"></div>
             </div>
-        </div>        
+        </div>
+
     </div>
 {% endblock %}

@@ -32,7 +32,8 @@
                 {{ render_nav_item('turnos_del_dia', 'Turnos del dia') }}
               {% elif session["dni"] and session["tipo"] == 3%}
                 {{ render_nav_item('registrar_enfermero', 'Registrar Enfermero') }}
-                {{ render_nav_item('admin', 'Enviar Mails') }}
+                {{ render_nav_item('enviar_recordatorios', 'Enviar Mails') }}
+                {{render_nav_item('estadisticas', 'Estadísticas')}}
               {% endif %}
             </ul>
           </div>
@@ -45,7 +46,7 @@
             {% elif session["dni"] and session["tipo"] == 2%}
               <a class="navbar-brand mx-auto" href="{{ url_for('turnos_del_dia') }}" target=""><img src="{{ url_for('static', filename='/images/Logo_VacunAssist_largo.png') }}" alt="Logo_VacunAssist"></a>
             {% elif session["dni"] and session["tipo"] == 3%}
-              <a class="navbar-brand mx-auto" href="{{ url_for('registrar_enfermero') }}" target=""><img src="{{ url_for('static', filename='/images/Logo_VacunAssist_largo.png') }}" alt="Logo_VacunAssist"></a>
+              <a class="navbar-brand mx-auto" href="{{ url_for('admin') }}" target=""><img src="{{ url_for('static', filename='/images/Logo_VacunAssist_largo.png') }}" alt="Logo_VacunAssist"></a>
             {% endif %}
           </div>
           <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
@@ -68,11 +69,6 @@
                           
                         </ul>
                     </li>
-                    
-                <!--
-                {{ render_nav_item('perfil', 'Mi perfil', use_li=True) }}
-                {{ render_nav_item('logout', 'Cerrar sesión', use_li=True) }}
-                -->
               {% endif %}
             </ul>
           </div>

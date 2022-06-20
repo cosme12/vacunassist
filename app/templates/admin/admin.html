@@ -8,22 +8,23 @@
                 <div class="row justify-content-evenly ">
                     <div class="w-100 d-none d-block"></div>
                     <div class="col ">
-                        <a href="{{ url_for('enviar_recordatorios') }}" class="pb-2" style="text-decoration: none;">  
+                        <a href="{{ url_for('gestion_pacientes') }}" class="pb-2" style="text-decoration: none;">  
                             <div class="card text-white bg-secondary mb-3 text-center " style="min-width: 10rem; max-width: 12rem;">
-                                <div class="card-header"><h5>Enviar recordatorios</h5></div>
+                                <div class="card-header"><h5>Gestionar pacientes</h5></div>
                                 <div class="card-body">
-                                    <h5 class="card-title"><i class="bi bi-calendar-date-fill" style="font-size: 40px;"></i></h5>
+                                    <h5 class="card-title"><i class="bi bi-people-fill" style="font-size: 40px;"></i></h5>
                                     <p class="card-text"></p>
                                 </div>
                             </div>
                         </a>
                     </div>
+                    
                     <div class="col">
-                        <a href="{{ url_for('registrar_enfermero') }}" class="pb-2" style="text-decoration: none;">  
+                        <a href="{{ url_for('gestion_enfermeros') }}" class="pb-2" style="text-decoration: none;">  
                             <div class="card text-white bg-secondary mb-3 text-center" style="min-width: 12rem; max-width: 12rem;">
-                                <div class="card-header"><h5>Registrar enfermero</h5></div>
+                                <div class="card-header"><h5>Gestionar enfermeros</h5></div>
                                 <div class="card-body">
-                                <h5 class="card-title"><i class="bi bi-clipboard2-pulse-fill" style="font-size: 40px;"></i></i></h5>
+                                <h5 class="card-title"><i class="bi bi-person-rolodex" style="font-size: 40px;"></i></h5>
                                 <p class="card-text"></p>
                                 </div>
                             </div>
@@ -32,9 +33,20 @@
                     <div class="col">
                         <a href="{{ url_for('estadisticas') }}" class="pb-2" style="text-decoration: none;">  
                             <div class="card text-white bg-secondary mb-3 text-center" style="min-width: 12rem; max-width: 12rem;">
-                                <div class="card-header"><h5>Estadísticas</h5></div>
+                                <div class="card-header"><h5>Ver <br> Estadísticas</h5></div>
                                 <div class="card-body">
-                                <h5 class="card-title"><i class="bi bi-clipboard2-pulse-fill" style="font-size: 40px;"></i></i></h5>
+                                <h5 class="card-title"><i class="bi bi-bar-chart-line-fill" style="font-size: 40px;"></i></h5>
+                                <p class="card-text"></p>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col">
+                        <a href="{{ url_for('datos_vacunatorio') }}" class="pb-2" style="text-decoration: none;">  
+                            <div class="card text-white bg-secondary mb-3 text-center" style="min-width: 12rem; max-width: 12rem;">
+                                <div class="card-header"><h5>Datos del vacunatorio</h5></div>
+                                <div class="card-body">
+                                <h5 class="card-title"><i class="bi bi-info-square-fill" style="font-size: 40px;"></i></h5>
                                 <p class="card-text"></p>
                                 </div>
                             </div>

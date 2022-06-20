@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Gestion de enfermeros</h1>
+Aca va la seccion para ver, buscar y eliminar enfermeros, registrarlos, asignarlos a zonas?
+<div class="card p-4 ">
+    <div class="container ">
+        <div class="row justify-content-evenly ">
+            <div class="w-100 d-none d-block"></div>
+            <div class="col">
+                <a href="{{ url_for('registrar_enfermero') }}" class="pb-2" style="text-decoration: none;">  
+                    <div class="card text-white bg-secondary mb-3 text-center" style="min-width: 12rem; max-width: 12rem;">
+                        <div class="card-header"><h5>Registrar enfermero</h5></div>
+                        <div class="card-body">
+                        <h5 class="card-title"><i class="bi bi-person-rolodex" style="font-size: 40px;"></i></h5>
+                        <p class="card-text"></p>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

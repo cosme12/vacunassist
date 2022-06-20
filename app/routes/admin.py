@@ -1,11 +1,32 @@
 from flask import render_template, redirect, url_for, session, flash
-from app.forms import RegistroEnfermeroForm
+from app.forms import LoginForm, RegistroEnfermeroForm, EnviarEmailsAdminForm
 from app.auth import login_required
 from app import models
 from app import app
 from app.handlers.email_enviar import enviar_email
 from app.models.usuarios import generar_reset_password_token
 
+@app.route('/admin') # http://localhost:5000/admin
+@login_required
+def admin():
+    return render_template('admin/admin.html', titulo="Admin")
+
+@app.route('/admin/enviar-recordatorios', methods=['GET', 'POST'])
+@login_required
+def enviar_recordatorios():
+    form = EnviarEmailsAdminForm()
+    turnos_aprobados = models.get_turnos_aprobados()
+    if form.validate_on_submit():
+        for turno in turnos_aprobados:
+            #print(f"Hola {turno['nombre']}, \n\nTe recordamos que mañana tenes turno para vacunarte.\n\nDatos del turno:\n\nVacuna: {turno['enfermedad']}\nFecha: {turno['fecha']}\nHora: {turno['hora']}hs\nZona: {turno[24]} {turno[25]}")
+            if app.config['EMAIL_ENABLED']:
+                enviar_email(turno["email"], "Vacunassist - Recordatorio de turno", f"Hola {turno['nombre']}, \n\nTe recordamos que mañana tenes turno para vacunarte.\n\nDatos del turno:\n\nVacuna: {turno['enfermedad']}\nFecha: {turno['fecha']}\nHora: {turno['hora']}hs\nZona: {turno[24]} {turno[25]}")
+                flash("Se enviaron los emails con éxito.", "success")
+    return render_template('admin/enviar_recordatorios.html', titulo="Envio de recordatorios", form=form, turnos_aprobados=turnos_aprobados, cant=len(turnos_aprobados))
+
+@app.route('/admin/estadisticas')
+def estadisticas():
+    return render_template('admin/estadisticas.html', titulo="Estadisticas")
 
 @app.route('/admin/registrar-enfermero', methods=['GET', 'POST'])
 @login_required

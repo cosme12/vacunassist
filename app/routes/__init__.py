@@ -269,27 +269,6 @@ def sacar_turno(id_vacuna):
 
     return render_template('sacar_turno.html', titulo="Sacar Titulo", form=form,vaccine_name=vaccine_name)
 
-
-@app.route('/admin') # http://localhost:5000/admin
-def admin():
-    return render_template('admin.html', titulo="Admin")
-
-@app.route('/admin/enviar-recordatorios', methods=['GET', 'POST'])
-def enviar_recordatorios():
-    form = EnviarEmailsAdminForm()
-    turnos_aprobados = models.get_turnos_aprobados()
-    if form.validate_on_submit():
-        for turno in turnos_aprobados:
-            #print(f"Hola {turno['nombre']}, \n\nTe recordamos que mañana tenes turno para vacunarte.\n\nDatos del turno:\n\nVacuna: {turno['enfermedad']}\nFecha: {turno['fecha']}\nHora: {turno['hora']}hs\nZona: {turno[24]} {turno[25]}")
-            if app.config['EMAIL_ENABLED']:
-                enviar_email(turno["email"], "Vacunassist - Recordatorio de turno", f"Hola {turno['nombre']}, \n\nTe recordamos que mañana tenes turno para vacunarte.\n\nDatos del turno:\n\nVacuna: {turno['enfermedad']}\nFecha: {turno['fecha']}\nHora: {turno['hora']}hs\nZona: {turno[24]} {turno[25]}")
-                flash("Se enviaron los emails con éxito.", "success")
-    return render_template('enviar_recordatorios.html', titulo="Envio de recordatorios", form=form, turnos_aprobados=turnos_aprobados, cant=len(turnos_aprobados))
-
-@app.route('/admin/estadisticas')
-def estadisticas():
-    return render_template('estadisticas.html', titulo="Estadisticas")
-
 @app.route('/turnos-del-dia/', methods=['GET', 'POST']) #http://localhost:5000/turnos-del-dia/<id_zona>
 @login_required
 def turnos_del_dia():

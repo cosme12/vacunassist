@@ -56,8 +56,9 @@
                       <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                         <div style="display: inline;">{{ session['nombre'] | upper }} {{ session['apellido'] | upper }}  <i class="bi bi-person-circle" style="font-size: 24px;"></i></div></a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                          
-                          <li><a class="dropdown-item" href="{{ url_for('perfil')}}"><i class="bi bi-person-circle" style="font-size: 20px;"></i> Perfil</a></li>
+                          {% if session["tipo"]!= 3 %}
+                            <li><a class="dropdown-item" href="{{ url_for('perfil')}}"><i class="bi bi-person-circle" style="font-size: 20px;"></i> Perfil</a></li>
+                          {% endif %}
                           <li><a class="dropdown-item" href="{{ url_for('logout')}}"><i class="bi bi-door-closed-fill" style="font-size: 20px;"></i> Cerrar sesión</a></li>
                           <!--
                           <li><a class="dropdown-item" href="{{ url_for('perfil')}}">Perfil <i class="bi bi-person-circle" style="font-size: 20px; float: right;"></i></a></li>

@@ -71,3 +71,10 @@ def gestion_pacientes():
 @login_required
 def gestion_enfermeros():
     return render_template('admin/gestion_enfermeros.html', titulo="Gestion de enfermeros")
+
+@app.route('/admin/ver-listado-enfermeros')
+@login_required
+def ver_listado_enfermeros():
+    enfermeros = models.get_usuarios_tipo(2)
+    return render_template('admin/listado_enfermeros.html', titulo='Listado de enfermeros', enfermeros=enfermeros)
+

@@ -1,0 +1,101 @@
+{% extends "base.html" %}
+{% from 'bootstrap5/form.html' import render_form %}
+
+{% block content %}
+    <style>
+        .page-item.active .page-link {
+            background-color: #5c636a;
+            border-color: #5c636a;
+        }
+    </style>
+
+
+    <h1 class="text-end pb-5">ENFERMEROS</h1>
+    <table id="data" class="table table-striped" data-order='[[ 0, "asc" ]]'>
+        <thead>
+        <tr>
+
+           
+            <th>Nombre</th>
+            <th>Apellido</th>
+            <th>DNI</th>
+            <th>Zona</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+
+            {% for enfermero in enfermeros %}
+                <tr>
+                    
+                    <td>{{ enfermero['nombre'] }}</td>
+                    <td>{{ enfermero['apellido'] }}</td>
+                    <td>{{ enfermero['dni'] }}</td>
+                    <td>Zona {{ enfermero['z_nombre'] | capitalize}}</td>
+                    <td><button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#listado{{enfermero['id'] }}" ><i class="bi bi-trash3-fill"></i> Eliminar</button></td>
+                </tr>
+                
+            {% endfor %}   
+        </tbody>
+    </table>
+
+    <!-- Modal -->
+    {% for enfermero in enfermeros %}
+        <!-- Modal Confirmar asistencia-->
+        <div class="modal fade" id="listadoEnfermeros{{enfermero['id']}}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">¡Advertencia!</h5>
+                <!--<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>-->
+                </div>
+                <div class="modal-body">
+                    ¿Estas seguro que desea eliminar al usuario? No se podrán recuperar los cambios.
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <a href="/eliminar-enfermero/{{enfermero['id']}}" class="btn btn-success">Eliminar</a>
+                </div>
+            </div>
+            </div>
+        </div>
+    {% endfor %}
+        <br><br>
+    {% block scripts %}
+    <script type="text/javascript" charset="utf8" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.js"></script>
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.12.1/js/dataTables.bootstrap5.js"></script>
+    <script>
+        $(document).ready(function () {
+            table = $('#data').DataTable();
+            table.destroy();
+            
+            $('#data').DataTable({
+                        //paging: false,
+                        //scrollY: 400,
+                        columns: [
+                        null,
+                        null,
+                        {ordenable: false},
+                        {sercheable: false, orderable:true},
+                        {sercheable: false, orderable:false}],
+                        "language": {
+                            //"url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json",
+                            "info": "Mostrando _START_-_END_ de _TOTAL_ enferemeros",
+                            "lengthMenu": "Mostrar _MENU_ enfermeros por página",
+                            "zeroRecords": "No hay usuarios para mostrar",
+                            "infoEmpty": "",
+                            "search": "Buscar: ",
+                            "infoFiltered": "(Filtrado de un total de _MAX_ enfermeros)",
+                            "paginate": {
+                                "first": "Primero",
+                                "last": "Último",
+                                "next": "Siguiente",
+                                "previous": "Anterior"
+                            },
+                        }
+                    });
+            });
+        </script>
+    {% endblock %}
+{% endblock %}

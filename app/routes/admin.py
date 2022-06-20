@@ -88,6 +88,13 @@ def ver_listado_enfermeros():
     enfermeros = models.get_enfermeros()
     return render_template('admin/listado_enfermeros.html', titulo='Listado de enfermeros', enfermeros=enfermeros)
 
+@app.route('/admin/eliminar-enfermero/<int:id>')
+@login_required
+def eliminar_enfermero(id):
+    models.delete_user(id)
+    return redirect(url_for('ver_listado_enfermeros'))
+
+
 @app.route('/admin/ver-listado-pacientes')
 @login_required
 def ver_listado_pacientes():

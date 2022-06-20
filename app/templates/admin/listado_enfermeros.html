@@ -42,7 +42,7 @@
     <!-- Modal -->
     {% for enfermero in enfermeros %}
         <!-- Modal Confirmar asistencia-->
-        <div class="modal fade" id="listadoEnfermeros{{enfermero['id']}}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal fade" id="listado{{enfermero['id']}}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
@@ -54,7 +54,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                    <a href="/eliminar-enfermero/{{enfermero['id']}}" class="btn btn-success">Eliminar</a>
+                    <a href="/admin/eliminar-enfermero/{{enfermero['id']}}" class="btn btn-success">Eliminar</a>
                 </div>
             </div>
             </div>

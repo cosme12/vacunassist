@@ -106,3 +106,12 @@ def ver_listado_pacientes():
         edades[paciente['id']] = models.edad_de_usuario(paciente['id'])
     
     return render_template('admin/listado_pacientes.html', titulo='Listado de pacientes', pacientes=pacientes, edades=edades, vacunas_aplicadas=vacunas_aplicadas )
+
+
+@app.route('/admin/vacunas-por-zona')
+@login_required
+def vacunas_por_zona():
+    vacunas_zona1 = models.vacunas_por_zona(1)
+    vacunas_zona2 = models.vacunas_por_zona(2)
+    vacunas_zona3 = models.vacunas_por_zona(3)
+    return render_template('admin/vacunas_por_zona.html', titulo='Vacunas por zona', vacunas_zona1=vacunas_zona1, vacunas_zona2=vacunas_zona2, vacunas_zona3=vacunas_zona3)

@@ -61,3 +61,12 @@ def cargar_vacuna_aplicada(fecha,lote,laboratorio, id_vacuna, id_usuario,id_zona
                         VALUES ( ?, ?, ?, ?, ?, ?);",(fecha, lote, laboratorio, id_vacuna,id_usuario,id_zona,))
     conn.commit()
     conn.close()
+
+def vacunas_por_zona(id_zona):
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    vacunas = cursor.execute("SELECT * FROM vacuna_aplicada \
+                                INNER JOIN vacuna ON vacuna.id=vacuna_aplicada.id_vacuna\
+                                WHERE id_zona=?;",(id_zona,)).fetchall()
+    conn.close()
+    return vacunas

@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+{% block content %}
+    <h2>Cantidad de vacunas dadas por zona</h2>
+    <div class="card p-4 ">
+        <div class="container ">
+            <div class="row justify-content-evenly ">
+                <div class="col-md-6">
+                    <dl class="row">
+                        <dt class="col-sm-8">TOTAL DE VACUNAS APLICADAS: </dt>
+                        {% set total =  (vacunas_zona1 |length) + (vacunas_zona2 |length) + (vacunas_zona3 |length)%}
+                        <dd class="col-sm-4">{{total}}</dd>
+                    
+                        <dt class="col-sm-8">ZONA TERMINAL</dt>
+                        <dd class="col-sm-4">{{vacunas_zona1 | length}}</dd>
+                        <dt class="col-sm-8">ZONA MUNICIPALIDAD</dt>
+                        <dd class="col-sm-4">{{vacunas_zona2 | length}}</dd>
+                        <dt class="col-sm-8">ZONA CEMENTERIO</dt>
+                        <dd class="col-sm-4">{{vacunas_zona3 | length}}</dd>
+
+                </div>
+                <div class="w-100 d-none d-block"></div>
+                <div class="col ">
+                    <div>
+                        <canvas id="vacunas_por_zona" style="max-height: 50vh;"></canvas>
+                    </div> 
+                </div>
+                
+            </div>
+        </div>
+    </div>
+
+{% block scripts %}
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.8.0/chart.min.js" integrity="sha512-sW/w8s4RWTdFFSduOTGtk4isV1+190E/GghVffMA9XczdJ2MDzSzLEubKAs5h0wzgSJOQTRYyaz73L3d6RtJSg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script>
+    const labels = [
+        'Zona Terminal',
+        'Zona Municipalidad',
+        'Zona Cementerio',
+    ];
+
+    const data = {
+        labels: labels,
+        datasets: [{
+                label: 'Vacunas por zona',
+            data: [{{vacunas_zona1 |length}},{{vacunas_zona2 |length}},  {{vacunas_zona3 |length}}],
+            backgroundColor: [
+                'rgb(255, 99, 132)',
+                'rgb(54, 162, 235)',
+                'rgb(255, 205, 86)'
+            ],
+            hoverOffset: 4
+        }]
+    };
+
+    const config = {
+        type: 'pie',
+        data: data,
+        options: {}
+    };
+</script>
+<script>
+    const myChart = new Chart(
+      document.getElementById('vacunas_por_zona'),
+      config
+    );
+</script>
+      
+{% endblock %}
+{% endblock %}

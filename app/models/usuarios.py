@@ -251,7 +251,7 @@ def get_enfermeros():
 def get_pacientes():
     conn = get_db_connection()
     cursos = conn.cursor()
-    pacientes = cursos.execute("SELECT u.id, u.nombre, u.apellido, u.dni, u.email, u.telefono, u.fecha_de_nacimiento\
+    pacientes = cursos.execute("SELECT u.id, u.nombre, u.apellido, u.dni, u.email, u.telefono, u.fecha_de_nacimiento,u.paciente_de_riesgo\
                                 FROM usuario AS u \
                                 WHERE  u.tipo =1\
                                 ORDER BY u.apellido;").fetchall()

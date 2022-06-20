@@ -85,6 +85,17 @@ def gestion_enfermeros():
 @app.route('/admin/ver-listado-enfermeros')
 @login_required
 def ver_listado_enfermeros():
-    enfermeros = models.get_usuarios_tipo(2)
+    enfermeros = models.get_enfermeros()
     return render_template('admin/listado_enfermeros.html', titulo='Listado de enfermeros', enfermeros=enfermeros)
 
+@app.route('/admin/ver-listado-pacientes')
+@login_required
+def ver_listado_pacientes():
+    pacientes = models.get_pacientes()
+    vacunas_aplicadas = {}
+    edades= {}
+    for paciente in pacientes:
+        vacunas_aplicadas[paciente['dni']] = models.get_vacunas_aplicadas(paciente['dni'])
+        edades[paciente['id']] = models.edad_de_usuario(paciente['id'])
+    
+    return render_template('admin/listado_pacientes.html', titulo='Listado de pacientes', pacientes=pacientes, edades=edades, vacunas_aplicadas=vacunas_aplicadas )

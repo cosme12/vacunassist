@@ -1,0 +1,143 @@
+{% extends "base.html" %}
+{% from 'bootstrap5/form.html' import render_form %}
+
+{% block content %}
+    <style>
+        .page-item.active .page-link {
+            background-color: #5c636a;
+            border-color: #5c636a;
+        }
+    </style>
+
+
+    <h1 class="text-end pb-5">ENFERMEROS</h1>
+    <table id="data" class="table table-striped" data-order='[[ 0, "asc" ]]'>
+        <thead>
+        <tr>
+            <th>Nombre</th>
+            <th>Apellido</th>
+            <th>DNI</th>
+            <th>Mail</th>
+            <th>Telefono</th>
+            <th>Fecha Nacimiento</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+
+            {% for paciente in pacientes %}
+                <tr>
+                    
+                    <td>{{ paciente['nombre'] }}</td>
+                    <td>{{ paciente['apellido'] }}</td>
+                    <td>{{ paciente['dni'] }}</td>
+                    <td>{{ paciente['mail'] }}</td>
+                    {%if paciente['telefono'] %}
+                        <td>{{ paciente['telefono'] }}</td>
+                    {% else %}
+                        <td> - </td>
+                    {% endif %}
+                    <td>{{ paciente['fecha_de_nacimiento'] }}</td>
+                    <td><button class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#detalle{{paciente['id'] }}" >Ver detalles</button></td>
+                </tr>
+                
+            {% endfor %}   
+        </tbody>
+    </table>
+
+    <!-- Modal -->
+    {% for paciente in pacientes %}
+    <div class="modal fade" id="detalle{{ paciente['id']}}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+            <h5 class="modal-title" id="staticBackdropLabel">{{paciente['nombre']}} {{ paciente['apellido'] }}</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row justify-content-evenly ">
+                    <div class="col-md-12">
+                        <dl class="row">
+                            <!--
+                            <dt class="col-sm-6">Fecha de nacimiento</dt>
+                            <dd class="col-sm-6">{{ paciente['fecha_de_nacimiento'] }}</dd>
+                            -->
+                            <dt class="col-sm-6">Edad</dt>
+                            <dd class="col-sm-6">{{ edades[paciente['id']] }}</dd>
+                            
+                            <dt class="col-sm-6">Paciente de riesgo COVID</dt>
+                            {% if paciente["paciente_de_riesgo"] == 1 %}
+                                <dd class="col-sm-6">SI</dd>
+                            {% else %}
+                                <dd class="col-sm-6">NO</dd>
+                            {% endif %}
+
+                            
+                        </dl>
+                        <hr>
+                        
+                        <ul class="list-group list-group-flush"><dt>Vacunas Aplicadas</dt>
+                            
+                        {% if vacunas_aplicadas[paciente['dni']] %}
+                            {% for vacuna in vacunas_aplicadas[paciente['dni']] %}
+                                <li class="list-group-item">{{ vacuna['fecha']}} - {{ vacuna['enfermedad'] }} <br>
+                                    {% if vacuna['laboratorio'] %} Laboratorio: {{ vacuna['laboratorio'] }} - Lote:{{ vacuna['lote']}}
+                                    {% else %}Sin datos de aplicación.
+                                    {% endif %}
+                                </li>
+                            {% endfor %}
+                        {% else %}
+                            <li class="list-group-item"> Sin vacunas registradas </li>
+                        {% endif %}  
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+        </div>
+    </div>
+    {% endfor %}
+        <br><br>
+    {% block scripts %}
+    <script type="text/javascript" charset="utf8" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.js"></script>
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.12.1/js/dataTables.bootstrap5.js"></script>
+    <script>
+        $(document).ready(function () {
+            table = $('#data').DataTable();
+            table.destroy();
+            
+            $('#data').DataTable({
+                        //paging: false,
+                        //scrollY: 400,
+                        columns: [
+                        null, 
+                        null, 
+                        {orderable: false},  
+                        {sercheable: false, orderable:false},  
+                        {sercheable: false, orderable:false},
+                        {sercheable: false, orderable:false},
+                        {sercheable: false, orderable:false}],
+                        "language": {
+                            //"url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json",
+                            "info": "Mostrando _START_-_END_ de _TOTAL_ enferemeros",
+                            "lengthMenu": "Mostrar _MENU_ enfermeros por página",
+                            "zeroRecords": "No hay usuarios para mostrar",
+                            "infoEmpty": "",
+                            "search": "Buscar: ",
+                            "infoFiltered": "(Filtrado de un total de _MAX_ enfermeros)",
+                            "paginate": {
+                                "first": "Primero",
+                                "last": "Último",
+                                "next": "Siguiente",
+                                "previous": "Anterior"
+                            },
+                        }
+                    });
+            });
+        </script>
+    {% endblock %}
+{% endblock %}

@@ -234,14 +234,29 @@ def tiene_covid1(id):
     return tiene_vacuna_aplicada(id, id_covid1)
 
 
-def get_usuarios_tipo(tipo):
+def get_enfermeros():
     conn = get_db_connection()
     cursos = conn.cursor()
     enfermeros = cursos.execute("SELECT u.id, u.nombre, u.apellido, u.dni, z.id as id_z, z.nombre as z_nombre \
                                 FROM usuario AS u \
                                 INNER JOIN zona AS z ON u.id_zona = z.id \
-                                WHERE  u.tipo =?\
-                                ORDER BY u.apellido;",(tipo,)).fetchall()
+                                WHERE  u.tipo =2\
+                                ORDER BY u.apellido;").fetchall()
+    
+
     conn.close()
     return enfermeros
+
+
+def get_pacientes():
+    conn = get_db_connection()
+    cursos = conn.cursor()
+    pacientes = cursos.execute("SELECT u.id, u.nombre, u.apellido, u.dni, u.email, u.telefono, u.fecha_de_nacimiento\
+                                FROM usuario AS u \
+                                WHERE  u.tipo =1\
+                                ORDER BY u.apellido;").fetchall()
+    
+
+    conn.close()
+    return pacientes
     

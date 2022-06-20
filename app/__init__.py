@@ -8,7 +8,7 @@ class Config():
     DATABASE = 'app/pruebadb'
     #DATABASE = 'app/demo2'
     SECRET_KEY = 'password-super-dificil'
-    WTF_CSRF_ENABLED = False,
+    WTF_CSRF_ENABLED = True,
     BOOTSTRAP_BTN_STYLE = 'success'
     EMAIL_ENABLED = False
 

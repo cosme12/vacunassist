@@ -255,8 +255,21 @@ def get_pacientes():
                                 FROM usuario AS u \
                                 WHERE  u.tipo =1\
                                 ORDER BY u.apellido;").fetchall()
-    
-
     conn.close()
     return pacientes
-    
+
+
+def get_enfermeros_ordenados_por_zona():
+    """
+    Devuelve todos los enfermeros ordenados por zona
+    """
+    conn = get_db_connection()
+    cursos = conn.cursor()
+    enfermeros = cursos.execute("SELECT u.id, u.nombre, u.apellido, u.dni, z.id as id_z, z.nombre as z_nombre \
+                                FROM usuario AS u \
+                                INNER JOIN zona AS z ON u.id_zona = z.id \
+                                WHERE  u.tipo = 2\
+                                ORDER BY z.id;").fetchall()
+    conn.close()
+    return enfermeros
+

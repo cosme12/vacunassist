@@ -56,7 +56,7 @@ def registrar_enfermero():
 @app.route('/admin/asignar-zona', methods=['GET', 'POST'])
 def asignar_zona():
     form = AsignarZonaForm()
-    enfermeros = models.get_usuarios_tipo(2)
+    enfermeros = models.get_enfermeros_ordenados_por_zona()
     if form.validate_on_submit():
         print(form.data)
     else:

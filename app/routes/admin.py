@@ -6,10 +6,12 @@ from app import app
 from app.handlers.email_enviar import enviar_email
 from app.models.usuarios import generar_reset_password_token
 
+
 @app.route('/admin') # http://localhost:5000/admin
 @login_required
 def admin():
     return render_template('admin/admin.html', titulo="Admin")
+
 
 @app.route('/admin/enviar-recordatorios', methods=['GET', 'POST'])
 @login_required
@@ -24,9 +26,11 @@ def enviar_recordatorios():
                 flash("Se enviaron los emails con éxito.", "success")
     return render_template('admin/enviar_recordatorios.html', titulo="Envio de recordatorios", form=form, turnos_aprobados=turnos_aprobados, cant=len(turnos_aprobados))
 
+
 @app.route('/admin/estadisticas')
 def estadisticas():
     return render_template('admin/estadisticas.html', titulo="Estadisticas")
+
 
 @app.route('/admin/registrar-enfermero', methods=['GET', 'POST'])
 @login_required
@@ -48,4 +52,8 @@ def registrar_enfermero():
             flash(error, 'danger')
     return render_template('admin/registro.html', form=form)
     
+
+@app.route('/admin/asignar-zona', methods=['GET', 'POST'])
+def asignar_zona():
+    return render_template('admin/asignar_zona.html', titulo="Asignar zona")
 

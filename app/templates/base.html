@@ -31,9 +31,11 @@
               {% elif session["dni"] and session["tipo"] == 2%}
                 {{ render_nav_item('turnos_del_dia', 'Turnos del dia') }}
               {% elif session["dni"] and session["tipo"] == 3%}
-                {{ render_nav_item('registrar_enfermero', 'Registrar Enfermero') }}
-                {{ render_nav_item('enviar_recordatorios', 'Enviar Mails') }}
+                {{ render_nav_item('admin', 'Inicio') }}
+                {{ render_nav_item('gestion_enfermeros', 'Enfermeros') }}
+                {{ render_nav_item('gestion_pacientes', 'Pacientes') }}
                 {{render_nav_item('estadisticas', 'Estadísticas')}}
+                {{render_nav_item('datos_vacunatorio', 'Contacto')}}
               {% endif %}
             </ul>
           </div>

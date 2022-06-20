@@ -57,22 +57,30 @@ def registrar_enfermero():
 def asignar_zona():
     form = AsignarZonaForm()
     enfermeros = models.get_usuarios_tipo(2)
+    if form.validate_on_submit():
+        print(form.data)
+    else:
+        print(form.errors)
     return render_template('admin/asignar_zona.html', titulo="Asignar zona", form=form, enfermeros=enfermeros)
+
 
 @app.route('/admin/datos-vacunatorio', methods=['GET', 'POST'])
 @login_required
 def datos_vacunatorio():
     return render_template('admin/datos_vacunatorio.html', titulo="Datos del vacunatorio")
 
+
 @app.route('/admin/gestion-pacientes')
 @login_required
 def gestion_pacientes():
     return render_template('admin/gestion_pacientes.html', titulo="Gestion de pacientes")
 
+
 @app.route('/admin/gestion-enfermeros')
 @login_required
 def gestion_enfermeros():
     return render_template('admin/gestion_enfermeros.html', titulo="Gestion de enfermeros")
+
 
 @app.route('/admin/ver-listado-enfermeros')
 @login_required

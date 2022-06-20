@@ -94,6 +94,6 @@ class AsignarZonaForm(FlaskForm):
                                             ("3", "ZONA CEMENTERIO")], 
                                             validators=[DataRequired('Este campo es requerido')],
                                             render_kw={'class': 'form-control'})
-    enfermeros = FieldList(FormField(EnfermeroZonaForm), min_entries=0, max_entries=5)
+    enfermeros = FieldList(FormField(EnfermeroZonaForm), min_entries=0)
     enviar = SubmitField('Asignar zonas', render_kw={'class': 'btn btn-success btn-md'})
 

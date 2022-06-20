@@ -1,5 +1,5 @@
 from flask import render_template, redirect, url_for, session, flash
-from app.forms import LoginForm, RegistroEnfermeroForm, EnviarEmailsAdminForm
+from app.forms import LoginForm, RegistroEnfermeroForm, EnviarEmailsAdminForm, AsignarZonaForm
 from app.auth import login_required
 from app import models
 from app import app
@@ -55,7 +55,9 @@ def registrar_enfermero():
 
 @app.route('/admin/asignar-zona', methods=['GET', 'POST'])
 def asignar_zona():
-    return render_template('admin/asignar_zona.html', titulo="Asignar zona")
+    form = AsignarZonaForm()
+    enfermeros = models.get_usuarios_tipo(2)
+    return render_template('admin/asignar_zona.html', titulo="Asignar zona", form=form, enfermeros=enfermeros)
 
 @app.route('/admin/datos-vacunatorio', methods=['GET', 'POST'])
 @login_required

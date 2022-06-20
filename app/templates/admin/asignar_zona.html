@@ -5,7 +5,41 @@
     <div class="row">
         <div class="card p-4 mt-3">
             <h1 class="pb-4">Asignar Zona</h1>
-            
+            <br>
+            <form action="" method="post" class="form">
+                <div class="row">
+                    <div class="col">
+                        {{ form.id_zona }}
+                    </div>
+                    <div class="col">
+                        {{ form.enviar }}
+                    </div>
+                </div>
+                
+                 
+                <br><br>
+                <table class="table table-hover table-striped">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>Nombre</th>
+                            <th>Zona</th>
+                            <th>Seleccionar</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for enfermero in enfermeros %}
+                            <tr>
+                                <td>{{ enfermero.nombre }} {{ enfermero.apellido }}</td>
+                                <td>{{ enfermero.z_nombre | upper }}</td>
+                                <td>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" value="" id="enfermeros-0-seleccionado">
+                                      </div>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                </table>
+            </form>
         </div>
     </div>
     <br>

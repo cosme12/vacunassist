@@ -242,8 +242,6 @@ def get_usuarios_tipo(tipo):
                                 INNER JOIN zona AS z ON u.id_zona = z.id \
                                 WHERE  u.tipo =?\
                                 ORDER BY u.apellido;",(tipo,)).fetchall()
-    
-
     conn.close()
     return enfermeros
     

@@ -31,6 +31,7 @@ class RegistroForm(FlaskForm):
     vacunas = FieldList(FormField(HistorialVacunasForm), min_entries=0, max_entries=5)
     enviar = SubmitField('Registrarse', render_kw={'onkeyup':'return validateChars(event)'})
 
+
 class CambiarPasswordForm(FlaskForm):
     actual_password = PasswordField('Contraseña actual', validators=[DataRequired('Este campo es requerido')])
     nueva_password = PasswordField('Contraseña nueva', [InputRequired(), EqualTo('confirmar', message='Las contraseñas deben coincidir')])
@@ -41,10 +42,12 @@ class ForgotPasswordForm(FlaskForm):
     dni = StringField('DNI', validators=[DataRequired('Este campo es requerido'), Length(min=7, max=8, message='No es un dni válido')])
     enviar = SubmitField('Recuperar contraseña', render_kw={'onkeyup':'return validateChars(event)'})
 
+
 class ResetPasswordForm(FlaskForm):
     new_password = PasswordField('Contraseña', validators=[InputRequired(), EqualTo('confirmar', message='Las contraseñas deben coincidir')])
     confirmar = PasswordField('Repetir contraseña')
     enviar = SubmitField('Recuperar contraseña',render_kw={'onkeyup':'return validateChars(event)'})
+
 
 class BookAppointmedForm(FlaskForm):
     id_zona = SelectField('Zona:', choices=[("1", "ZONA TERMINAL"), ("2", "ZONA MUNICIPALIDAD"),
@@ -69,6 +72,7 @@ class RegistroEnfermeroForm(FlaskForm):
                                             validators=[DataRequired('Este campo es requerido')])
     enviar = SubmitField('Registrar', render_kw={'onkeyup':'return validateChars(event)'})
 
+
 class VacunaAplicadaForm(FlaskForm):
     id_usuario = HiddenField()
     id_turno = HiddenField()
@@ -78,4 +82,18 @@ class VacunaAplicadaForm(FlaskForm):
     laboratorio = StringField('Laboratorio', render_kw={'class': 'form-control'}, validators=[DataRequired('Este campo es requerido')])
     observaciones = StringField('Observaciones', render_kw={'class': 'form-control'})
     enviarse = SubmitField('Cargar Vacuna', render_kw={'class': 'btn btn-success btn-md'})
+
+
+class EnfermeroZonaForm(Form):
+    id_enfermero = HiddenField()
+    seleccionado = BooleanField('')
+
+
+class AsignarZonaForm(FlaskForm):
+    id_zona = SelectField('Zona:', choices=[("1", "ZONA TERMINAL"), ("2", "ZONA MUNICIPALIDAD"),
+                                            ("3", "ZONA CEMENTERIO")], 
+                                            validators=[DataRequired('Este campo es requerido')],
+                                            render_kw={'class': 'form-control'})
+    enfermeros = FieldList(FormField(EnfermeroZonaForm), min_entries=0, max_entries=5)
+    enviar = SubmitField('Asignar zonas', render_kw={'class': 'btn btn-success btn-md'})
 

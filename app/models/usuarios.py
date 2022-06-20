@@ -232,4 +232,18 @@ def apto_vacuna_fiebre_amarilla(id):
 def tiene_covid1(id):
     id_covid1 = 4
     return tiene_vacuna_aplicada(id, id_covid1)
+
+
+def get_usuarios_tipo(tipo):
+    conn = get_db_connection()
+    cursos = conn.cursor()
+    enfermeros = cursos.execute("SELECT u.id, u.nombre, u.apellido, u.dni, z.id as id_z, z.nombre as z_nombre \
+                                FROM usuario AS u \
+                                INNER JOIN zona AS z ON u.id_zona = z.id \
+                                WHERE  u.tipo =?;\
+                                ORDER BY u.apellido",(tipo,)).fetchall()
+    
+
+    conn.close()
+    return enfermeros
     

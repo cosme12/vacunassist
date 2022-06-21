@@ -1,12 +1,12 @@
 {% extends "base.html" %}
 {% block content %}
-    <h2>Cantidad de vacunas dadas por zona</h2>
+    <h2>Cantidad de vacunas aplicadas por zona</h2>
     <div class="card p-4 ">
         <div class="container ">
             <div class="row justify-content-evenly ">
                 <div class="col-md-6">
                     <dl class="row">
-                        <dt class="col-sm-8">TOTAL DE VACUNAS APLICADAS: </dt>
+                        <dt class="col-sm-8">TOTAL DE VACUNAS APLICADAS </dt>
                         {% set total =  (vacunas_zona1 |length) + (vacunas_zona2 |length) + (vacunas_zona3 |length)%}
                         <dd class="col-sm-4">{{total}}</dd>
                     

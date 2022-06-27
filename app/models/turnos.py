@@ -145,3 +145,17 @@ def aprobar_turno(id):
     cursor.execute("UPDATE turno SET estado=2 WHERE id =?;",(id,))
     conn.commit()
     conn.close()
+
+
+def get_cant_turnos_por_zona():
+    """
+    Devuelve la cantidad de turnos pendientes para los proximos 7 dias para cada zona
+    """
+    conn = get_db_connection()
+    cursos = conn.cursor()
+    turnos = cursos.execute("SELECT z.id, z.nombre as zona, count(t.id) as cantidad \
+                            FROM zona AS z \
+                            LEFT JOIN turno AS t ON (z.id=t.id_zona and t.estado=1 and t.fecha >= date('now', '+7 days')) \
+                            GROUP BY z.id").fetchall()
+    conn.close()
+    return turnos

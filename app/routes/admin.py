@@ -57,14 +57,16 @@ def registrar_enfermero():
 def asignar_zona():
     form = AsignarZonaForm()
     enfermeros = models.get_enfermeros_ordenados_por_zona()
+    cant_turnos_por_zona = models.get_cant_turnos_por_zona()
+    cant_enfermeros_por_zona = models.get_cant_enfermeros_por_zona()
+    total_enfermeros = len(enfermeros)
     if form.validate_on_submit():
-        print(form.data)
         for enfermero in form.enfermeros.data:
             if enfermero["seleccionado"]:
                 models.asignar_zona(enfermero["id_enfermero"], form.id_zona.data)
         flash("Se asignaron las zonas correctamente.", "success")
         return redirect(url_for('asignar_zona'))
-    return render_template('admin/asignar_zona.html', titulo="Asignar zona", form=form, enfermeros=enfermeros)
+    return render_template('admin/asignar_zona.html', titulo="Asignar zona", form=form, enfermeros=enfermeros, cant_turnos_por_zona=cant_turnos_por_zona, cant_enfermeros_por_zona=cant_enfermeros_por_zona, total_enfermeros=total_enfermeros)
 
 
 @app.route('/admin/datos-vacunatorio', methods=['GET', 'POST'])

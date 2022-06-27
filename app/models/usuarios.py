@@ -273,3 +273,17 @@ def get_enfermeros_ordenados_por_zona():
     conn.close()
     return enfermeros
 
+
+def get_cant_enfermeros_por_zona():
+    """
+    Devuelve la cantidad de enfermeros pendientes para los proximos 7 dias para cada zona
+    """
+    conn = get_db_connection()
+    cursos = conn.cursor()
+    enfermeros = cursos.execute("SELECT z.id, z.nombre as zona, count(e.id) as cantidad \
+                            FROM zona AS z \
+                            LEFT JOIN usuario AS e ON (z.id=e.id_zona and e.tipo=2) \
+                            GROUP BY z.id").fetchall()
+    conn.close()
+    return enfermeros
+

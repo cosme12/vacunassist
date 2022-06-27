@@ -8,38 +8,29 @@
             <br>
             <div class="row">
                 <div class="col">
-                    <div class="card mb-3 text-center" style="min-width: 12rem; max-width: 12rem;">
+                    <div class="card mb-3 text-center" style="min-width: 18rem; max-width: 18rem;">
                         <div class="card-header"><h6>Zona Terminal</h6></div>
                         <div class="card-body">
-                            <h6 class="card-title">5/10</h6>
-                            <p class="card-text">Turnos del día: 200</p>
-                            <div class="progress mt-1 mb-0" style="height: 7px;">
-                                <div class="progress-bar bg-danger" role="progressbar" style="width: 40%" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100"></div>
-                            </div>
+                            <h6 class="card-title">Enfermeros: {{ cant_enfermeros_por_zona[0]["cantidad"] }}/{{ total_enfermeros }}</h6>
+                            <p class="card-text">Turnos para los sig. siete días: {% if cant_turnos_por_zona[0]["zona"] == "terminal" %}{{ cant_turnos_por_zona[0]["cantidad"] }} {% else %} 0 {% endif %}</p>
                         </div>
                     </div>
                 </div>
                 <div class="col">
-                    <div class="card mb-3 text-center" style="min-width: 12rem; max-width: 12rem;">
+                    <div class="card mb-3 text-center" style="min-width: 18rem; max-width: 18rem;">
                         <div class="card-header"><h6>Zona Municipalidad</h6></div>
                         <div class="card-body">
-                            <h6 class="card-title">5/10</h6>
-                            <p class="card-text">Turnos del día: 200</p>
-                            <div class="progress mt-1 mb-0" style="height: 7px;">
-                                <div class="progress-bar bg-danger" role="progressbar" style="width: 40%" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100"></div>
-                            </div>
+                            <h6 class="card-title">Enfermeros: {{ cant_enfermeros_por_zona[1]["cantidad"] }}/{{ total_enfermeros }}</h6>
+                            <p class="card-text">Turnos para los sig. siete días: {% if cant_turnos_por_zona[1]["zona"] == "municipalidad" %}{{ cant_turnos_por_zona[1]["cantidad"] }} {% else %} 0 {% endif %}</p>
                         </div>
                     </div>
                 </div>
                 <div class="col">
-                    <div class="card mb-3 text-center" style="min-width: 12rem; max-width: 12rem;">
+                    <div class="card mb-3 text-center" style="min-width: 18rem; max-width: 18rem;">
                         <div class="card-header"><h6>Zona Cementerio</h6></div>
                         <div class="card-body">
-                            <h6 class="card-title">5/10</h6>
-                            <p class="card-text">Turnos del día: 200</p>
-                            <div class="progress mt-1 mb-0" style="height: 7px;">
-                                <div class="progress-bar bg-danger" role="progressbar" style="width: 40%" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100"></div>
-                            </div>
+                            <h6 class="card-title">Enfermeros: {{ cant_enfermeros_por_zona[2]["cantidad"] }}/{{ total_enfermeros }}</h6>
+                            <p class="card-text">Turnos para los sig. siete días: {% if cant_turnos_por_zona[2]["zona"] == "cementerio" %}{{ cant_turnos_por_zona[2]["cantidad"] }} {% else %} 0 {% endif %}</p>
                         </div>
                     </div>
                 </div>
@@ -48,6 +39,7 @@
             
             <form action="" method="post" class="form">
                 {{ form.csrf_token }}
+                <br><br>
                 <div class="row">
                     <div class="col-4">
                         {{ form.id_zona }}
@@ -58,7 +50,7 @@
                 </div>
                 
                  
-                <br><br>
+                <br>
                 <table class="table table-hover table-striped">
                     <thead class="table-dark">
                         <tr>

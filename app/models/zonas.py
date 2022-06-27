@@ -21,3 +21,16 @@ def get_nombre_zona(id):
     zona = cursor.execute("SELECT nombre FROM zona where id =?;",(id,)).fetchone()
     conn.close
     return zona
+
+
+def asignar_zona(id_enfermero, id_zona):
+    """
+    Asigna una zona a un enfermero
+    """
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    cursor.execute("UPDATE usuario SET id_zona = ? WHERE id = ?;", (id_zona, id_enfermero))
+    conn.commit()
+    conn.close()
+
+

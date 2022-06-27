@@ -59,8 +59,11 @@ def asignar_zona():
     enfermeros = models.get_enfermeros_ordenados_por_zona()
     if form.validate_on_submit():
         print(form.data)
-    else:
-        print(form.errors)
+        for enfermero in form.enfermeros.data:
+            if enfermero["seleccionado"]:
+                models.asignar_zona(enfermero["id_enfermero"], form.id_zona.data)
+        flash("Se asignaron las zonas correctamente.", "success")
+        return redirect(url_for('asignar_zona'))
     return render_template('admin/asignar_zona.html', titulo="Asignar zona", form=form, enfermeros=enfermeros)
 
 

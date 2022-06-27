@@ -15,6 +15,7 @@
      <table id="data" class="table table-striped" data-order='[[ 0, "asc" ]]'>
          <thead>
          <tr>
+             <th>Fecha</th>
              <th>Hora</th>
              <th>DNI</th>
              <th>Nombre</th>
@@ -28,6 +29,7 @@
                  {% for turno in turnos %}
                      
                      <tr>
+                         <td>{{ turno['fecha'] }}</td>
                          <td>{{ turno['hora'] }}</td>
                          <td>{{ turno['dni'] }}</td>
                          <td>{{ turno['nombre'] }}</td>
@@ -39,31 +41,6 @@
                  {% endfor %}   
          </tbody>
      </table>
- 
-     {% if turnos %}
-         <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#cancelarTodos">Cancelar todos</button>
-     {% else %}
-         <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#cancelarTodos" disabled>Cancelar todos</button>
-     {%endif%}
-         <!-- Modal Cancelar todos-->
-     <div class="modal fade" id="cancelarTodos" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-         <div class="modal-dialog">
-           <div class="modal-content">
-             <div class="modal-header">
-               <h5 class="modal-title" id="staticBackdropLabel">Cancelar turnos del día</h5>
-               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-             </div>
-             <div class="modal-body">
-               ¿Querés cancelar todos los turnos? <br>
-               <small class="text-danger">Esta acción no podrá deshacerse.</small>
-             </div>
-             <div class="modal-footer">
-                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
-                 <a href="/cancelar-turnos-del-dia" class="btn btn-danger">Si</a>
-             </div>
-           </div>
-         </div>
-     </div>
  
      <!-- Modal -->
      {% for turno in turnos %}
@@ -116,7 +93,7 @@
                      </div>
                  </div>
                  <div class="modal-footer">
-                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Rechazar</button>
+                 <a href="/admin/rechazar-turno/{{turno['id']}}"><button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Rechazar</button></a>
                  <a href="/admin/aprobar-turno/{{turno['id']}}"><button type="button" class="btn btn-success" data-bs-dismiss="modal">Aprobar</button></a>
                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
                  </div>
@@ -139,10 +116,10 @@
                          //scrollY: 400,
                          columns: [
                          {searchable: false},
-                         {orderable: false},
-                         null,
-                         null,
                          {searchable: false},
+                         null,
+                         null,
+                         null,
                          {sercheable: false, orderable:false},
                          {sercheable: false, orderable:false}],
                          "language": {

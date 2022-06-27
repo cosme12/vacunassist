@@ -122,3 +122,26 @@ def finalizar_turno(id):
     cursor.execute("UPDATE turno SET estado=3 WHERE id =?;",(id,))
     conn.commit()
     conn.close()
+
+
+def get_pendientes_fiebre_amarilla():
+    conn = get_db_connection()
+    cursos = conn.cursor()
+    turnos = cursos.execute("SELECT t.id, t.fecha, t.hora, t.id_usuario, t.id_vacuna, \
+                            u.dni, u.nombre, u.apellido, u.fecha_de_nacimiento, u.paciente_de_riesgo, \
+                            z.nombre as zona, v.enfermedad as vacuna \
+                            FROM turno AS t \
+                            INNER JOIN usuario AS u ON t.id_usuario=u.id \
+                            INNER JOIN vacuna AS v ON t.id_vacuna=v.id \
+                            INNER JOIN zona AS z ON t.id_zona=z.id \
+                            WHERE t.id_vacuna = 2 and t.estado=1 \
+                            ORDER BY t.hora, u.apellido;").fetchall()
+    conn.close()
+    return turnos
+
+def aprobar_turno(id):
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    cursor.execute("UPDATE turno SET estado=2 WHERE id =?;",(id,))
+    conn.commit()
+    conn.close()

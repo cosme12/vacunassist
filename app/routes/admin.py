@@ -118,3 +118,27 @@ def vacunas_por_zona():
     vacunas_zona2 = models.vacunas_por_zona(2)
     vacunas_zona3 = models.vacunas_por_zona(3)
     return render_template('admin/vacunas_por_zona.html', titulo='Vacunas por zona', vacunas_zona1=vacunas_zona1, vacunas_zona2=vacunas_zona2, vacunas_zona3=vacunas_zona3)
+
+
+@app.route('/admin/turnos-pendientes-de-fiebre-amarilla')
+@login_required
+def listado_pendientes_fiebre_amarilla():
+    turnos = models.get_pendientes_fiebre_amarilla()
+    vacunas_aplicadas = {}
+    edades= {}
+    for turno in turnos :
+        print(turno['dni'])
+        vacunas_aplicadas[turno['dni']] = models.get_vacunas_aplicadas(turno['dni'])
+        edades[turno['id_usuario']] = models.edad_de_usuario(turno['id_usuario'])
+
+    return render_template('admin/listado_pendientes_fiebre_amarilla.html', titulo = "Turnos pendientes de fiebre amarilla", turnos=turnos, vacunas_aplicadas=vacunas_aplicadas, edades=edades)  
+
+@app.route('/admin/aprobar-turno/<int:id>')
+@login_required
+def aprobar_turno(id):
+    turno = models.get_turno_por_id(id)
+    usuario = models.get_user_data_por_id(turno['id_usuario'])
+    models.aprobar_turno(id)
+    if app.config['EMAIL_ENABLED']:
+                enviar_email(usuario['email'], "Vacunassist - Aprobacion de turno Fiebre Amarilla", f"Su turno para la vacuna la Fiebre amarilla el dia {turno['fecha']}, a las {turno['hora']} horas, en zona{turno['nombre']} {turno['direccion']} a sido aprobado.\n")
+    return redirect(url_for('listado_pendientes_fiebre_amarilla'))

@@ -25,6 +25,13 @@
                     </div> 
                 </div>
                 
+                <div class="row ">
+                    <div clas="col">
+                        <input onchange="filterDataByDate()" type="date" id="startdate" placeholder="dd/mm/yyyy">
+                        <input onchange="filterDataByDate()" type="date" id="enddate">
+                    </div> 
+                </div>
+                
             </div>
         </div>
     </div>
@@ -38,18 +45,19 @@
         'Zona Municipalidad',
         'Zona Cementerio',
     ];
-
+    const datapoints = [{{vacunas_zona1 | length}},{{vacunas_zona2 |length}},  {{vacunas_zona3 |length}}];
     const data = {
         labels: labels,
         datasets: [{
                 label: 'Vacunas por zona',
-            data: [{{vacunas_zona1 |length}},{{vacunas_zona2 |length}},  {{vacunas_zona3 |length}}],
+            data: datapoints,
             backgroundColor: [
                 'rgb(255, 99, 132)',
                 'rgb(54, 162, 235)',
                 'rgb(255, 205, 86)'
             ],
             hoverOffset: 4
+            //borderColor: 'rgb(255, 99, 132)'
         }]
     };
 
@@ -64,6 +72,52 @@
       document.getElementById('vacunas_por_zona'),
       config
     );
+
+    function filterDataByDate(){
+        v1 = [{% for v in vacunas_zona1 %}"{{v["fecha"]}}",{% endfor %}];
+        v2 = [{% for v in vacunas_zona2 %}"{{v["fecha"]}}",{% endfor %}];
+        v3 = [{% for v in vacunas_zona3 %}"{{v["fecha"]}}",{% endfor %}];
+        
+        var desde = document.getElementById('startdate').value;
+        var hasta = document.getElementById('enddate').value;
+        
+        console.log(hasta);
+        console.log(v1,v2,v3);
+
+        //desde to date
+        if (desde){
+            desde = new Date(desde);
+        } else {
+            desde = new Date("1970-01-01");
+        }
+        if (hasta){
+            hasta = new Date(hasta);
+        } else {
+            hasta = new Date();
+        }
+
+        // filtra los datos por fecha
+        var filtrado1 = v1.filter(function(v){
+            let fecha = v.split("/");
+            fecha = new Date(fecha[2] + '-' + fecha[1] + '-' + fecha[0]);
+            return fecha >= desde && fecha <= hasta;
+        });
+        // filtra los datos por fecha
+        var filtrado2 = v2.filter(function(v){
+            let fecha = v.split("/");
+            fecha = new Date(fecha[2] + '-' + fecha[1] + '-' + fecha[0]);
+            return fecha >= desde && fecha <= hasta;
+        });
+        // filtra los datos por fecha
+        var filtrado3 = v3.filter(function(v){
+            let fecha = v.split("/");
+            fecha = new Date(fecha[2] + '-' + fecha[1] + '-' + fecha[0]);
+            return fecha >= desde && fecha <= hasta;
+        });
+
+        myChart.config.data.datasets[0].data = [filtrado1.length, filtrado2.length, filtrado3.length];
+        myChart.update();
+    }
 </script>
       
 {% endblock %}

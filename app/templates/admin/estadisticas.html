@@ -2,9 +2,32 @@
 {% block content %}
 <h1><i class="bi bi-bar-chart-line-fill" style="font-size: 40px;"> </i>Estadísticas</h1>
 ACA VAN LAS DISTINTAS ESTADÍSTICAS QUE SE PUEDEN VER
-<div>
-    <canvas id="myChart"></canvas>
- </div>
+<div class="card p-4 ">
+    <div class="container ">
+        <div class="row justify-content-evenly ">
+            <div class="w-100 d-none d-block"></div>
+            <div class="col">
+                <a href="{{ url_for('vacunas_por_zona') }}" class="pb-2" style="text-decoration: none;">  
+                    <button class="btn btn-secondary">Vacunas por zona</button>
+                </a>
+            </div>
+            <div class="col ">
+                <a href="" class="pb-2" style="text-decoration: none;">  
+                    <button class="btn btn-secondary">Vacunas por tipo</button>
+                </a>
+            </div>
+            <div class="col ">
+                <a href="" class="pb-2" style="text-decoration: none;">  
+                    <button class="btn btn-secondary">Vacunas por edad</button>
+                </a>
+            </div>
+        </div>
+    </div>
+    <div>
+        <canvas id="myChart"></canvas>
+     </div>
+</div>
+
   
 
 {% block scripts %}
@@ -23,7 +46,7 @@ ACA VAN LAS DISTINTAS ESTADÍSTICAS QUE SE PUEDEN VER
         const data = {
             labels: labels,
             datasets: [{
-            label: 'My First dataset',
+            label: 'Estadísticas',
             backgroundColor: 'rgb(255, 99, 132)',
             borderColor: 'rgb(255, 99, 132)',
             data: [0, 10, 5, 2, 20, 30, 45],

@@ -8,14 +8,14 @@
                     <dl class="row">
                         <dt class="col-sm-8">TOTAL DE VACUNAS APLICADAS </dt>
                         {% set total =  (vacunas_zona1 |length) + (vacunas_zona2 |length) + (vacunas_zona3 |length)%}
-                        <dd class="col-sm-4">{{total}}</dd>
+                        <dd id="total" class="col-sm-4">{{total}}</dd>
                     
                         <dt class="col-sm-8">ZONA TERMINAL</dt>
-                        <dd class="col-sm-4">{{vacunas_zona1 | length}}</dd>
+                        <dd id="total_z1" class="col-sm-4">{{vacunas_zona1 | length}}</dd>
                         <dt class="col-sm-8">ZONA MUNICIPALIDAD</dt>
-                        <dd class="col-sm-4">{{vacunas_zona2 | length}}</dd>
+                        <dd id="total_z2" class="col-sm-4">{{vacunas_zona2 | length}}</dd>
                         <dt class="col-sm-8">ZONA CEMENTERIO</dt>
-                        <dd class="col-sm-4">{{vacunas_zona3 | length}}</dd>
+                        <dd id="total_z3"class="col-sm-4">{{vacunas_zona3 | length}}</dd>
 
                 </div>
                 <div class="w-100 d-none d-block"></div>
@@ -27,8 +27,14 @@
                 
                 <div class="row ">
                     <div clas="col">
-                        <input onchange="filterDataByDate()" type="date" id="startdate" placeholder="dd/mm/yyyy">
-                        <input onchange="filterDataByDate()" type="date" id="enddate">
+                        Desde: <input onchange="filterDataByDate()" type="date" id="startdate" placeholder="dd/mm/yyyy">
+                        Hasta: <input onchange="filterDataByDate()" type="date" id="enddate">
+                    </div> 
+                </div>
+                <div class="row ">
+                    <div clas="col">
+                        
+                        
                     </div> 
                 </div>
                 
@@ -117,6 +123,12 @@
 
         myChart.config.data.datasets[0].data = [filtrado1.length, filtrado2.length, filtrado3.length];
         myChart.update();
+        console.log(filtrado1.length + filtrado2.length + filtrado3.length);
+        document.getElementById('total').innerHTML = (filtrado1.length + filtrado2.length + filtrado3.length);
+        document.getElementById('total_z1').innerHTML = filtrado1.length;
+        document.getElementById('total_z2').innerHTML = filtrado2.length;
+        document.getElementById('total_z3').innerHTML = filtrado3.length;
+        
     }
 </script>
       

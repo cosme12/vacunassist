@@ -130,8 +130,16 @@ def vacunas_por_edad():
     vacunas_menores18 = models.vacunas_menores18()
     vacunas_entre18y60 = models.vacunas_entre18y60()
     vacunas_mayores60 = models.vacunas_mayores60()
-    print(18)
     return render_template('admin/vacunas_por_edad.html', titulo='Vacunas por edad', vacunas_menores18=vacunas_menores18, vacunas_entre18y60=vacunas_entre18y60, vacunas_mayores60=vacunas_mayores60)
+
+@app.route('/admin/vacunas-por-enfermedad')
+@login_required
+def vacunas_por_enfermedad():
+    vacunas_covid1 = models.get_vacunas_aplicadas_por_id(4)
+    vacunas_covid2 = models.get_vacunas_aplicadas_por_id(3)
+    vacunas_fiebre_amarilla = models.get_vacunas_aplicadas_por_id(2)
+    vacunas_gripe = models.get_vacunas_aplicadas_por_id(1)
+    return render_template('admin/vacunas_por_enfermedad.html', titulo='Vacunas por enfermedad', vacunas_covid1=vacunas_covid1, vacunas_covid2=vacunas_covid2, vacunas_fiebre_amarilla=vacunas_fiebre_amarilla, vacunas_gripe=vacunas_gripe)
 
 
 @app.route('/admin/turnos-pendientes-de-fiebre-amarilla')

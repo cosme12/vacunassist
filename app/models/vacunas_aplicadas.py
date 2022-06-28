@@ -107,3 +107,16 @@ def vacunas_mayores60():
                             AND fecha_de_nacimiento < ?;", ("", fecha_max,)).fetchall()
     conn.close()
     return vacunas
+
+def get_vacunas_aplicadas_por_id(id_vacuna):
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    
+    vacunas = cursor.execute("SELECT * FROM vacuna_aplicada \
+                            INNER JOIN vacuna ON vacuna.id=vacuna_aplicada.id_vacuna\
+                            WHERE vacuna_aplicada.id_zona != ?\
+                            AND vacuna.id = ?;", ("", id_vacuna,)).fetchall()
+    conn.close()
+    return vacunas
+
+

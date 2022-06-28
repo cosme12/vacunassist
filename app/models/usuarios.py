@@ -2,7 +2,7 @@ import hashlib
 import random
 import sqlite3
 import string
-from datetime import date
+from datetime import date, datetime, timedelta
 from app.models import get_db_connection
 import time
 from app.models.turnos import tiene_turno_pendiente
@@ -175,6 +175,39 @@ def edad_de_usuario(id_usuario):
     edad = today.year - fecha_de_nacimiento[2] - ((today.month, today.day) < (fecha_de_nacimiento[1], fecha_de_nacimiento[0]))
     return edad
 
+def menores18():
+    """
+    Devuelve los id de los usuarios menores de 18
+    """
+    conn= get_db_connection()
+    cursor = conn.cursor()
+    fechaMax = datetime.strftime((datetime.today() - timedelta(years=18)),"%d/%m/%Y")
+    usuarios=cursor.execute("SELECT id FROM usuario WHERE fecha_de_nacimiento > ?;"(fechaMax,)).fetchall()
+    conn.close()
+    return usuarios
+
+def entre18y60():
+    """
+    Devuelve los id de los usuarios mayores de 18 y menores de 60
+    """
+    conn= get_db_connection()
+    cursor = conn.cursor()
+    fechaMax = datetime.strftime((datetime.today() - timedelta(years=18)),"%d/%m/%Y")
+    fechaMin = datetime.strftime((datetime.today - timedelta(years=60)), "%d/%m/%Y")
+    usuarios=cursor.execute("SELECT id FROM usuario WHERE fecha_de_nacimiento > ? and fecha_de_nacimiento < ?;", (fechaMin, fechaMax,)).fetchall()
+    conn.close()
+    return usuarios
+
+def mayores60():
+    """
+    Devuelve los id de los usuarios mayores de 60
+    """
+    conn= get_db_connection()
+    cursor = conn.cursor()
+    fechaMax = datetime.strftime((datetime.today() - timedelta(years=60)),"%d/%m/%Y")
+    usuarios=cursor.execute("SELECT id FROM usuario WHERE fecha_de_nacimiento < ?;", (fechaMax,)).fetchall()
+    conn.close()
+    return usuarios
 
 def cambiar_password(id, password_nueva):
     hash_password = hashear_contrasena(password_nueva)

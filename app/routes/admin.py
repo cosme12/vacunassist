@@ -121,6 +121,18 @@ def vacunas_por_zona():
     vacunas_zona3 = models.vacunas_por_zona(3)
     return render_template('admin/vacunas_por_zona.html', titulo='Vacunas por zona', vacunas_zona1=vacunas_zona1, vacunas_zona2=vacunas_zona2, vacunas_zona3=vacunas_zona3)
 
+@app.route('/admin/vacunas-por-edad')
+@login_required
+def vacunas_por_edad():
+    #menores18 = models.menores18()
+    #entre18y60 = models.entre18y60()
+    #mayores60 = models.mayores60()
+    vacunas_menores18 = models.vacunas_menores18()
+    vacunas_entre18y60 = models.vacunas_entre18y60()
+    vacunas_mayores60 = models.vacunas_mayores60()
+    print(18)
+    return render_template('admin/vacunas_por_edad.html', titulo='Vacunas por edad', vacunas_menores18=vacunas_menores18, vacunas_entre18y60=vacunas_entre18y60, vacunas_mayores60=vacunas_mayores60)
+
 
 @app.route('/admin/turnos-pendientes-de-fiebre-amarilla')
 @login_required

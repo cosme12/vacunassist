@@ -1,0 +1,136 @@
+{% extends "base.html" %}
+{% block content %}
+    <h2>Cantidad de vacunas aplicadas por edad</h2>
+    <div class="card p-4 ">
+        <div class="container ">
+            <div class="row justify-content-evenly ">
+                <div class="col-md-6">
+                    <dl class="row">
+                        <dt class="col-sm-8">TOTAL DE VACUNAS APLICADAS </dt>
+                        {% set total =  (vacunas_menores18 |length) + (vacunas_entre18y60 |length) + (vacunas_mayores60 |length)%}
+                        <dd id="total" class="col-sm-4">{{total}}</dd>
+                    
+                        <dt class="col-sm-8">MENORES DE 18 AÑOS</dt>
+                        <dd id="total_-18" class="col-sm-4">{{vacunas_menores18 | length}}</dd>
+                        <dt class="col-sm-8">ENTRE 18 y 60 AÑOS</dt>
+                        <dd id="total_18-60" class="col-sm-4">{{vacunas_entre18y60 | length}}</dd>
+                        <dt class="col-sm-8">MAYORES DE 60 AÑOS</dt>
+                        <dd id="total_+60"class="col-sm-4">{{vacunas_mayores60 | length}}</dd>
+
+                </div>
+                <div class="w-100 d-none d-block"></div>
+                <div class="col ">
+                    <div>
+                        <canvas id="vacunas_por_edad" style="max-height: 50vh;"></canvas>
+                    </div> 
+                </div>
+                
+                <div class="row ">
+                    <div clas="col">
+                        Desde: <input onchange="filterDataByDate()" type="date" id="startdate" placeholder="dd/mm/yyyy">
+                        Hasta: <input onchange="filterDataByDate()" type="date" id="enddate">
+                    </div> 
+                </div>
+                <div class="row ">
+                    <div clas="col">
+                        
+                        
+                    </div> 
+                </div>
+                
+            </div>
+        </div>
+    </div>
+
+{% block scripts %}
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.8.0/chart.min.js" integrity="sha512-sW/w8s4RWTdFFSduOTGtk4isV1+190E/GghVffMA9XczdJ2MDzSzLEubKAs5h0wzgSJOQTRYyaz73L3d6RtJSg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script>
+    const labels = [
+        '<18',
+        '18-60',
+        '>60',
+    ];
+    const datapoints = [{{vacunas_menores18 | length}},{{vacunas_entre18y60 |length}},  {{vacunas_mayores60 |length}}];
+    const data = {
+        labels: labels,
+        datasets: [{
+                label: 'Vacunas por edad',
+            data: datapoints,
+            backgroundColor: [
+                'rgb(255, 99, 132)',
+                'rgb(54, 162, 235)',
+                'rgb(255, 205, 86)'
+            ],
+            hoverOffset: 4
+            //borderColor: 'rgb(255, 99, 132)'
+        }]
+    };
+
+    const config = {
+        type: 'pie',
+        data: data,
+        options: {}
+    };
+</script>
+<script>
+    const myChart = new Chart(
+      document.getElementById('vacunas_por_edad'),
+      config
+    );
+
+    function filterDataByDate(){
+        v1 = [{% for v in vacunas_menores18 %}"{{v["fecha"]}}",{% endfor %}];
+        v2 = [{% for v in vacunas_entre18y60 %}"{{v["fecha"]}}",{% endfor %}];
+        v3 = [{% for v in vacunas_mayores60 %}"{{v["fecha"]}}",{% endfor %}];
+        
+        var desde = document.getElementById('startdate').value;
+        var hasta = document.getElementById('enddate').value;
+        
+        console.log(hasta);
+        console.log(v1,v2,v3);
+
+        //desde to date
+        if (desde){
+            desde = new Date(desde);
+        } else {
+            desde = new Date("1970-01-01");
+        }
+        if (hasta){
+            hasta = new Date(hasta);
+        } else {
+            hasta = new Date();
+        }
+
+        // filtra los datos por fecha
+        var filtrado1 = v1.filter(function(v){
+            let fecha = v.split("/");
+            fecha = new Date(fecha[2] + '-' + fecha[1] + '-' + fecha[0]);
+            return fecha >= desde && fecha <= hasta;
+        });
+        // filtra los datos por fecha
+        var filtrado2 = v2.filter(function(v){
+            let fecha = v.split("/");
+            fecha = new Date(fecha[2] + '-' + fecha[1] + '-' + fecha[0]);
+            return fecha >= desde && fecha <= hasta;
+        });
+        // filtra los datos por fecha
+        var filtrado3 = v3.filter(function(v){
+            let fecha = v.split("/");
+            fecha = new Date(fecha[2] + '-' + fecha[1] + '-' + fecha[0]);
+            return fecha >= desde && fecha <= hasta;
+        });
+
+        myChart.config.data.datasets[0].data = [filtrado1.length, filtrado2.length, filtrado3.length];
+        myChart.update();
+        console.log(filtrado1.length + filtrado2.length + filtrado3.length);
+        document.getElementById('total').innerHTML = (filtrado1.length + filtrado2.length + filtrado3.length);
+        document.getElementById('total_-18').innerHTML = filtrado1.length;
+        document.getElementById('total_18-60').innerHTML = filtrado2.length;
+        document.getElementById('total_+60').innerHTML = filtrado3.length;
+        
+    }
+</script>
+      
+{% endblock %}
+{% endblock %}

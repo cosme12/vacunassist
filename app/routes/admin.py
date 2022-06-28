@@ -141,6 +141,15 @@ def vacunas_por_enfermedad():
     vacunas_gripe = models.get_vacunas_aplicadas_por_id(1)
     return render_template('admin/vacunas_por_enfermedad.html', titulo='Vacunas por enfermedad', vacunas_covid1=vacunas_covid1, vacunas_covid2=vacunas_covid2, vacunas_fiebre_amarilla=vacunas_fiebre_amarilla, vacunas_gripe=vacunas_gripe)
 
+@app.route('/admin/cancelados-por-vacuna')
+@login_required
+def cancelados_por_vacuna():
+    cancelados_covid1 = models.get_turnos_cancelados_por_vacuna(4)
+    cancelados_covid2 = models.get_turnos_cancelados_por_vacuna(3)
+    cancelados_fiebre_amarilla = models.get_turnos_cancelados_por_vacuna(2)
+    cancelados_gripe = models.get_turnos_cancelados_por_vacuna(1)
+    return render_template('admin/cancelados_por_vacuna.html', titulo='Turnos cancelados', cancelados_covid1=cancelados_covid1, cancelados_covid2=cancelados_covid2, cancelados_fiebre_amarilla=cancelados_fiebre_amarilla, cancelados_gripe=cancelados_gripe)
+
 
 @app.route('/admin/turnos-pendientes-de-fiebre-amarilla')
 @login_required

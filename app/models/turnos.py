@@ -159,3 +159,13 @@ def get_cant_turnos_por_zona():
                             GROUP BY z.id").fetchall()
     conn.close()
     return turnos
+
+def get_turnos_cancelados_por_vacuna(id_vacuna):
+    """
+    Devuelve los turnos cancelados para la vacuna con id=id_vacuna
+    """
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    turnos = cursor.execute("SELECT * FROM turno WHERE id_vacuna=? AND (estado=? OR estado=?);", (id_vacuna, 4, 5,)).fetchall()
+    conn.close()
+    return turnos

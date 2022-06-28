@@ -1,21 +1,23 @@
 {% extends "base.html" %}
 {% block content %}
-    <h2>Cantidad de vacunas aplicadas por zona</h2>
+    <h2>Cantidad de turnos cancelados por vacuna</h2>
     <div class="card p-4 ">
         <div class="container ">
             <div class="row justify-content-evenly ">
                 <div class="col-md-6">
                     <dl class="row">
-                        <dt class="col-sm-8">TOTAL DE VACUNAS APLICADAS </dt>
-                        {% set total =  (vacunas_zona1 |length) + (vacunas_zona2 |length) + (vacunas_zona3 |length)%}
+                        <dt class="col-sm-8">TOTAL DE TURNOS CANCELADOS </dt>
+                        {% set total =  (cancelados_covid1 |length) + (cancelados_covid2 |length) + (cancelados_gripe |length) + (cancelados_fiebre_amarilla |length)%}
                         <dd id="total" class="col-sm-4">{{total}}</dd>
                     
-                        <dt class="col-sm-8">ZONA TERMINAL</dt>
-                        <dd id="total_z1" class="col-sm-4">{{vacunas_zona1 | length}}</dd>
-                        <dt class="col-sm-8">ZONA MUNICIPALIDAD</dt>
-                        <dd id="total_z2" class="col-sm-4">{{vacunas_zona2 | length}}</dd>
-                        <dt class="col-sm-8">ZONA CEMENTERIO</dt>
-                        <dd id="total_z3"class="col-sm-4">{{vacunas_zona3 | length}}</dd>
+                        <dt class="col-sm-8">COVID 1era DOSIS</dt>
+                        <dd id="total_c1" class="col-sm-4">{{cancelados_covid1 | length}}</dd>
+                        <dt class="col-sm-8">COVID 2da DOSIS</dt>
+                        <dd id="total_c2" class="col-sm-4">{{cancelados_covid2 | length}}</dd>
+                        <dt class="col-sm-8">GRIPE</dt>
+                        <dd id="total_g"class="col-sm-4">{{cancelados_gripe | length}}</dd>
+                        <dt class="col-sm-8">FIEBRE AMARILLA</dt>
+                        <dd id="total_fa"class="col-sm-4">{{cancelados_fiebre_amarilla | length}}</dd>
                         <hr>
                         <div class="row ">
                             <h6>Aplicar filtro por fechas</h6>
@@ -28,9 +30,10 @@
                 <div class="w-100 d-none d-block"></div>
                 <div class="col ">
                     <div>
-                        <canvas id="vacunas_por_zona" style="max-height: 50vh;"></canvas>
+                        <canvas id="cancelados_por_vacuna" style="max-height: 50vh;"></canvas>
                     </div> 
                 </div>
+                
                 
                 
                 
@@ -43,19 +46,21 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.8.0/chart.min.js" integrity="sha512-sW/w8s4RWTdFFSduOTGtk4isV1+190E/GghVffMA9XczdJ2MDzSzLEubKAs5h0wzgSJOQTRYyaz73L3d6RtJSg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script>
     const labels = [
-        'Zona Terminal',
-        'Zona Municipalidad',
-        'Zona Cementerio',
+        'COVID 1era DOSIS',
+        'COVID 2da DOSIS',
+        'GRIPE',
+        'FIEBRE AMARILLA',
     ];
-    const datapoints = [{{vacunas_zona1 | length}},{{vacunas_zona2 |length}},  {{vacunas_zona3 |length}}];
+    const datapoints = [{{cancelados_covid1 | length}},{{cancelados_covid2 |length}},  {{cancelados_gripe |length}}, {{cancelados_fiebre_amarilla |length}}];
     const data = {
         labels: labels,
         datasets: [{
-                label: 'Vacunas por zona',
+                label: 'Vacunas por enfermedad',
             data: datapoints,
             backgroundColor: [
-                'rgb(255, 99, 132)',
+                'rgb(150, 205, 122)',
                 'rgb(54, 162, 235)',
+                'rgb(255, 99, 132)',
                 'rgb(255, 205, 86)'
             ],
             hoverOffset: 4
@@ -71,14 +76,15 @@
 </script>
 <script>
     const myChart = new Chart(
-      document.getElementById('vacunas_por_zona'),
+      document.getElementById('cancelados_por_vacuna'),
       config
     );
 
     function filterDataByDate(){
-        v1 = [{% for v in vacunas_zona1 %}"{{v["fecha"]}}",{% endfor %}];
-        v2 = [{% for v in vacunas_zona2 %}"{{v["fecha"]}}",{% endfor %}];
-        v3 = [{% for v in vacunas_zona3 %}"{{v["fecha"]}}",{% endfor %}];
+        v1 = [{% for v in cancelados_covid1 %}"{{v["fecha"]}}",{% endfor %}];
+        v2 = [{% for v in cancelados_covid2 %}"{{v["fecha"]}}",{% endfor %}];
+        v3 = [{% for v in cancelados_gripe %}"{{v["fecha"]}}",{% endfor %}];
+        v4 = [{% for v in cancelados_fiebre_amarilla %}"{{v["fecha"]}}",{% endfor %}];
         
         var desde = document.getElementById('startdate').value;
         var hasta = document.getElementById('enddate').value;
@@ -116,14 +122,20 @@
             fecha = new Date(fecha[2] + '-' + fecha[1] + '-' + fecha[0]);
             return fecha >= desde && fecha <= hasta;
         });
+        var filtrado4 = v4.filter(function(v){
+            let fecha = v.split("/");
+            fecha = new Date(fecha[2] + '-' + fecha[1] + '-' + fecha[0]);
+            return fecha >= desde && fecha <= hasta;
+        });
 
-        myChart.config.data.datasets[0].data = [filtrado1.length, filtrado2.length, filtrado3.length];
+        myChart.config.data.datasets[0].data = [filtrado1.length, filtrado2.length, filtrado3.length, filtrado4.length];
         myChart.update();
-        console.log(filtrado1.length + filtrado2.length + filtrado3.length);
-        document.getElementById('total').innerHTML = (filtrado1.length + filtrado2.length + filtrado3.length);
-        document.getElementById('total_z1').innerHTML = filtrado1.length;
-        document.getElementById('total_z2').innerHTML = filtrado2.length;
-        document.getElementById('total_z3').innerHTML = filtrado3.length;
+        console.log(filtrado1.length + filtrado2.length + filtrado3.length + filtrado4.length);
+        document.getElementById('total').innerHTML = (filtrado1.length + filtrado2.length + filtrado3.length + filtrado4.length);
+        document.getElementById('total_c1').innerHTML = filtrado1.length;
+        document.getElementById('total_c2').innerHTML = filtrado2.length;
+        document.getElementById('total_g').innerHTML = filtrado3.length;
+        document.getElementById('total_fa').innerHTML = filtrado4.length;
         
     }
 </script>

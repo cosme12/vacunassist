@@ -18,25 +18,19 @@
                         <dd id="total_g"class="col-sm-4">{{vacunas_gripe | length}}</dd>
                         <dt class="col-sm-8">FIEBRE AMARILLA</dt>
                         <dd id="total_fa"class="col-sm-4">{{vacunas_fiebre_amarilla | length}}</dd>
-
+                        <hr>
+                        <div class="row ">
+                            <h6>Aplicar filtro por fechas</h6>
+                            <div clas="col">
+                                Desde <input onchange="filterDataByDate()" type="date" id="startdate" class="form-control" style="width: 50%;">
+                                Hasta <input onchange="filterDataByDate()" type="date" id="enddate" class="form-control" style="width: 50%;">
+                            </div> 
+                        </div>
                 </div>
                 <div class="w-100 d-none d-block"></div>
                 <div class="col ">
                     <div>
                         <canvas id="vacunas_por_enfermedad" style="max-height: 50vh;"></canvas>
-                    </div> 
-                </div>
-                
-                <div class="row ">
-                    <div clas="col">
-                        Desde: <input onchange="filterDataByDate()" type="date" id="startdate" placeholder="dd/mm/yyyy">
-                        Hasta: <input onchange="filterDataByDate()" type="date" id="enddate">
-                    </div> 
-                </div>
-                <div class="row ">
-                    <div clas="col">
-                        
-                        
                     </div> 
                 </div>
                 

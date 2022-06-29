@@ -30,12 +30,6 @@
                 {{ render_nav_item('mis_vacunas', 'Mis vacunas', use_li=True) }}
               {% elif session["dni"] and session["tipo"] == 2%}
                 {{ render_nav_item('turnos_del_dia', 'Turnos del dia') }}
-              {% elif session["dni"] and session["tipo"] == 3%}
-                {{ render_nav_item('admin', 'Inicio') }}
-                {{ render_nav_item('gestion_enfermeros', 'Enfermeros') }}
-                {{ render_nav_item('gestion_pacientes', 'Pacientes') }}
-                {{render_nav_item('estadisticas', 'Estadísticas')}}
-                {{render_nav_item('datos_vacunatorio', 'Contacto')}}
               {% endif %}
             </ul>
           </div>
@@ -77,7 +71,57 @@
           </div>
         </div>
       </nav>
-      
+
+      {% if session["dni"] and session["tipo"] == 3 %}
+      <nav class="navbar navbar-expand-md navbar-light shadow-sm"  style="background-color: lightgray; padding-left: 10%; padding-right: 10%;">
+        <div class="container-fluid">
+          <div class="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2">
+            <ul class="navbar-nav mx-auto">
+              <li class="nav-item me-3">
+                <a class="nav-link" href="{{url_for('admin')}}" >Inicio</a>
+              </li>            
+                <li class="nav-item dropdown me-3">
+                  <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <div style="display: inline;">Gestión de pacientes</div></a>
+                    <ul class="dropdown-menu text-end" aria-labelledby="navbarDropdownMenuLink">
+                      <li><a href="{{ url_for('ver_listado_pacientes') }}" class="dropdown-item">Listado de pacientes</a></li>
+                      <li><hr class="dropdown-divider"></li>
+                      <li><a href="{{ url_for('listado_pendientes_fiebre_amarilla') }}" class="dropdown-item">Solicitudes Fiebre Amarilla</a></li>
+                      <li><hr class="dropdown-divider"></li>
+                      <li><a href="{{ url_for('enviar_recordatorios') }}" class="dropdown-item">Enviar recordatorios</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item dropdown me-3">
+                  <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <div style="display: inline;">Gestión de enfermeros</div></a>
+                    <ul class="dropdown-menu text-end" aria-labelledby="navbarDropdownMenuLink">
+                      <li><a href="{{ url_for('ver_listado_enfermeros') }}" class="dropdown-item">Listado de enfermeros</a></li>
+                      <li><hr class="dropdown-divider"></li>
+                      <li><a href="{{ url_for('registrar_enfermero') }}" class="dropdown-item">Registrar enfermero</a></li>
+                      <li><hr class="dropdown-divider"></li>
+                      <li><a href="{{ url_for('asignar_zona') }}" class="dropdown-item">Asignar zonas</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item dropdown me-3">
+                  <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <div style="display: inline;">Estadísticas</div></a>
+                    <ul class="dropdown-menu text-end" aria-labelledby="navbarDropdownMenuLink">
+                      <li> <a href="{{ url_for('cancelados_por_vacuna') }}" class="dropdown-item">Turnos cancelados por vacuna</a></li>
+                      <li><hr class="dropdown-divider"></li>
+                      <li><a class="dropdown-item" href="{{ url_for('vacunas_por_edad') }}">Vacunas aplicadas por edad</a></li>
+                      <li><hr class="dropdown-divider"></li>
+                      <li><a class="dropdown-item" href="{{ url_for('vacunas_por_enfermedad') }}">Vacunas aplicadas por tipo</a></li>
+                      
+                    </ul>
+                </li>
+                <li class="nav-item me-3">
+                  <a class="nav-link" href="{{url_for('datos_vacunatorio')}}" >Datos del vacunatorio</a>
+                </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+      {% endif %}
 
       <main class="container p-4">
         {{ render_messages(container=False, dismissible=True) }}

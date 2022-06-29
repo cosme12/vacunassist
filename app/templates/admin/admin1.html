@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1 class="pb-4"> <i class="bi bi-person-circle" style="font-size: 40px;"></i> ADMINISTRADOR </h1>
+        
+<div class="card p-4 ">
+    <div class="container text-center">
+        
+        <div class="row row-cols-1 row-cols-md-2 g-4">
+            <div class="col">
+                <div class="card h-100">
+                    
+                    <h5 class="card-header"><i class="bi bi-people-fill" style="font-size: 40px;"></i><br>Gestion de pacientes</h5>
+                    <div class="card-body d-grid gap-2">
+                        <a href="{{ url_for('ver_listado_pacientes') }}" class="btn btn-secondary">Listado de pacientes</a>
+                        <a href="{{ url_for('listado_pendientes_fiebre_amarilla') }}" class="btn btn-secondary">Solicitudes Fiebre Amarilla</a>
+                        <a href="{{ url_for('enviar_recordatorios') }}" class="btn btn-secondary">Enviar recordatorios</a> 
+                    </div>
+
+                </div>
+            </div>
+            
+            <div class="col">
+                <div class="card h-100">
+                    <h5 class="card-header"><i class="bi bi-person-rolodex" style="font-size: 40px;"></i><br>Gestion de enfermeros</h5>
+                    <div class="card-body d-grid gap-2">
+                        <a href="{{ url_for('ver_listado_enfermeros') }}" class="btn btn-secondary">Listado de enfermeros</a>
+                        <a href="{{ url_for('registrar_enfermero') }}" class="btn btn-secondary">Registrar enfermero</a>
+                        <a href="{{ url_for('asignar_zona') }}" class="btn btn-secondary">Asignar zonas</a> 
+                    </div>
+                </div>
+            </div>
+
+            <div class="col">
+                <div class="card h-100">
+                    <h5 class="card-header"><i class="bi bi-info-square-fill" style="font-size: 40px;"></i><br>Información del vacunatorio</h5>
+                    <div class="card-body d-grid gap-2">
+                        <p></p> 
+                        <a href="" class="btn btn-secondary">Editar</a>
+                        <p></p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col">
+                <div class="card h-100">
+                    <h5 class="card-header"><i class="bi bi-bar-chart-line-fill" style="font-size: 40px;"></i><br>Estadísticas</h5>
+                    <div class="card-body d-grid gap-2">
+                        <a href="{{ url_for('vacunas_por_enfermedad') }}" class="btn btn-secondary">Vacunas aplicadas por tipo</a>
+                        <a href="{{ url_for('vacunas_por_edad') }}" class="btn btn-secondary">Vacunas aplicadas por edad</a>
+                        <a href="{{ url_for('cancelados_por_vacuna') }}" class="btn btn-secondary">Turnos cancelados por vacuna</a> 
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

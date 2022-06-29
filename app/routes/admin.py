@@ -10,7 +10,7 @@ from app.models.usuarios import generar_reset_password_token
 @app.route('/admin') # http://localhost:5000/admin
 @login_required
 def admin():
-    return render_template('admin/admin.html', titulo="Admin")
+    return render_template('admin/admin1.html', titulo="Admin")
 
 
 @app.route('/admin/enviar-recordatorios', methods=['GET', 'POST'])

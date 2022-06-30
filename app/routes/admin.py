@@ -182,5 +182,5 @@ def rechazar_turno(id):
     usuario = models.get_user_data_por_id(turno['id_usuario'])
     models.cancel_appointment(id,5)
     if app.config['EMAIL_ENABLED']:
-                enviar_email(usuario['email'], "Vacunassist - Aprobacion de turno Fiebre Amarilla", f"Hola {usuario['nombre']}\n\nSu turno para la vacuna la Fiebre amarilla el dia {turno['fecha']}, a las {turno['hora']} horas, en zona{turno['nombre']} {turno['direccion']} a sido aprobado.\n")
+                enviar_email(usuario['email'], "Vacunassist - Aprobacion de turno Fiebre Amarilla", f"Hola {usuario['nombre']}\n\nSu turno para la vacuna la Fiebre amarilla el dia {turno['fecha']}, a las {turno['hora']} horas, en zona{turno['nombre']} {turno['direccion']} a sido rechazado.\n Ante cualquier consulta comuniquese al 221- 5412345")
     return redirect(url_for('listado_pendientes_fiebre_amarilla'))

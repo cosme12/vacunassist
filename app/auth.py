@@ -30,7 +30,7 @@ def login_required(func):
                 if request.path != url_for('perfil') and request.path != url_for('turnos_del_dia') and request.path != url_for('logout') and request.path != url_for('cancelar_turnos_del_dia') and request.path != url_for('cambiar_password') :
                     return redirect(url_for('turnos_del_dia'))
             elif session["tipo"]==3:
-                if 'admin' not in request.path:
+                if 'admin' not in request.path and request.path != url_for('logout'):
                     return redirect(url_for('admin'))
         return func(*args, **kwargs)
     return decorated_function

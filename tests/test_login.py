@@ -300,7 +300,7 @@ def test_inicio_de_sesion_paciente_registrado_con_covid_60(client, create_db):
     assert response.status_code == 200
     #assert response.request.path == "/sacar-turno/1"
     html = response.get_data(as_text=True)
-    debuggear_respuesta(html)
+    #debuggear_respuesta(html)
     assert 'Cerrar sesión' in html
     assert 'Perfil' in html
     assert 'Mis vacunas' in html

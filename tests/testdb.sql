@@ -34,5 +34,11 @@ INSERT INTO zona (id, nombre, direccion) VALUES (1, 'terminal', '41 y 4');
 INSERT INTO zona (id, nombre, direccion) VALUES (2, 'municipalidad', '51 y 12');
 INSERT INTO zona (id, nombre, direccion) VALUES (3, 'cementerio', 'diag 74');
 
+-- Table: vacunatorio
+DROP TABLE IF EXISTS vacunatorio;
+CREATE TABLE vacunatorio (id INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE NOT NULL, telefono TEXT NOT NULL);
+INSERT INTO vacunatorio (id, telefono) VALUES (1, '1234');
+
+
 COMMIT TRANSACTION;
 PRAGMA foreign_keys = on;

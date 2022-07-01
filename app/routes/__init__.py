@@ -17,6 +17,7 @@ from app.models.vacunas_aplicadas import tiene_vacuna_aplicada, get_vacuna_aplic
 @app.route('/')  # http://localhost:5000/
 @login_required
 def index():
+    session["telefono_vacunatorio"] = models.get_telefono()["telefono"]
     usuario = models.get_user_data(session['dni'])
     habilitar_covid = models.apto_vacuna_covid(usuario["id"])
     tiene_covid1 = models.tiene_covid1(usuario["id"])

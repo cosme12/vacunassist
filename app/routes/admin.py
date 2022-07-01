@@ -99,6 +99,14 @@ def eliminar_enfermero(id):
     models.delete_user(id)
     return redirect(url_for('ver_listado_enfermeros'))
 
+@app.route('/admin/eliminar-enfermeros')
+@login_required
+def eliminar_enfermeros():
+    enfermeros = models.get_enfermeros()
+    for enfermero in enfermeros:
+        models.delete_user(enfermero['id'])
+    return redirect(url_for('ver_listado_enfermeros'))
+
 
 @app.route('/admin/ver-listado-pacientes')
 @login_required

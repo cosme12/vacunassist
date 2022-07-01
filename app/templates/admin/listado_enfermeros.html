@@ -38,6 +38,30 @@
             {% endfor %}   
         </tbody>
     </table>
+    {% if enfermeros %}
+        <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#eliminarTodos">Eliminar todos</button>
+    {% else %}
+        <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#eliminarTodos" disabled>Eliminar todos</button>
+    {%endif%}
+        <!-- Modal Eliminar todos-->
+    <div class="modal fade" id="eliminarTodos" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="staticBackdropLabel">Eliminar enfermeros</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              ¿Querés eliminar a todos los enfermeros? <br>
+              <small class="text-danger">Esta acción no podrá deshacerse.</small>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+                <a href="/admin/eliminar-enfermeros" class="btn btn-danger">Si</a>
+            </div>
+          </div>
+        </div>
+    </div>
 
     <!-- Modal -->
     {% for enfermero in enfermeros %}

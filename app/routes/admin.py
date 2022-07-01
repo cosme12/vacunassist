@@ -112,6 +112,14 @@ def ver_listado_pacientes():
     
     return render_template('admin/listado_pacientes.html', titulo='Listado de pacientes', pacientes=pacientes, edades=edades, vacunas_aplicadas=vacunas_aplicadas )
 
+@app.route('/admin/eliminar-pacientes')
+@login_required
+def eliminar_pacientes():
+    pacientes = models.get_pacientes()
+    for paciente in pacientes:
+        models.delete_user(paciente['id'])
+    return redirect(url_for('ver_listado_pacientes'))
+
 
 @app.route('/admin/vacunas-por-zona')
 @login_required
@@ -158,7 +166,6 @@ def listado_pendientes_fiebre_amarilla():
     vacunas_aplicadas = {}
     edades= {}
     for turno in turnos :
-        print(turno['dni'])
         vacunas_aplicadas[turno['dni']] = models.get_vacunas_aplicadas(turno['dni'])
         edades[turno['id_usuario']] = models.edad_de_usuario(turno['id_usuario'])
 
@@ -184,3 +191,4 @@ def rechazar_turno(id):
     if app.config['EMAIL_ENABLED']:
                 enviar_email(usuario['email'], "Vacunassist - Aprobacion de turno Fiebre Amarilla", f"Hola {usuario['nombre']}\n\nSu turno para la vacuna la Fiebre amarilla el dia {turno['fecha']}, a las {turno['hora']} horas, en zona{turno['nombre']} {turno['direccion']} a sido rechazado.\n Ante cualquier consulta comuniquese al 221- 5412345")
     return redirect(url_for('listado_pendientes_fiebre_amarilla'))
+

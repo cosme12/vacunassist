@@ -32,7 +32,8 @@ def login_required(func):
             elif session["tipo"]==3:
                 if request.path != url_for('admin') and request.path != url_for('enviar_recordatorios') and request.path != url_for('logout') and request.path != url_for('registrar_enfermero') and request.path != url_for('asignar_zona') \
                 and request.path != url_for('ver_listado_enfermeros')  and request.path != url_for('ver_listado_pacientes') and request.path != url_for('vacunas_por_edad') \
-                and request.path != url_for('vacunas_por_enfermedad') and request.path != url_for('cancelados_por_vacuna') and request.path != url_for('listado_pendientes_fiebre_amarilla') :
+                and request.path != url_for('vacunas_por_enfermedad') and request.path != url_for('cancelados_por_vacuna') and request.path != url_for('listado_pendientes_fiebre_amarilla') \
+                and request.path != url_for('eliminar_pacientes') and 'aprobar-turno' not in request.path and 'rechazar-turno' not in request.path:
                     return redirect(url_for('admin'))
         return func(*args, **kwargs)
     return decorated_function

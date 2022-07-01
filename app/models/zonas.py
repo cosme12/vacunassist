@@ -34,3 +34,13 @@ def asignar_zona(id_enfermero, id_zona):
     conn.close()
 
 
+def set_direccion(id_zona, direccion):
+    """
+    Modifica la direccion de una zona
+    """
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    cursor.execute("UPDATE zona SET direccion = ? WHERE id = ?;", (direccion, id_zona))
+    conn.commit()
+    conn.close()
+

@@ -19,4 +19,4 @@ from app.models.turnos import *
 from app.models.vacunas import *
 from app.models.vacunas_aplicadas import *
 from app.models.zonas import *
-
+from app.models.vacunatorio import *

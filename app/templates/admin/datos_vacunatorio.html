@@ -1,5 +1,16 @@
 {% extends "base.html" %}
+{% from 'bootstrap5/form.html' import render_form %}
+
+
 {% block content %}
 <h1><i class="bi bi-info-square-fill" style="font-size: 40px;"></i> Datos del vacunatorio</h1>
-Aca va la seccion para editar telefono y direcciones de las distintas zonas.
+
+<div class="row">
+    <div class="card p-4 mt-3">
+        {{ render_form(form, form_type='horizontal', horizontal_columns=('lg', 3, 9)) }}
+    </div>
+</div>
+<br>
+<br><br>
+
 {% endblock %}

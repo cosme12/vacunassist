@@ -97,3 +97,11 @@ class AsignarZonaForm(FlaskForm):
     enfermeros = FieldList(FormField(EnfermeroZonaForm), min_entries=0)
     enviar = SubmitField('Asignar zonas', render_kw={'class': 'btn btn-success btn-md'})
 
+
+class DatosVacunatorioForm(FlaskForm):
+    zona_terminal = StringField('Dirección zona terminal', validators=[DataRequired('Este campo es requerido')])
+    zona_municipalidad = StringField('Dirección zona municipalidad', validators=[DataRequired('Este campo es requerido')])
+    zona_cementerio = StringField('Dirección zona cementerio', validators=[DataRequired('Este campo es requerido')])
+    telefono = StringField('Teléfono', validators=[DataRequired('Este campo es requerido')])
+    editar = SubmitField('Guardar cambios')
+

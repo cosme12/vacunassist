@@ -28,6 +28,7 @@ def index():
 
 @app.route('/login', methods=['GET', 'POST'])  # http://localhost:5000/login
 def login():
+    session["telefono_vacunatorio"] = models.get_telefono()["telefono"]
     if "dni" in session:  # Si el usuario esta logueado, lo redirige a la pagina principal
         return redirect(url_for('index'))
     formulario_de_login = LoginForm()
@@ -58,6 +59,7 @@ def login():
 def logout():
     #session.pop('dni', None)
     session.clear()
+    session["telefono_vacunatorio"] = models.get_telefono()["telefono"]
     return redirect(url_for('login'))
 
 

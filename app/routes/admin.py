@@ -1,5 +1,5 @@
 from flask import render_template, redirect, url_for, session, flash
-from app.forms import LoginForm, RegistroEnfermeroForm, EnviarEmailsAdminForm, AsignarZonaForm
+from app.forms import LoginForm, RegistroEnfermeroForm, EnviarEmailsAdminForm, AsignarZonaForm, DatosVacunatorioForm
 from app.auth import login_required
 from app import models
 from app import app
@@ -72,7 +72,21 @@ def asignar_zona():
 @app.route('/admin/datos-vacunatorio', methods=['GET', 'POST'])
 @login_required
 def datos_vacunatorio():
-    return render_template('admin/datos_vacunatorio.html', titulo="Datos del vacunatorio")
+    data = {
+        "zona_terminal": models.get_zona(1)["direccion"],
+        "zona_municipalidad": models.get_zona(2)["direccion"],
+        "zona_cementerio": models.get_zona(3)["direccion"],
+        "telefono": models.get_telefono()["telefono"]
+    }
+    form = DatosVacunatorioForm(data=data)
+    if form.validate_on_submit():
+        models.set_direccion(1, form.zona_terminal.data)
+        models.set_direccion(2, form.zona_municipalidad.data)
+        models.set_direccion(3, form.zona_cementerio.data)
+        models.set_telefono(form.telefono.data)
+        session["telefono_vacunatorio"] = models.get_telefono()["telefono"]
+        flash("Los datos se actualizaron correctamente.", "success")
+    return render_template('admin/datos_vacunatorio.html', titulo="Datos del vacunatorio", form=form)
 
 
 @app.route('/admin/gestion-pacientes')

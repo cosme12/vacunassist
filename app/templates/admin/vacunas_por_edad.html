@@ -33,18 +33,22 @@
                 </div>
                 
             </div>
+            <br>
             <div class="row justify-content-evenly ">
                 <div class="col">
                         <div>
+                            <h5 class="text-center">ZONA TERMINAL</h5>
                             <canvas id="vacunas_por_edad_z1" style="max-height: 25vh;"></canvas>
                         </div>
                 </div>
                 <div class="col">
                     <div>
+                        <h5 class="text-center">ZONA MUNICIPALIDAD</h5>
                         <canvas id="vacunas_por_edad_z2" style="max-height: 25vh;"></canvas>
                     </div>
             </div><div class="col">
                 <div>
+                    <h5 class="text-center">ZONA CEMENTERIO</h5>
                     <canvas id="vacunas_por_edad_z3" style="max-height: 25vh;"></canvas>
                 </div>
             </div>
@@ -135,19 +139,31 @@
     const config_z1 = {
         type: 'pie',
         data: data_z1,
-        options: {}
+        options: { plugins: {
+            legend: {
+                display: false
+            }}
+        }
     };
 
     const config_z2 = {
         type: 'pie',
         data: data_z2,
-        options: {}
+        options: { plugins: {
+            legend: {
+                display: false
+            }}
+        }
     };
 
     const config_z3 = {
         type: 'pie',
         data: data_z3,
-        options: {}
+        options: { plugins: {
+            legend: {
+                display: false
+            }}
+        }
     };
 
 

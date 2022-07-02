@@ -99,7 +99,7 @@ def registro():
                     return redirect(url_for('login'))
                 else:
                     flash(error, 'danger')
-    hoy = datetime.date.today()
+    hoy = datetime.today()
     return render_template('registro.html', titulo="Registro", form=form, hoy=hoy)
 
 
@@ -277,7 +277,7 @@ def sacar_turno(id_vacuna):
 def turnos_del_dia():
     id_zona = session['id_zona']
     zona = models.get_nombre_zona(id_zona)
-    hoy = datetime.date.today().strftime("%d/%m/%Y")
+    hoy = datetime.today().strftime("%d/%m/%Y")
     turnos = models.get_turnos_del_dia(hoy, id_zona)
     vacunas_aplicadas = {}
     edades= {}
@@ -310,7 +310,7 @@ def turnos_del_dia():
 @app.route('/cancelar-turnos-del-dia') #http://localhost:5000//cancelar-turnos-del-dia/<hoy>
 @login_required
 def cancelar_turnos_del_dia():
-    hoy = datetime.date.today().strftime("%d/%m/%Y")
+    hoy = datetime.today().strftime("%d/%m/%Y")
     id_zona = session['id_zona']
     turnos = models.get_turnos_del_dia(hoy, id_zona)
     for turno in turnos:

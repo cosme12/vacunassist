@@ -6,7 +6,7 @@ from app import models
 from app import app
 from app.handlers.email_enviar import enviar_email
 from app.models.usuarios import generar_reset_password_token
-from app.models.vacunas_aplicadas import vacunas_aplicadas_y_fechas
+from app.models.vacunas_aplicadas import fechas_y_zonas_de_vacunas_aplicadas
 
 
 @app.route('/admin') # http://localhost:5000/admin
@@ -156,26 +156,49 @@ def vacunas_por_zona():
 @app.route('/admin/vacunas-por-edad')
 @login_required
 def vacunas_por_edad():
-    fechas = vacunas_aplicadas_y_fechas()
+    fechas = fechas_y_zonas_de_vacunas_aplicadas()
     menores18 = []
     entre18y60 = []
     mayores60 = []
+    zona1 = [[],[],[]]
+    zona2 = [[],[],[]]
+    zona3 = [[],[],[]]
+
     fecha_60 = (datetime.datetime.today() - datetime.timedelta(days=365*60))  
     fecha_18 = (datetime.datetime.today() - datetime.timedelta(days=365*18))
 
     for f in fechas:
         fecha = datetime.datetime.strptime(f["fecha_de_nacimiento"], "%d/%m/%Y")
         if (fecha > fecha_18):
-            menores18.append(f["fecha"])
+            menores18.append({"fecha": f["fecha"], "zona": f["id_zona"]})
         elif (fecha >= fecha_60 and fecha <= fecha_18):
-            entre18y60.append(f["fecha"])
+            entre18y60.append({"fecha": f["fecha"], "zona": f["id_zona"]})
         else:
-            mayores60.append(f["fecha"])
-    print(menores18)
-    print(entre18y60)
-    print(mayores60)
+            mayores60.append({"fecha": f["fecha"], "zona": f["id_zona"]})
 
-    return render_template('admin/vacunas_por_edad.html', titulo='Vacunas por edad', menores18=menores18, entre18y60=entre18y60, mayores60=mayores60)
+    for item in menores18:
+        if item['zona']==1:
+            zona1[0].append(item['fecha'])
+        elif item['zona']==2:
+            zona2[0].append(item['fecha'])
+        else:
+            zona3[0].append(item['fecha'])
+    for item in entre18y60:
+        if item['zona']==1:
+            zona1[1].append(item['fecha'])
+        elif item['zona']==2:
+            zona2[1].append(item['fecha'])
+        else:
+            zona3[1].append(item['fecha'])
+    for item in mayores60:
+        if item['zona']==1:
+            zona1[2].append(item['fecha'])
+        elif item['zona']==2:
+            zona2[2].append(item['fecha'])
+        else:
+            zona3[2].append(item['fecha'])
+
+    return render_template('admin/vacunas_por_edad.html', titulo='Vacunas por edad', menores18=menores18, entre18y60=entre18y60, mayores60=mayores60, zona1=zona1, zona2=zona2, zona3=zona3)
 
 @app.route('/admin/vacunas-por-enfermedad')
 @login_required

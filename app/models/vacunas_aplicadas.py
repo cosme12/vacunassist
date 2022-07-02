@@ -71,12 +71,13 @@ def vacunas_por_zona(id_zona):
     conn.close()
     return vacunas
 
-def vacunas_aplicadas_y_fechas():
+def fechas_y_zonas_de_vacunas_aplicadas():
     conn = get_db_connection()
     cursor = conn.cursor()
-    vacunas = cursor.execute("SELECT fecha_de_nacimiento, fecha FROM vacuna_aplicada\
+    vacunas = cursor.execute("SELECT fecha_de_nacimiento, fecha, vacuna_aplicada.id_zona FROM vacuna_aplicada\
                             INNER JOIN vacuna ON vacuna.id=vacuna_aplicada.id_vacuna\
                             INNER JOIN usuario ON vacuna_aplicada.id_usuario=usuario.id").fetchall()
+    conn.close()
     return vacunas
 
 def get_vacunas_aplicadas_por_id(id_vacuna):

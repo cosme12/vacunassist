@@ -33,6 +33,23 @@
                 </div>
                 
             </div>
+            <div class="row justify-content-evenly ">
+                <div class="col">
+                        <div>
+                            <canvas id="vacunas_por_edad_z1" style="max-height: 25vh;"></canvas>
+                        </div>
+                </div>
+                <div class="col">
+                    <div>
+                        <canvas id="vacunas_por_edad_z2" style="max-height: 25vh;"></canvas>
+                    </div>
+            </div><div class="col">
+                <div>
+                    <canvas id="vacunas_por_edad_z3" style="max-height: 25vh;"></canvas>
+                </div>
+            </div>
+                
+            </div>
         </div>
     </div>
 
@@ -61,11 +78,79 @@
         }]
     };
 
+    const datapoints_z1 = [{{zona1[0] | length}}, {{zona1[1] | length}}, {{zona1[2] | length}} ]
+    const data_z1 = {
+        labels: labels,
+        datasets: [{
+                label: 'Vacunas por edad',
+            data: datapoints_z1,
+            backgroundColor: [
+                'rgb(255, 99, 132)',
+                'rgb(54, 162, 235)',
+                'rgb(255, 205, 86)'
+            ],
+            hoverOffset: 4
+            //borderColor: 'rgb(255, 99, 132)'
+        }]
+    };
+
+    const datapoints_z2 = [{{zona2[0] | length}}, {{zona2[1] | length}}, {{zona2[2] | length}} ]
+    const data_z2 = {
+        labels: labels,
+        datasets: [{
+                label: 'Vacunas por edad',
+            data: datapoints_z2,
+            backgroundColor: [
+                'rgb(255, 99, 132)',
+                'rgb(54, 162, 235)',
+                'rgb(255, 205, 86)'
+            ],
+            hoverOffset: 4
+            //borderColor: 'rgb(255, 99, 132)'
+        }]
+    };
+
+    const datapoints_z3 = [{{zona3[0] | length}}, {{zona3[1] | length}}, {{zona3[2] | length}} ]
+    const data_z3 = {
+        labels: labels,
+        datasets: [{
+                label: 'Vacunas por edad',
+            data: datapoints_z3,
+            backgroundColor: [
+                'rgb(255, 99, 132)',
+                'rgb(54, 162, 235)',
+                'rgb(255, 205, 86)'
+            ],
+            hoverOffset: 4
+            //borderColor: 'rgb(255, 99, 132)'
+        }]
+    };
+
     const config = {
         type: 'pie',
         data: data,
         options: {}
     };
+
+    const config_z1 = {
+        type: 'pie',
+        data: data_z1,
+        options: {}
+    };
+
+    const config_z2 = {
+        type: 'pie',
+        data: data_z2,
+        options: {}
+    };
+
+    const config_z3 = {
+        type: 'pie',
+        data: data_z3,
+        options: {}
+    };
+
+
 </script>
 <script>
     const myChart = new Chart(
@@ -73,10 +158,25 @@
       config
     );
 
+    const myChart_z1 = new Chart(
+      document.getElementById('vacunas_por_edad_z1'),
+      config_z1
+    );
+
+    const myChart_z2 = new Chart(
+      document.getElementById('vacunas_por_edad_z2'),
+      config_z2
+    );
+
+    const myChart_z3 = new Chart(
+      document.getElementById('vacunas_por_edad_z3'),
+      config_z3
+    );
+
     function filterDataByDate(){
-        v1 = [{% for v in menores18 %}"{{v}}",{% endfor %}];
-        v2 = [{% for v in entre18y60 %}"{{v}}",{% endfor %}];
-        v3 = [{% for v in mayores60 %}"{{v}}",{% endfor %}];
+        v1 = [{% for v in menores18 %}"{{v['fecha']}}",{% endfor %}];
+        v2 = [{% for v in entre18y60 %}"{{v['fecha']}}",{% endfor %}];
+        v3 = [{% for v in mayores60 %}"{{v['fecha']}}",{% endfor %}];
 
         
         var desde = document.getElementById('startdate').value;

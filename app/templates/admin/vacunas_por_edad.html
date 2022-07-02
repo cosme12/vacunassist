@@ -7,15 +7,15 @@
                 <div class="col-md-6">
                     <dl class="row">
                         <dt class="col-sm-8">TOTAL DE VACUNAS APLICADAS </dt>
-                        {% set total =  (vacunas_menores18 |length) + (vacunas_entre18y60 |length) + (vacunas_mayores60 |length)%}
+                        {% set total =  (menores18 |length) + (entre18y60 |length) + (mayores60 |length)%}
                         <dd id="total" class="col-sm-4">{{total}}</dd>
                     
                         <dt class="col-sm-8">MENORES DE 18 AÑOS</dt>
-                        <dd id="total_-18" class="col-sm-4">{{vacunas_menores18 | length}}</dd>
+                        <dd id="total_-18" class="col-sm-4">{{menores18 | length}}</dd>
                         <dt class="col-sm-8">ENTRE 18 y 60 AÑOS</dt>
-                        <dd id="total_18-60" class="col-sm-4">{{vacunas_entre18y60 | length}}</dd>
+                        <dd id="total_18-60" class="col-sm-4">{{entre18y60 | length}}</dd>
                         <dt class="col-sm-8">MAYORES DE 60 AÑOS</dt>
-                        <dd id="total_+60"class="col-sm-4">{{vacunas_mayores60 | length}}</dd>
+                        <dd id="total_+60"class="col-sm-4">{{mayores60 | length}}</dd>
                         <hr>
                         <div class="row ">
                             <h6>Aplicar filtro por fechas</h6>
@@ -45,7 +45,7 @@
         '18-60',
         '>60',
     ];
-    const datapoints = [{{vacunas_menores18 | length}},{{vacunas_entre18y60 |length}},  {{vacunas_mayores60 |length}}];
+    const datapoints = [{{menores18 | length}},{{entre18y60 |length}},  {{mayores60 |length}}];
     const data = {
         labels: labels,
         datasets: [{
@@ -74,14 +74,15 @@
     );
 
     function filterDataByDate(){
-        v1 = [{% for v in vacunas_menores18 %}"{{v["fecha"]}}",{% endfor %}];
-        v2 = [{% for v in vacunas_entre18y60 %}"{{v["fecha"]}}",{% endfor %}];
-        v3 = [{% for v in vacunas_mayores60 %}"{{v["fecha"]}}",{% endfor %}];
+        v1 = [{% for v in menores18 %}"{{v}}",{% endfor %}];
+        v2 = [{% for v in entre18y60 %}"{{v}}",{% endfor %}];
+        v3 = [{% for v in mayores60 %}"{{v}}",{% endfor %}];
+
         
         var desde = document.getElementById('startdate').value;
         var hasta = document.getElementById('enddate').value;
         
-        console.log(hasta);
+        
         console.log(v1,v2,v3);
 
         //desde to date
@@ -115,6 +116,7 @@
             return fecha >= desde && fecha <= hasta;
         });
 
+        console.log(filtrado1, filtrado2, filtrado3);
         myChart.config.data.datasets[0].data = [filtrado1.length, filtrado2.length, filtrado3.length];
         myChart.update();
         console.log(filtrado1.length + filtrado2.length + filtrado3.length);

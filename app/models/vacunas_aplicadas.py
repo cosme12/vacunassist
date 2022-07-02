@@ -71,41 +71,12 @@ def vacunas_por_zona(id_zona):
     conn.close()
     return vacunas
 
-def vacunas_menores18():
+def vacunas_aplicadas_y_fechas():
     conn = get_db_connection()
     cursor = conn.cursor()
-    fecha_min = datetime.strftime((datetime.today() - timedelta(days=365*18)), "%d/%m/%Y")
-    vacunas = cursor.execute("SELECT * FROM vacuna_aplicada \
+    vacunas = cursor.execute("SELECT fecha_de_nacimiento, fecha FROM vacuna_aplicada\
                             INNER JOIN vacuna ON vacuna.id=vacuna_aplicada.id_vacuna\
-                            INNER JOIN usuario ON vacuna_aplicada.id_usuario=usuario.id\
-                            WHERE vacuna_aplicada.id_zona != ?\
-                                AND fecha_de_nacimiento > ?;", ("",fecha_min,)).fetchall()
-    conn.close()
-    return vacunas
-
-def vacunas_entre18y60():
-    conn = get_db_connection()
-    cursor = conn.cursor()
-    fecha_min = datetime.strftime((datetime.today() - timedelta(days=365*60)), "%d/%m/%Y")
-    fecha_max = datetime.strftime((datetime.today() - timedelta(days=365*18)), "%d/%m/%Y")
-    vacunas = cursor.execute("SELECT * FROM vacuna_aplicada \
-                            INNER JOIN vacuna ON vacuna.id=vacuna_aplicada.id_vacuna\
-                            INNER JOIN usuario ON vacuna_aplicada.id_usuario=usuario.id\
-                            WHERE vacuna_aplicada.id_zona != ?\
-                            AND (fecha_de_nacimiento >= ? and fecha_de_nacimiento <= ?);", ("", fecha_min, fecha_max, )).fetchall()
-    conn.close()
-    return vacunas
-
-def vacunas_mayores60():
-    conn = get_db_connection()
-    cursor = conn.cursor()
-    fecha_max = datetime.strftime((datetime.today() - timedelta(days=365*60)), "%d/%m/%Y")
-    vacunas = cursor.execute("SELECT * FROM vacuna_aplicada \
-                            INNER JOIN vacuna ON vacuna.id=vacuna_aplicada.id_vacuna\
-                            INNER JOIN usuario ON vacuna_aplicada.id_usuario=usuario.id\
-                            WHERE vacuna_aplicada.id_zona != ?\
-                            AND fecha_de_nacimiento < ?;", ("", fecha_max,)).fetchall()
-    conn.close()
+                            INNER JOIN usuario ON vacuna_aplicada.id_usuario=usuario.id").fetchall()
     return vacunas
 
 def get_vacunas_aplicadas_por_id(id_vacuna):

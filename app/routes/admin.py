@@ -1,3 +1,4 @@
+from datetime import datetime, timedelta
 from flask import render_template, redirect, url_for, session, flash
 from app.forms import LoginForm, RegistroEnfermeroForm, EnviarEmailsAdminForm, AsignarZonaForm, DatosVacunatorioForm
 from app.auth import login_required
@@ -5,6 +6,7 @@ from app import models
 from app import app
 from app.handlers.email_enviar import enviar_email
 from app.models.usuarios import generar_reset_password_token
+from app.models.vacunas_aplicadas import vacunas_aplicadas_y_fechas
 
 
 @app.route('/admin') # http://localhost:5000/admin
@@ -154,13 +156,26 @@ def vacunas_por_zona():
 @app.route('/admin/vacunas-por-edad')
 @login_required
 def vacunas_por_edad():
-    #menores18 = models.menores18()
-    #entre18y60 = models.entre18y60()
-    #mayores60 = models.mayores60()
-    vacunas_menores18 = models.vacunas_menores18()
-    vacunas_entre18y60 = models.vacunas_entre18y60()
-    vacunas_mayores60 = models.vacunas_mayores60()
-    return render_template('admin/vacunas_por_edad.html', titulo='Vacunas por edad', vacunas_menores18=vacunas_menores18, vacunas_entre18y60=vacunas_entre18y60, vacunas_mayores60=vacunas_mayores60)
+    fechas = vacunas_aplicadas_y_fechas()
+    menores18 = []
+    entre18y60 = []
+    mayores60 = []
+    fecha_60 = (datetime.today() - timedelta(days=365*60))  
+    fecha_18 = (datetime.today() - timedelta(days=365*18))
+
+    for f in fechas:
+        fecha = datetime.strptime(f["fecha_de_nacimiento"], "%d/%m/%Y")
+        if (fecha > fecha_18):
+            menores18.append(f["fecha"])
+        elif (fecha >= fecha_60 and fecha <= fecha_18):
+            entre18y60.append(f["fecha"])
+        else:
+            mayores60.append(f["fecha"])
+    print(menores18)
+    print(entre18y60)
+    print(mayores60)
+
+    return render_template('admin/vacunas_por_edad.html', titulo='Vacunas por edad', menores18=menores18, entre18y60=entre18y60, mayores60=mayores60)
 
 @app.route('/admin/vacunas-por-enfermedad')
 @login_required

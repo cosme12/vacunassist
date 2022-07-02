@@ -1,4 +1,4 @@
-from datetime import datetime, timedelta
+import datetime
 from flask import render_template, redirect, url_for, session, flash
 from app.forms import LoginForm, RegistroEnfermeroForm, EnviarEmailsAdminForm, AsignarZonaForm, DatosVacunatorioForm
 from app.auth import login_required
@@ -160,11 +160,11 @@ def vacunas_por_edad():
     menores18 = []
     entre18y60 = []
     mayores60 = []
-    fecha_60 = (datetime.today() - timedelta(days=365*60))  
-    fecha_18 = (datetime.today() - timedelta(days=365*18))
+    fecha_60 = (datetime.datetime.today() - datetime.timedelta(days=365*60))  
+    fecha_18 = (datetime.datetime.today() - datetime.timedelta(days=365*18))
 
     for f in fechas:
-        fecha = datetime.strptime(f["fecha_de_nacimiento"], "%d/%m/%Y")
+        fecha = datetime.datetime.strptime(f["fecha_de_nacimiento"], "%d/%m/%Y")
         if (fecha > fecha_18):
             menores18.append(f["fecha"])
         elif (fecha >= fecha_60 and fecha <= fecha_18):

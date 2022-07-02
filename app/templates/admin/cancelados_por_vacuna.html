@@ -34,8 +34,22 @@
                     </div> 
                 </div>
                 
-                
-                
+            </div>
+            <div class="row justify-content-evenly ">
+                <div class="col">
+                        <div>
+                            <canvas id="cancelados_por_vacuna_z1" style="max-height: 25vh;"></canvas>
+                        </div>
+                </div>
+                <div class="col">
+                    <div>
+                        <canvas id="cancelados_por_vacuna_z2" style="max-height: 25vh;"></canvas>
+                    </div>
+            </div><div class="col">
+                <div>
+                    <canvas id="cancelados_por_vacuna_z3" style="max-height: 25vh;"></canvas>
+                </div>
+            </div>
                 
             </div>
         </div>
@@ -68,16 +82,104 @@
         }]
     };
 
+    const datapoints_z1 = [{{zona1[0] | length}}, {{zona1[1] | length}}, {{zona1[2] | length}}, {{zona1[3] | length}} ]
+    const data_z1 = {
+        labels: labels,
+        datasets: [{
+                label: 'Vacunas por edad',
+            data: datapoints_z1,
+            backgroundColor: [
+                'rgb(150, 205, 122)',
+                'rgb(54, 162, 235)',
+                'rgb(255, 99, 132)',
+                'rgb(255, 205, 86)'
+                
+            ],
+            hoverOffset: 4
+            //borderColor: 'rgb(255, 99, 132)'
+        }]
+    };
+
+    const datapoints_z2 = [{{zona2[0] | length}}, {{zona2[1] | length}}, {{zona2[2] | length}}, {{zona2[3] | length}} ]
+    const data_z2 = {
+        labels: labels,
+        datasets: [{
+                label: 'Vacunas por edad',
+            data: datapoints_z2,
+            backgroundColor: [
+                'rgb(150, 205, 122)',
+                'rgb(54, 162, 235)',
+                'rgb(255, 99, 132)',
+                'rgb(255, 205, 86)'
+            ],
+            hoverOffset: 4
+            //borderColor: 'rgb(255, 99, 132)'
+        }]
+    };
+
+    const datapoints_z3 = [{{zona3[0] | length}}, {{zona3[1] | length}}, {{zona3[2] | length}}, {{zona3[3] | length}} ]
+    const data_z3 = {
+        labels: labels,
+        datasets: [{
+                label: 'Vacunas por edad',
+            data: datapoints_z3,
+            backgroundColor: [
+                'rgb(150, 205, 122)',
+                'rgb(54, 162, 235)',
+                'rgb(255, 99, 132)',
+                'rgb(255, 205, 86)'
+            ],
+            hoverOffset: 4
+            //borderColor: 'rgb(255, 99, 132)'
+        }]
+    };
+
     const config = {
         type: 'pie',
         data: data,
         options: {}
     };
+
+    const config_z1 = {
+        type: 'pie',
+        data: data_z1,
+        options: {}
+    };
+
+    const config_z2 = {
+        type: 'pie',
+        data: data_z2,
+        options: {}
+    };
+
+    const config_z3 = {
+        type: 'pie',
+        data: data_z3,
+        options: {}
+    };
+    
+
+
 </script>
 <script>
     const myChart = new Chart(
       document.getElementById('cancelados_por_vacuna'),
       config
+    );
+
+    const myChart_z1 = new Chart(
+      document.getElementById('cancelados_por_vacuna_z1'),
+      config_z1
+    );
+
+    const myChart_z2 = new Chart(
+      document.getElementById('cancelados_por_vacuna_z2'),
+      config_z2
+    );
+
+    const myChart_z3 = new Chart(
+      document.getElementById('cancelados_por_vacuna_z3'),
+      config_z3
     );
 
     function filterDataByDate(){
@@ -86,6 +188,27 @@
         v3 = [{% for v in cancelados_gripe %}"{{v["fecha"]}}",{% endfor %}];
         v4 = [{% for v in cancelados_fiebre_amarilla %}"{{v["fecha"]}}",{% endfor %}];
         
+        zona1 = [
+            [{% for v in zona1[0] %}"{{v}}",{% endfor %}],
+            [{% for v in zona1[1] %}"{{v}}",{% endfor %}],
+            [{% for v in zona1[2] %}"{{v}}",{% endfor %}],
+            [{% for v in zona1[3] %}"{{v}}",{% endfor %}]
+        ];
+
+        zona2 = [
+            [{% for v in zona2[0] %}"{{v}}",{% endfor %}],
+            [{% for v in zona2[1] %}"{{v}}",{% endfor %}],
+            [{% for v in zona2[2] %}"{{v}}",{% endfor %}],
+            [{% for v in zona2[3] %}"{{v}}",{% endfor %}]
+        ];
+
+        zona3 = [
+            [{% for v in zona3[0] %}"{{v}}",{% endfor %}],
+            [{% for v in zona3[1] %}"{{v}}",{% endfor %}],
+            [{% for v in zona3[2] %}"{{v}}",{% endfor %}],
+            [{% for v in zona3[3] %}"{{v}}",{% endfor %}]
+        ];
+
         var desde = document.getElementById('startdate').value;
         var hasta = document.getElementById('enddate').value;
         
@@ -128,8 +251,89 @@
             return fecha >= desde && fecha <= hasta;
         });
 
+        // filtra los datos por fecha de zona 1
+        var filtrado_zona1_0 = zona1[0].filter(function(v){
+            let fecha = v.split("/");
+            fecha = new Date(fecha[2] + '-' + fecha[1] + '-' + fecha[0]);
+            return fecha >= desde && fecha <= hasta;
+        });
+
+        var filtrado_zona1_1 = zona1[1].filter(function(v){
+            let fecha = v.split("/");
+            fecha = new Date(fecha[2] + '-' + fecha[1] + '-' + fecha[0]);
+            return fecha >= desde && fecha <= hasta;
+        });
+
+        var filtrado_zona1_2 = zona1[2].filter(function(v){
+            let fecha = v.split("/");
+            fecha = new Date(fecha[2] + '-' + fecha[1] + '-' + fecha[0]);
+            return fecha >= desde && fecha <= hasta;
+        });
+
+        var filtrado_zona1_3 = zona1[3].filter(function(v){
+            let fecha = v.split("/");
+            fecha = new Date(fecha[2] + '-' + fecha[1] + '-' + fecha[0]);
+            return fecha >= desde && fecha <= hasta;
+        });
+
+        // filtra los datos por fecha de zona 2
+        var filtrado_zona2_0 = zona2[0].filter(function(v){
+            let fecha = v.split("/");
+            fecha = new Date(fecha[2] + '-' + fecha[1] + '-' + fecha[0]);
+            return fecha >= desde && fecha <= hasta;
+        });
+
+        var filtrado_zona2_1 = zona2[1].filter(function(v){
+            let fecha = v.split("/");
+            fecha = new Date(fecha[2] + '-' + fecha[1] + '-' + fecha[0]);
+            return fecha >= desde && fecha <= hasta;
+        });
+
+        var filtrado_zona2_2 = zona2[2].filter(function(v){
+            let fecha = v.split("/");
+            fecha = new Date(fecha[2] + '-' + fecha[1] + '-' + fecha[0]);
+            return fecha >= desde && fecha <= hasta;
+        });
+
+        var filtrado_zona2_3 = zona2[3].filter(function(v){
+            let fecha = v.split("/");
+            fecha = new Date(fecha[2] + '-' + fecha[1] + '-' + fecha[0]);
+            return fecha >= desde && fecha <= hasta;
+        });
+
+        // filtra los datos por fecha de zona 3
+        var filtrado_zona3_0 = zona3[0].filter(function(v){
+            let fecha = v.split("/");
+            fecha = new Date(fecha[2] + '-' + fecha[1] + '-' + fecha[0]);
+            return fecha >= desde && fecha <= hasta;
+        });
+
+        var filtrado_zona3_1 = zona3[1].filter(function(v){
+            let fecha = v.split("/");
+            fecha = new Date(fecha[2] + '-' + fecha[1] + '-' + fecha[0]);
+            return fecha >= desde && fecha <= hasta;
+        });
+
+        var filtrado_zona3_2 = zona3[2].filter(function(v){
+            let fecha = v.split("/");
+            fecha = new Date(fecha[2] + '-' + fecha[1] + '-' + fecha[0]);
+            return fecha >= desde && fecha <= hasta;
+        });
+
+        var filtrado_zona3_3 = zona3[3].filter(function(v){
+            let fecha = v.split("/");
+            fecha = new Date(fecha[2] + '-' + fecha[1] + '-' + fecha[0]);
+            return fecha >= desde && fecha <= hasta;
+        });
+
         myChart.config.data.datasets[0].data = [filtrado1.length, filtrado2.length, filtrado3.length, filtrado4.length];
         myChart.update();
+        myChart_z1.config.data.datasets[0].data = [filtrado_zona1_0.length, filtrado_zona1_1.length, filtrado_zona1_2.length, filtrado_zona1_3.length];
+        myChart_z1.update();
+        myChart_z2.config.data.datasets[0].data = [filtrado_zona2_0.length, filtrado_zona2_1.length, filtrado_zona2_2.length, filtrado_zona2_3.length];
+        myChart_z2.update();
+        myChart_z3.config.data.datasets[0].data = [filtrado_zona3_0.length, filtrado_zona3_1.length, filtrado_zona3_2.length, filtrado_zona3_3.length];
+        myChart_z3.update();
         console.log(filtrado1.length + filtrado2.length + filtrado3.length + filtrado4.length);
         document.getElementById('total').innerHTML = (filtrado1.length + filtrado2.length + filtrado3.length + filtrado4.length);
         document.getElementById('total_c1').innerHTML = filtrado1.length;

@@ -207,7 +207,44 @@ def vacunas_por_enfermedad():
     vacunas_covid2 = models.get_vacunas_aplicadas_por_id(3)
     vacunas_fiebre_amarilla = models.get_vacunas_aplicadas_por_id(2)
     vacunas_gripe = models.get_vacunas_aplicadas_por_id(1)
-    return render_template('admin/vacunas_por_enfermedad.html', titulo='Vacunas por enfermedad', vacunas_covid1=vacunas_covid1, vacunas_covid2=vacunas_covid2, vacunas_fiebre_amarilla=vacunas_fiebre_amarilla, vacunas_gripe=vacunas_gripe)
+    zona1 = [[],[],[],[]]
+    zona2 = [[],[],[],[]]
+    zona3 = [[],[],[],[]]
+
+    for item in vacunas_covid1:
+        if item['id_zona']==1:
+            zona1[0].append(item['fecha'])
+        elif item['id_zona']==2:
+            zona2[0].append(item['fecha'])
+        else:
+            zona3[0].append(item['fecha'])
+
+    for item in vacunas_covid2:
+        if item['id_zona']==1:
+            zona1[1].append(item['fecha'])
+        elif item['id_zona']==2:
+            zona2[1].append(item['fecha'])
+        else:
+            zona3[1].append(item['fecha'])
+
+    for item in vacunas_fiebre_amarilla:
+        if item['id_zona']==1:
+            zona1[2].append(item['fecha'])
+        elif item['id_zona']==2:
+            zona2[2].append(item['fecha'])
+        else:
+            zona3[2].append(item['fecha'])
+
+    for item in vacunas_gripe:
+        if item['id_zona']==1:
+            zona1[3].append(item['fecha'])
+        elif item['id_zona']==2:
+            zona2[3].append(item['fecha'])
+        else:
+            zona3[3].append(item['fecha'])
+    
+    return render_template('admin/vacunas_por_enfermedad.html', titulo='Vacunas por enfermedad', vacunas_covid1=vacunas_covid1, vacunas_covid2=vacunas_covid2, vacunas_fiebre_amarilla=vacunas_fiebre_amarilla, vacunas_gripe=vacunas_gripe, zona1=zona1, zona2=zona2, zona3=zona3)
+
 
 @app.route('/admin/cancelados-por-vacuna')
 @login_required

@@ -32,8 +32,22 @@
                     <div>
                         <canvas id="vacunas_por_enfermedad" style="max-height: 50vh;"></canvas>
                     </div> 
+                </div>                
+            </div>
+            <div class="row justify-content-evenly ">
+                <div class="col">
+                        <div>
+                            <canvas id="vacunas_por_edad_z1" style="max-height: 25vh;"></canvas>
+                        </div>
                 </div>
-                
+                <div class="col">
+                    <div>
+                        <canvas id="vacunas_por_edad_z2" style="max-height: 25vh;"></canvas>
+                    </div>
+                </div><div class="col">
+                <div>
+                    <canvas id="vacunas_por_edad_z3" style="max-height: 25vh;"></canvas>
+                </div>
             </div>
         </div>
     </div>
@@ -42,18 +56,71 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.8.0/chart.min.js" integrity="sha512-sW/w8s4RWTdFFSduOTGtk4isV1+190E/GghVffMA9XczdJ2MDzSzLEubKAs5h0wzgSJOQTRYyaz73L3d6RtJSg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script>
-    const labels = [
+    labels = [
         'COVID 1era DOSIS',
         'COVID 2da DOSIS',
         'GRIPE',
         'FIEBRE AMARILLA',
     ];
-    const datapoints = [{{vacunas_covid1 | length}},{{vacunas_covid2 |length}},  {{vacunas_gripe |length}}, {{vacunas_fiebre_amarilla |length}}];
-    const data = {
+    datapoints = [{{vacunas_covid1 | length}},{{vacunas_covid2 |length}},  {{vacunas_gripe |length}}, {{vacunas_fiebre_amarilla |length}}];
+    data = {
         labels: labels,
         datasets: [{
                 label: 'Vacunas por enfermedad',
             data: datapoints,
+            backgroundColor: [
+                'rgb(150, 205, 122)',
+                'rgb(54, 162, 235)',
+                'rgb(255, 99, 132)',
+                'rgb(255, 205, 86)'
+            ],
+            hoverOffset: 4
+            //borderColor: 'rgb(255, 99, 132)'
+        }]
+    };
+    datapointsTerminal = [{{zona1[0] | length}},{{zona1[1] |length}},  {{zona1[2] |length}}, {{zona1[3] |length}}];
+
+    data2 = {
+        labels: labels,
+        datasets: [{
+                label: 'Vacunas por enfermedad',
+            data: datapointsTerminal,
+            backgroundColor: [
+                'rgb(150, 205, 122)',
+                'rgb(54, 162, 235)',
+                'rgb(255, 99, 132)',
+                'rgb(255, 205, 86)'
+            ],
+            hoverOffset: 4
+            //borderColor: 'rgb(255, 99, 132)'
+        }]
+    };
+
+    datapointsMunicipalidad = [{{zona2[0] | length}},{{zona2[1] |length}},  {{zona2[2] |length}}, {{zona2[3] |length}}];
+
+    data3 = {
+        labels: labels,
+        datasets: [{
+                label: 'Vacunas por enfermedad',
+            data: datapointsMunicipalidad,
+            backgroundColor: [
+                'rgb(150, 205, 122)',
+                'rgb(54, 162, 235)',
+                'rgb(255, 99, 132)',
+                'rgb(255, 205, 86)'
+            ],
+            hoverOffset: 4
+            //borderColor: 'rgb(255, 99, 132)'
+        }]
+    };
+
+    datapointsCementerio = [{{zona3[0] | length}},{{zona3[1] |length}},  {{zona3[2] |length}}, {{zona3[3] |length}}];
+
+    data4 = {
+        labels: labels,
+        datasets: [{
+                label: 'Vacunas por enfermedad',
+            data: datapointsCementerio,
             backgroundColor: [
                 'rgb(150, 205, 122)',
                 'rgb(54, 162, 235)',
@@ -70,6 +137,24 @@
         data: data,
         options: {}
     };
+
+    const config2 = {
+        type: 'pie',
+        data: data2,
+        options: {}
+    };
+
+    const config3 = {
+        type: 'pie',
+        data: data3,
+        options: {}
+    };
+
+    const config4 = {
+        type: 'pie',
+        data: data4,
+        options: {}
+    };
 </script>
 <script>
     const myChart = new Chart(
@@ -77,17 +162,56 @@
       config
     );
 
+    const myChartTerminal = new Chart(
+      document.getElementById('vacunas_por_edad_z1'),
+      config2
+    );
+
+    const myChartMunicipalidad = new Chart(
+      document.getElementById('vacunas_por_edad_z2'),
+      config3
+    );
+
+    const myChartCementerio = new Chart(
+      document.getElementById('vacunas_por_edad_z3'),
+      config4
+    );
+
     function filterDataByDate(){
         v1 = [{% for v in vacunas_covid1 %}"{{v["fecha"]}}",{% endfor %}];
         v2 = [{% for v in vacunas_covid2 %}"{{v["fecha"]}}",{% endfor %}];
         v3 = [{% for v in vacunas_gripe %}"{{v["fecha"]}}",{% endfor %}];
         v4 = [{% for v in vacunas_fiebre_amarilla %}"{{v["fecha"]}}",{% endfor %}];
+
+        
+        console.log("{{zona1[1]}}");
+
+        zona1 = [
+            [{% for v in zona1[0] %}"{{v}}",{% endfor %}],
+            [{% for v in zona1[1] %}"{{v}}",{% endfor %}],
+            [{% for v in zona1[2] %}"{{v}}",{% endfor %}],
+            [{% for v in zona1[3] %}"{{v}}",{% endfor %}]
+        ];
+
+        zona2 = [
+            [{% for v in zona2[0] %}"{{v}}",{% endfor %}],
+            [{% for v in zona2[1] %}"{{v}}",{% endfor %}],
+            [{% for v in zona2[2] %}"{{v}}",{% endfor %}],
+            [{% for v in zona2[3] %}"{{v}}",{% endfor %}]
+        ];
+
+        zona3 = [
+            [{% for v in zona3[0] %}"{{v}}",{% endfor %}],
+            [{% for v in zona3[1] %}"{{v}}",{% endfor %}],
+            [{% for v in zona3[2] %}"{{v}}",{% endfor %}],
+            [{% for v in zona3[3] %}"{{v}}",{% endfor %}]
+        ];
         
         var desde = document.getElementById('startdate').value;
         var hasta = document.getElementById('enddate').value;
         
         console.log(hasta);
-        console.log(v1,v2,v3);
+        //console.log(v1,v2,v3);
 
         //desde to date
         if (desde){
@@ -125,8 +249,90 @@
             return fecha >= desde && fecha <= hasta;
         });
 
+        // filtra los datos por fecha de zona 1
+        var filtrado_zona1_0 = zona1[0].filter(function(v){
+            let fecha = v.split("/");
+            fecha = new Date(fecha[2] + '-' + fecha[1] + '-' + fecha[0]);
+            return fecha >= desde && fecha <= hasta;
+        });
+
+        var filtrado_zona1_1 = zona1[1].filter(function(v){
+            let fecha = v.split("/");
+            fecha = new Date(fecha[2] + '-' + fecha[1] + '-' + fecha[0]);
+            return fecha >= desde && fecha <= hasta;
+        });
+
+        var filtrado_zona1_2 = zona1[2].filter(function(v){
+            let fecha = v.split("/");
+            fecha = new Date(fecha[2] + '-' + fecha[1] + '-' + fecha[0]);
+            return fecha >= desde && fecha <= hasta;
+        });
+
+        var filtrado_zona1_3 = zona1[3].filter(function(v){
+            let fecha = v.split("/");
+            fecha = new Date(fecha[2] + '-' + fecha[1] + '-' + fecha[0]);
+            return fecha >= desde && fecha <= hasta;
+        });
+
+        // filtra los datos por fecha de zona 2
+        var filtrado_zona2_0 = zona2[0].filter(function(v){
+            let fecha = v.split("/");
+            fecha = new Date(fecha[2] + '-' + fecha[1] + '-' + fecha[0]);
+            return fecha >= desde && fecha <= hasta;
+        });
+
+        var filtrado_zona2_1 = zona2[1].filter(function(v){
+            let fecha = v.split("/");
+            fecha = new Date(fecha[2] + '-' + fecha[1] + '-' + fecha[0]);
+            return fecha >= desde && fecha <= hasta;
+        });
+
+        var filtrado_zona2_2 = zona2[2].filter(function(v){
+            let fecha = v.split("/");
+            fecha = new Date(fecha[2] + '-' + fecha[1] + '-' + fecha[0]);
+            return fecha >= desde && fecha <= hasta;
+        });
+
+        var filtrado_zona2_3 = zona2[3].filter(function(v){
+            let fecha = v.split("/");
+            fecha = new Date(fecha[2] + '-' + fecha[1] + '-' + fecha[0]);
+            return fecha >= desde && fecha <= hasta;
+        });
+
+        // filtra los datos por fecha de zona 3
+        var filtrado_zona3_0 = zona3[0].filter(function(v){
+            let fecha = v.split("/");
+            fecha = new Date(fecha[2] + '-' + fecha[1] + '-' + fecha[0]);
+            return fecha >= desde && fecha <= hasta;
+        });
+
+        var filtrado_zona3_1 = zona3[1].filter(function(v){
+            let fecha = v.split("/");
+            fecha = new Date(fecha[2] + '-' + fecha[1] + '-' + fecha[0]);
+            return fecha >= desde && fecha <= hasta;
+        });
+
+        var filtrado_zona3_2 = zona3[2].filter(function(v){
+            let fecha = v.split("/");
+            fecha = new Date(fecha[2] + '-' + fecha[1] + '-' + fecha[0]);
+            return fecha >= desde && fecha <= hasta;
+        });
+
+        var filtrado_zona3_3 = zona3[3].filter(function(v){
+            let fecha = v.split("/");
+            fecha = new Date(fecha[2] + '-' + fecha[1] + '-' + fecha[0]);
+            return fecha >= desde && fecha <= hasta;
+        });
+
+
         myChart.config.data.datasets[0].data = [filtrado1.length, filtrado2.length, filtrado3.length, filtrado4.length];
         myChart.update();
+        myChartTerminal.config.data.datasets[0].data = [filtrado_zona1_0.length, filtrado_zona1_1.length, filtrado_zona1_2.length, filtrado_zona1_3.length];
+        myChartTerminal.update();
+        myChartMunicipalidad.config.data.datasets[0].data = [filtrado_zona2_0.length, filtrado_zona2_1.length, filtrado_zona2_2.length, filtrado_zona2_3.length];
+        myChartMunicipalidad.update();
+        myChartCementerio.config.data.datasets[0].data = [filtrado_zona3_0.length, filtrado_zona3_1.length, filtrado_zona3_2.length, filtrado_zona3_3.length];
+        myChartCementerio.update();
         console.log(filtrado1.length + filtrado2.length + filtrado3.length + filtrado4.length);
         document.getElementById('total').innerHTML = (filtrado1.length + filtrado2.length + filtrado3.length + filtrado4.length);
         document.getElementById('total_c1').innerHTML = filtrado1.length;
@@ -136,6 +342,7 @@
         
     }
 </script>
+
       
 {% endblock %}
 {% endblock %}

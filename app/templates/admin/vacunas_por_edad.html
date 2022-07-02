@@ -178,12 +178,18 @@
         v2 = [{% for v in entre18y60 %}"{{v['fecha']}}",{% endfor %}];
         v3 = [{% for v in mayores60 %}"{{v['fecha']}}",{% endfor %}];
 
+        z1 = [[{% for fecha in zona1[0] %}"{{fecha}}",{% endfor %}], [{% for fecha in zona1[1] %}"{{fecha}}",{% endfor %}], [{% for fecha in zona1[2] %}"{{fecha}}",{% endfor %}]];
+        z2 = [[{% for fecha in zona2[0] %}"{{fecha}}",{% endfor %}], [{% for fecha in zona2[1] %}"{{fecha}}",{% endfor %}], [{% for fecha in zona2[2] %}"{{fecha}}",{% endfor %}]];
+        z3 = [[{% for fecha in zona3[0] %}"{{fecha}}",{% endfor %}], [{% for fecha in zona3[1] %}"{{fecha}}",{% endfor %}], [{% for fecha in zona3[2] %}"{{fecha}}",{% endfor %}]];
         
         var desde = document.getElementById('startdate').value;
         var hasta = document.getElementById('enddate').value;
         
-        
-        console.log(v1,v2,v3);
+        console.log("DESDE: "+ desde);
+        console.log("HASTA: "+ hasta);
+        //console.log(v1,v2,v3);
+        console.log("z1 - z2 -z3");
+        console.log(z1, z2, z3);
 
         //desde to date
         if (desde){
@@ -216,10 +222,73 @@
             return fecha >= desde && fecha <= hasta;
         });
 
-        console.log(filtrado1, filtrado2, filtrado3);
+        // filtros de zonas
+        var filtro_z1 = [[],[],[]];
+        filtro_z1[0] = z1[0].filter(function(v){
+            let fecha = v.split("/");
+            fecha = new Date(fecha[2] + '-' + fecha[1] + '-' + fecha[0]);
+            return fecha >= desde && fecha <= hasta;
+        });
+        filtro_z1[1] = z1[1].filter(function(v){
+            let fecha = v.split("/");
+            fecha = new Date(fecha[2] + '-' + fecha[1] + '-' + fecha[0]);
+            return fecha >= desde && fecha <= hasta;
+        });
+        filtro_z1[2] = z1[2].filter(function(v){
+            let fecha = v.split("/");
+            fecha = new Date(fecha[2] + '-' + fecha[1] + '-' + fecha[0]);
+            return fecha >= desde && fecha <= hasta;
+        });
+
+        var filtro_z2 = [[],[],[]];
+        filtro_z2[0] = z2[0].filter(function(v){
+            let fecha = v.split("/");
+            fecha = new Date(fecha[2] + '-' + fecha[1] + '-' + fecha[0]);
+            return fecha >= desde && fecha <= hasta;
+        });
+        filtro_z2[1] = z2[1].filter(function(v){
+            let fecha = v.split("/");
+            fecha = new Date(fecha[2] + '-' + fecha[1] + '-' + fecha[0]);
+            return fecha >= desde && fecha <= hasta;
+        });
+        filtro_z2[2] = z2[2].filter(function(v){
+            let fecha = v.split("/");
+            fecha = new Date(fecha[2] + '-' + fecha[1] + '-' + fecha[0]);
+            return fecha >= desde && fecha <= hasta;
+        });
+
+        var filtro_z3 = [[],[],[]];
+        filtro_z3[0] = z3[0].filter(function(v){
+            let fecha = v.split("/");
+            fecha = new Date(fecha[2] + '-' + fecha[1] + '-' + fecha[0]);
+            return fecha >= desde && fecha <= hasta;
+        });
+        filtro_z3[1] = z3[1].filter(function(v){
+            let fecha = v.split("/");
+            fecha = new Date(fecha[2] + '-' + fecha[1] + '-' + fecha[0]);
+            return fecha >= desde && fecha <= hasta;
+        });
+        filtro_z3[2] = z3[2].filter(function(v){
+            let fecha = v.split("/");
+            fecha = new Date(fecha[2] + '-' + fecha[1] + '-' + fecha[0]);
+            return fecha >= desde && fecha <= hasta;
+        });
+
+
+        //console.log(filtrado1, filtrado2, filtrado3);
+        console.log("filtro z1 - filtro z2 - filtro z3");
+        console.log(filtro_z1, filtro_z2, filtrado3);
         myChart.config.data.datasets[0].data = [filtrado1.length, filtrado2.length, filtrado3.length];
         myChart.update();
-        console.log(filtrado1.length + filtrado2.length + filtrado3.length);
+        
+        myChart_z1.config.data.datasets[0].data = [filtro_z1[0].length, filtro_z1[1].length, filtro_z1[2].length];
+        myChart_z1.update();
+        myChart_z2.config.data.datasets[0].data = [filtro_z2[0].length, filtro_z2[1].length, filtro_z2[2].length];
+        myChart_z2.update();
+        myChart_z3.config.data.datasets[0].data = [filtro_z3[0].length, filtro_z3[1].length, filtro_z3[2].length];
+        myChart_z3.update();
+
+        //console.log(filtrado1.length + filtrado2.length + filtrado3.length);
         document.getElementById('total').innerHTML = (filtrado1.length + filtrado2.length + filtrado3.length);
         document.getElementById('total_-18').innerHTML = filtrado1.length;
         document.getElementById('total_18-60').innerHTML = filtrado2.length;

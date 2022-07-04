@@ -1,4 +1,3 @@
-from asyncio.windows_events import NULL
 from datetime import date, datetime, timedelta
 from app.models import get_db_connection
 

@@ -5,12 +5,12 @@ from flask_bootstrap import Bootstrap5
 class Config():
     TESTING = True
     DEBUG = True
-    DATABASE = 'app/pruebadb'
-    #DATABASE = 'app/demo2'
+    #DATABASE = 'app/pruebadb'
+    DATABASE = 'app/demo3'
     SECRET_KEY = 'password-super-dificil'
     WTF_CSRF_ENABLED = True,
     BOOTSTRAP_BTN_STYLE = 'success'
-    EMAIL_ENABLED = False
+    EMAIL_ENABLED = True
 
 
 app = Flask(__name__)

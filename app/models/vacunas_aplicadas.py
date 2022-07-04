@@ -77,7 +77,7 @@ def fechas_y_zonas_de_vacunas_aplicadas():
     vacunas = cursor.execute("SELECT fecha_de_nacimiento, fecha, vacuna_aplicada.id_zona FROM vacuna_aplicada\
                             INNER JOIN vacuna ON vacuna.id=vacuna_aplicada.id_vacuna\
                             INNER JOIN usuario ON vacuna_aplicada.id_usuario=usuario.id\
-                                WHERE vacuna_aplicada.id_zona != ?;", (NULL,)).fetchall()
+                                WHERE vacuna_aplicada.id_zona is not NULL;").fetchall()
     conn.close()
     return vacunas
 

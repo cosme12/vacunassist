@@ -306,10 +306,11 @@ def listado_pendientes_fiebre_amarilla():
 @login_required
 def aprobar_turno(id):
     turno = models.get_turno_por_id(id)
+    zona = models.get_zona(turno['id_zona'])
     usuario = models.get_user_data_por_id(turno['id_usuario'])
     models.aprobar_turno(id)
     if app.config['EMAIL_ENABLED']:
-                enviar_email(usuario['email'], "Vacunassist - Aprobacion de turno Fiebre Amarilla", f"Hola {usuario['nombre']}\n\nSu turno para la vacuna la Fiebre amarilla el dia {turno['fecha']}, a las {turno['hora']} horas, en zona{turno['nombre']} {turno['direccion']} a sido aprobado.\n")
+                enviar_email(usuario['email'], "Vacunassist - Aprobacion de turno Fiebre Amarilla", f"Hola {usuario['nombre']}\n\nSu turno para la vacuna contra la Fiebre amarilla del día {turno['fecha']}, a las {turno['hora']} horas, en la zona {zona['nombre']} ({zona['direccion']}) fue APROBADO.\n")
     flash("Se aprobó el turno correctamente. Se envió un email informando la actualización de estado del turno al paciente correspondiente.", "success")
     return redirect(url_for('listado_pendientes_fiebre_amarilla'))
 
@@ -318,10 +319,11 @@ def aprobar_turno(id):
 @login_required
 def rechazar_turno(id):
     turno = models.get_turno_por_id(id)
+    zona = models.get_zona(turno['id_zona'])
     usuario = models.get_user_data_por_id(turno['id_usuario'])
     models.cancel_appointment(id,5)
     if app.config['EMAIL_ENABLED']:
-                enviar_email(usuario['email'], "Vacunassist - Rechazo de turno Fiebre Amarilla", f"Hola {usuario['nombre']}\n\nSu turno para la vacuna la Fiebre amarilla el dia {turno['fecha']}, a las {turno['hora']} horas, en zona{turno['nombre']} {turno['direccion']} a sido rechazado.\n Ante cualquier consulta comuniquese al 221- 5412345")
+                enviar_email(usuario['email'], "Vacunassist - Rechazo de turno Fiebre Amarilla", f"Hola {usuario['nombre']}\n\nSu turno para la vacuna contra la Fiebre amarilla del día {turno['fecha']}, a las {turno['hora']} horas, en la zona {zona['nombre']} ({zona['direccion']}) fue RECHAZADO.\n")
     flash("Se rechazó el turno correctamente. Se envió un email informando la actualización de estado del turno al paciente correspondiente.", "success")
     return redirect(url_for('listado_pendientes_fiebre_amarilla'))
 

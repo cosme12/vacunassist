@@ -113,6 +113,7 @@ def ver_listado_enfermeros():
 @login_required
 def eliminar_enfermero(id):
     models.delete_user(id)
+    flash("El enfermero se eliminó correctamente.", "success")
     return redirect(url_for('ver_listado_enfermeros'))
 
 @app.route('/admin/eliminar-enfermeros')

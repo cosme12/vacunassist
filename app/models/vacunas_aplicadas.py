@@ -1,3 +1,4 @@
+from asyncio.windows_events import NULL
 from datetime import date, datetime, timedelta
 from app.models import get_db_connection
 
@@ -76,7 +77,8 @@ def fechas_y_zonas_de_vacunas_aplicadas():
     cursor = conn.cursor()
     vacunas = cursor.execute("SELECT fecha_de_nacimiento, fecha, vacuna_aplicada.id_zona FROM vacuna_aplicada\
                             INNER JOIN vacuna ON vacuna.id=vacuna_aplicada.id_vacuna\
-                            INNER JOIN usuario ON vacuna_aplicada.id_usuario=usuario.id").fetchall()
+                            INNER JOIN usuario ON vacuna_aplicada.id_usuario=usuario.id\
+                                WHERE vacuna_aplicada.id_zona != ?;", (NULL,)).fetchall()
     conn.close()
     return vacunas
 

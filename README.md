@@ -4,6 +4,9 @@
 
 Proyecto para IS2 - Vacunatorio
 
+![https://raw.githubusercontent.com/cosme12/vacunassist/master/imagenes/IMAGEN1.png?token=GHSAT0AAAAAABJUDVOAOOF5KNFGBSWQ5LMSYXVVMFA](https://raw.githubusercontent.com/cosme12/vacunassist/master/imagenes/IMAGEN1.png?token=GHSAT0AAAAAABJUDVOAOOF5KNFGBSWQ5LMSYXVVMFA)
+
+![https://raw.githubusercontent.com/cosme12/vacunassist/master/imagenes/imagen2.png?token=GHSAT0AAAAAABJUDVOBIXTIIVHCSYYMMBNAYXVVMZA](https://raw.githubusercontent.com/cosme12/vacunassist/master/imagenes/imagen2.png?token=GHSAT0AAAAAABJUDVOBIXTIIVHCSYYMMBNAYXVVMZA)
 
 ## Tests
 
